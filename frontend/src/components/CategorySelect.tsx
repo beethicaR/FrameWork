@@ -9,7 +9,6 @@ interface CategorySelectProps {
 export default function CategorySelect({ onSelect, onBack }: CategorySelectProps) {
   const [categories] = useState<string[]>(getAllCategories());
   const [caseCounts, setCaseCounts] = useState<Record<string, number>>(() => getCaseCountByCategory());
-  const [loading, setLoading] = useState(false);
 
   // Optionally refresh counts from backend in background (non-blocking)
   useEffect(() => {
@@ -41,30 +40,23 @@ export default function CategorySelect({ onSelect, onBack }: CategorySelectProps
         <p className="page-subtitle">Select the type of case you want to practice</p>
       </div>
 
-      {loading ? (
-        <div className="loading-container">
-          <div className="loader" />
-          <p>Loading categories...</p>
-        </div>
-      ) : (
-        <div className="category-grid">
-          {categories.map((cat) => (
-            <button key={cat} className="category-card" onClick={() => onSelect(cat)}>
-              <div className="category-icon">{categoryIcons[cat] || '📋'}</div>
-              <div className="category-info">
-                <h3>{cat}</h3>
-                <p>{categoryDescriptions[cat] || 'Practice this case type'}</p>
-              </div>
-              <div className="category-meta">
-                <span className="case-count">{caseCounts[cat] || 0} cases</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="category-grid">
+        {categories.map((cat) => (
+          <button key={cat} className="category-card" onClick={() => onSelect(cat)}>
+            <div className="category-icon">{categoryIcons[cat] || '📋'}</div>
+            <div className="category-info">
+              <h3>{cat}</h3>
+              <p>{categoryDescriptions[cat] || 'Practice this case type'}</p>
+            </div>
+            <div className="category-meta">
+              <span className="case-count">{caseCounts[cat] || 0} cases</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
