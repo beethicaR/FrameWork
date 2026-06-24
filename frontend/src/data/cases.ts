@@ -13,13 +13,15 @@ export interface CaseData {
   successCriteria: string[];
 }
 
+import { getAllExpandedCases } from './expanded-cases';
+
 interface Exhibit {
   title: string;
   data: Record<string, string | number>[];
   description: string;
 }
 
-const cases: CaseData[] = [
+const baseCases: CaseData[] = [
   // ============ MARKET ENTRY ============
   {
     id: 'market-entry-1',
@@ -1762,18 +1764,20 @@ export const categoryIcons: Record<string, string> = {
   'Digital Transformation': '💻', 'Turnaround / Restructuring': '🔄', 'New Business / Innovation': '💡',
 };
 
+const allCases: CaseData[] = [...baseCases, ...getAllExpandedCases()];
+
 export function getCasesByCategory(category: string): CaseData[] {
-  return cases.filter(c => c.category === category);
+  return allCases.filter(c => c.category === category);
 }
 
 export function getCaseById(id: string): CaseData | undefined {
-  return cases.find(c => c.id === id);
+  return allCases.find(c => c.id === id);
 }
 
 export function getCaseCountByCategory(): Record<string, number> {
   const counts: Record<string, number> = {};
   for (const cat of categories) {
-    counts[cat] = cases.filter(c => c.category === cat).length;
+    counts[cat] = allCases.filter(c => c.category === cat).length;
   }
   return counts;
 }
@@ -1782,5 +1786,5 @@ export function getAllCategories(): string[] {
   return categories;
 }
 
-export default cases;
+export default allCases;
 
