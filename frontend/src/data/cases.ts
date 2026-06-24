@@ -1739,4 +1739,48 @@ const cases: CaseData[] = [
   }
 ];
 
+export const categories = [
+  'Market Entry', 'Profitability', 'Pricing Strategy', 'Growth Strategy',
+  'Operations / Supply Chain', 'M&A / Corporate Strategy', 'Digital Transformation', 'Turnaround / Restructuring', 'New Business / Innovation'
+];
+
+export const categoryDescriptions: Record<string, string> = {
+  'Market Entry': 'Evaluate new market opportunities and entry strategies',
+  'Profitability': 'Diagnose profit issues and design turnaround plans',
+  'Pricing Strategy': 'Set optimal prices and design pricing frameworks',
+  'Growth Strategy': 'Identify and evaluate growth opportunities',
+  'Operations / Supply Chain': 'Optimize operations and supply chain efficiency',
+  'M&A / Corporate Strategy': 'Analyze M&A targets and corporate strategy',
+  'Digital Transformation': 'Lead digital innovation and transformation',
+  'Turnaround / Restructuring': 'Revive struggling businesses',
+  'New Business / Innovation': 'Design new business models and ventures',
+};
+
+export const categoryIcons: Record<string, string> = {
+  'Market Entry': '🌍', 'Profitability': '📈', 'Pricing Strategy': '💰',
+  'Growth Strategy': '🚀', 'Operations / Supply Chain': '⚙️', 'M&A / Corporate Strategy': '🤝',
+  'Digital Transformation': '💻', 'Turnaround / Restructuring': '🔄', 'New Business / Innovation': '💡',
+};
+
+export function getCasesByCategory(category: string): CaseData[] {
+  return cases.filter(c => c.category === category);
+}
+
+export function getCaseById(id: string): CaseData | undefined {
+  return cases.find(c => c.id === id);
+}
+
+export function getCaseCountByCategory(): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const cat of categories) {
+    counts[cat] = cases.filter(c => c.category === cat).length;
+  }
+  return counts;
+}
+
+export function getAllCategories(): string[] {
+  return categories;
+}
+
 export default cases;
+

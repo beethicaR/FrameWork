@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCasesByCategory } from '../data/cases';
+import casesData, { getCasesByCategory } from '../data/cases';
 import type { CaseData } from '../types';
 
 interface CaseSelectProps {
