@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getAllCategories, getCaseCountByCategory, categoryIcons, categoryDescriptions } from '../data/cases';
+import { getAllCategories, categoryIcons, categoryDescriptions } from '../data/cases';
+import { fetchCases } from '../api/caseApi';
 
 interface CategorySelectProps {
   onSelect: (category: string) => void;
@@ -7,18 +8,29 @@ interface CategorySelectProps {
 }
 
 export default function CategorySelect({ onSelect, onBack }: CategorySelectProps) {
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories] = useState<string[]>(getAllCategories());
   const [caseCounts, setCaseCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load categories from local data immediately (no API dependency)
-    const localCategories = getAllCategories();
-    const localCounts = getCaseCountByCategory();
-    setCategories(localCategories);
-    setCaseCounts(localCounts);
-    setLoading(false);
-  }, []);
+    let cancelled = false;
+    // Fetch all cases to get accurate counts per category
+    fetchCases()
+      .then((allCases) => {
+        if (!cancelled) {
+          const counts: Record<string, number> = {};
+          for (const cat of categories) {
+            counts[cat] = allCases.filter((c) => c.category === cat).length;
+          }
+          setCaseCounts(counts);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [categories]);
 
   return (
     <div className="category-page">

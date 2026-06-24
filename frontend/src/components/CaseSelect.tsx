@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCasesByCategory } from '../data/cases';
+import { fetchCases } from '../api/caseApi';
 import type { CaseData } from '../types';
 
 interface CaseSelectProps {
@@ -23,16 +23,21 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
   const [difficultyFilter, setDifficultyFilter] = useState<string>('');
 
   useEffect(() => {
-    loadCases();
+    let cancelled = false;
+    setLoading(true);
+    fetchCases({ category })
+      .then((data) => {
+        if (!cancelled) {
+          setCases(data);
+          setFilteredCases(data);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
   }, [category]);
-
-  function loadCases() {
-    // Use local data directly (no API dependency for browsing)
-    const localCases = getCasesByCategory(category);
-    setCases(localCases);
-    setFilteredCases(localCases);
-    setLoading(false);
-  }
 
   useEffect(() => {
     let filtered = cases;
