@@ -1739,4 +1739,7 @@ const cases: CaseData[] = [
   }
 ];
 
-export default cases;
+// ============ GENERATED CASES (225 total, 25 per category) ============
+import generatedCases from './generated-cases.json';
+
+export default [...cases, ...generatedCases];

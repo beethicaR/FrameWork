@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllCategories, categoryIcons, categoryDescriptions } from '../data/cases';
-import { fetchCases } from '../api/caseApi';
+import { getAllCategories, getCaseCountByCategory, categoryIcons, categoryDescriptions } from '../data/cases';
 
 interface CategorySelectProps {
   onSelect: (category: string) => void;
@@ -9,26 +8,23 @@ interface CategorySelectProps {
 
 export default function CategorySelect({ onSelect, onBack }: CategorySelectProps) {
   const [categories] = useState<string[]>(getAllCategories());
-  const [caseCounts, setCaseCounts] = useState<Record<string, number>>({});
-  const [loading, setLoading] = useState(true);
+  const [caseCounts, setCaseCounts] = useState<Record<string, number>>(() => getCaseCountByCategory());
+  const [loading, setLoading] = useState(false);
 
+  // Optionally refresh counts from backend in background (non-blocking)
   useEffect(() => {
     let cancelled = false;
-    // Fetch all cases to get accurate counts per category
-    fetchCases()
-      .then((allCases) => {
+    import('../api/caseApi').then(({ fetchCases }) => {
+      fetchCases().then((allCases) => {
         if (!cancelled) {
           const counts: Record<string, number> = {};
           for (const cat of categories) {
             counts[cat] = allCases.filter((c) => c.category === cat).length;
           }
           setCaseCounts(counts);
-          setLoading(false);
         }
-      })
-      .catch(() => {
-        if (!cancelled) setLoading(false);
-      });
+      }).catch(() => {});
+    }).catch(() => {});
     return () => { cancelled = true; };
   }, [categories]);
 
