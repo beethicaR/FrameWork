@@ -1739,17 +1739,4 @@ const cases: CaseData[] = [
   }
 ];
 
-// ============ GENERATED CASES (225 total, 25 per category) ============
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-const generatedCases: CaseData[] = (() => {
-  try {
-    const data = readFileSync(join(__dirname, 'generated-cases.json'), 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-})();
-
-export default [...cases, ...generatedCases];
+export default cases;
