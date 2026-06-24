@@ -149,10 +149,16 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
 
   async function initSession() {
     try {
-      const result = await startChatSession(caseData.id, userRole, difficulty);
+      const result = await Promise.race([
+        startChatSession(caseData.id, userRole, difficulty),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000))
+      ]) as { sessionId: string };
       setSessionId(result.sessionId);
       if (onSessionCreated) onSessionCreated(result.sessionId);
-      const history = await getChatHistory(result.sessionId);
+      const history = await Promise.race([
+        getChatHistory(result.sessionId),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000))
+      ]) as { messages: any[] };
       if (history.messages && history.messages.length > 0) {
         setMessages(history.messages.map(m => ({
           ...m,
