@@ -78,6 +78,7 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
   const [showNotes, setShowNotes] = useState(false);
   const [flowchart, setFlowchart] = useState<Flowchart | null>(null);
   const [showFlowchart, setShowFlowchart] = useState(false);
+  const [sessionError, setSessionError] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -158,8 +159,10 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
           timestamp: Date.now()
         })));
       }
+      setSessionError(null);
     } catch (err) {
       console.error('Failed to start session:', err);
+      setSessionError('Could not connect to the interview server. Please check your connection and try again.');
     }
   }
 
@@ -379,14 +382,22 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
         </div>
 
         {/* Center: Chat Area */}
-        <div className="chat-main">
-          <div className="chat-messages">
-            {messages.length === 0 ? (
-              <div className="chat-welcome">
-                <div className="welcome-spinner" />
-                <p>Starting your case session...</p>
-              </div>
-            ) : (
+      <div className="chat-main">
+        <div className="chat-messages">
+          {messages.length === 0 && !sessionError ? (
+            <div className="chat-welcome">
+              <div className="welcome-spinner" />
+              <p>Starting your case session...</p>
+            </div>
+          ) : messages.length === 0 && sessionError ? (
+            <div className="chat-welcome" style={{ textAlign: 'center', padding: 40 }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
+              <p style={{ color: 'var(--warning)', marginBottom: 16 }}>{sessionError}</p>
+              <button className="btn-primary" onClick={initSession} style={{ marginTop: 8 }}>
+                Retry Connection
+              </button>
+            </div>
+          ) : (
               messages.map((msg, i) => (
                 <div key={i} className={`message ${msg.role === 'user' ? 'user' : 'assistant'}`}>
                   <div className="message-avatar">
