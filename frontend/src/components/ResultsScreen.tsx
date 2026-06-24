@@ -391,7 +391,7 @@ export default function ResultsScreen({
 
 function heuristicScore(
   caseData: CaseData,
-  userRole: 'interviewee' | 'interviewer',
+  _userRole: 'interviewee' | 'interviewer',
   difficulty: string,
   messages: ChatMessage[]
 ): ScoreSet {

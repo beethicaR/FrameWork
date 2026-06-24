@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchCategories, fetchCases } from '../api/caseApi';
 import { getAllCategories, getCaseCountByCategory, categoryIcons, categoryDescriptions } from '../data/cases';
-import type { CaseData } from '../types';
 
 interface CategorySelectProps {
   onSelect: (category: string) => void;
