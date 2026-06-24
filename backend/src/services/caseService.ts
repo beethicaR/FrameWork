@@ -1,0 +1,76 @@
+import * as fs from 'fs';
+import * as path from 'path';
+import cases, { CaseData } from '../data/cases';
+import { getAllExpandedCases } from '../data/expanded-cases';
+
+// Load from all sources
+let allCases: CaseData[] = [...cases, ...getAllExpandedCases()];
+
+// Load generated cases from JSON
+try {
+  const jsonPath = path.join(__dirname, '../../data/generated-cases.json');
+  if (fs.existsSync(jsonPath)) {
+    const raw = fs.readFileSync(jsonPath, 'utf-8');
+    const generated: CaseData[] = JSON.parse(raw);
+    if (Array.isArray(generated)) {
+      const existingIds = new Set(allCases.map(c => c.id));
+      const newOnes = generated.filter(c => c && c.id && !existingIds.has(c.id));
+      allCases = [...allCases, ...newOnes];
+    }
+  }
+} catch (e) {
+  console.warn('Could not load generated cases:', e);
+}
+
+export function getAllCases(): CaseData[] {
+  return allCases;
+}
+
+export function getCasesByCategory(category: string): CaseData[] {
+  return allCases.filter(c => c.category.toLowerCase() === category.toLowerCase());
+}
+
+export function getCaseById(id: string): CaseData | undefined {
+  return allCases.find(c => c.id === id);
+}
+
+export function getCategories(): string[] {
+  const categories = new Set(allCases.map(c => c.category));
+  return Array.from(categories);
+}
+
+export function getRandomCase(category?: string, difficulty?: string): CaseData | undefined {
+  let filtered = allCases;
+  if (category) filtered = filtered.filter(c => c.category.toLowerCase() === category.toLowerCase());
+  if (difficulty) filtered = filtered.filter(c => c.difficulty.toLowerCase() === difficulty.toLowerCase());
+  if (filtered.length === 0) return undefined;
+  return filtered[Math.floor(Math.random() * filtered.length)];
+}
+
+export function getCasesByFilters(filters: {
+  category?: string;
+  difficulty?: string;
+  industry?: string;
+  search?: string;
+}): CaseData[] {
+  let filtered = allCases;
+  if (filters.category) filtered = filtered.filter(c => c.category.toLowerCase() === filters.category!.toLowerCase());
+  if (filters.difficulty) filtered = filtered.filter(c => c.difficulty.toLowerCase() === filters.difficulty!.toLowerCase());
+  if (filters.industry) filtered = filtered.filter(c => c.industry.toLowerCase().includes(filters.industry!.toLowerCase()));
+  if (filters.search) {
+    const s = filters.search.toLowerCase();
+    filtered = filtered.filter(c => 
+      c.title.toLowerCase().includes(s) || 
+      c.prompt.toLowerCase().includes(s) || 
+      c.context.toLowerCase().includes(s) ||
+      c.industry.toLowerCase().includes(s)
+    );
+  }
+  return filtered;
+}
+
+export function getCaseCount(): number {
+  return allCases.length;
+}
+
+export { CaseData };
