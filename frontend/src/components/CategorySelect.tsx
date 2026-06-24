@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { fetchCategories, fetchCases } from '../api/caseApi';
 import { getAllCategories, getCaseCountByCategory, categoryIcons, categoryDescriptions } from '../data/cases';
 
 interface CategorySelectProps {
@@ -13,30 +12,13 @@ export default function CategorySelect({ onSelect, onBack }: CategorySelectProps
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadCategories();
+    // Load categories from local data immediately (no API dependency)
+    const localCategories = getAllCategories();
+    const localCounts = getCaseCountByCategory();
+    setCategories(localCategories);
+    setCaseCounts(localCounts);
+    setLoading(false);
   }, []);
-
-  async function loadCategories() {
-    try {
-      // Try API first
-      const cats = await fetchCategories();
-      setCategories(cats);
-      const counts: Record<string, number> = {};
-      for (const cat of cats) {
-        const cases = await fetchCases({ category: cat });
-        counts[cat] = cases.length;
-      }
-      setCaseCounts(counts);
-    } catch {
-      // Fallback to local data
-      const localCategories = getAllCategories();
-      const localCounts = getCaseCountByCategory();
-      setCategories(localCategories);
-      setCaseCounts(localCounts);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <div className="category-page">

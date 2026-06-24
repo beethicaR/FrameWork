@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { fetchCases } from '../api/caseApi';
 import { getCasesByCategory } from '../data/cases';
 import type { CaseData } from '../types';
 
@@ -27,19 +26,12 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
     loadCases();
   }, [category]);
 
-  async function loadCases() {
-    try {
-      const allCases = await fetchCases({ category });
-      setCases(allCases);
-      setFilteredCases(allCases);
-    } catch {
-      // Fallback to local data
-      const localCases = getCasesByCategory(category);
-      setCases(localCases);
-      setFilteredCases(localCases);
-    } finally {
-      setLoading(false);
-    }
+  function loadCases() {
+    // Use local data directly (no API dependency for browsing)
+    const localCases = getCasesByCategory(category);
+    setCases(localCases);
+    setFilteredCases(localCases);
+    setLoading(false);
   }
 
   useEffect(() => {
