@@ -15,6 +15,6 @@
     "sourceMap": false,
     "allowJs": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "src/scripts", "src/**/*.json"]
+  "include": ["src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules", "dist", "src/scripts"]
 }
