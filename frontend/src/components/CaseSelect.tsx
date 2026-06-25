@@ -57,9 +57,6 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
         <p className="page-subtitle">Browse and select a case to practice</p>
       </div>
 
-        <div className="case-count">
-          {cases.length} case{cases.length !== 1 ? 's' : ''} available
-        </div>
         <div className="case-filters">
         <div className="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
