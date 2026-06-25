@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getCasesByCategory } from '../data/cases';
-import { fetchCases } from '../api/caseApi';
 import type { CaseData } from '../types';
 
 interface CaseSelectProps {
@@ -22,28 +21,10 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
   const [search, setSearch] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('');
 
-  // Refresh from backend in the background (non-blocking)
-  // Merge backend cases with local cases (which include expandedCases)
   useEffect(() => {
-    let cancelled = false;
-    fetchCases({ category })
-      .then((data) => {
-        if (!cancelled && data.length > 0) {
-          const localCases = getCasesByCategory(category);
-          const seen = new Set(localCases.map((c) => c.id));
-          const merged = [...localCases];
-          for (const c of data) {
-            if (!seen.has(c.id)) {
-              merged.push(c);
-              seen.add(c.id);
-            }
-          }
-          setCases(merged);
-          setFilteredCases(merged);
-        }
-      })
-      .catch(() => {});
-    return () => { cancelled = true; };
+    const localCases = getCasesByCategory(category);
+    setCases(localCases);
+    setFilteredCases(localCases);
   }, [category]);
 
   useEffect(() => {

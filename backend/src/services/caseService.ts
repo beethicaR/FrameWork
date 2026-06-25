@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import cases, { CaseData } from '../data/cases';
+import { getAllExpandedCases } from '../data/expanded-cases';
 
 // Load from data/cases.ts (contains 39 handcrafted real cases)
 let allCases: CaseData[] = [...cases];
@@ -19,6 +20,16 @@ try {
   }
 } catch (e) {
   console.warn('Could not load generated cases:', e);
+}
+
+// Merge expanded cases (Market Entry, Profitability, etc.)
+const expanded = getAllExpandedCases();
+const expandedIds = new Set(allCases.map(c => c.id));
+for (const c of expanded) {
+  if (!expandedIds.has(c.id)) {
+    allCases.push(c);
+    expandedIds.add(c.id);
+  }
 }
 
 export function getAllCases(): CaseData[] {
