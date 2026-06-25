@@ -7,7 +7,7 @@ let allCases: CaseData[] = [...cases];
 
 // Also load generated cases from JSON
 try {
-  const jsonPath = path.join(__dirname, '../data/generated-cases.json');
+  const jsonPath = path.join(__dirname, '../../data/generated-cases.json');
   if (fs.existsSync(jsonPath)) {
     const raw = fs.readFileSync(jsonPath, 'utf-8');
     const generated: CaseData[] = JSON.parse(raw);

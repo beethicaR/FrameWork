@@ -100,32 +100,12 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     };
   }, []);
 
-  // Auto-scroll: user message scrolls to top of that message, AI response scrolls to bottom
-  const prevMessagesRef = useRef<ChatMessage[]>([]);
-
+  // Keep chat scrolled to the top at all times
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (messages.length === 0) return;
-    const lastMsg = messages[messages.length - 1];
-    const prevLast = prevMessagesRef.current[prevMessagesRef.current.length - 1];
-    if (lastMsg.timestamp === prevLast?.timestamp) return;
-
-    setTimeout(() => {
-      const chatContainer = messagesEndRef.current?.parentElement;
-      if (!chatContainer) return;
-      const messageEls = chatContainer.querySelectorAll('.message');
-      const lastEl = messageEls[messageEls.length - 1] as HTMLElement | null;
-      if (!lastEl) return;
-
-      if (lastMsg.role === 'user') {
-        // Scroll so user's message is at the top of the visible area
-        lastEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        // AI response: scroll to where the response starts (top of AI bubble)
-        lastEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 150);
-
-    prevMessagesRef.current = messages;
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = 0;
+    }
   }, [messages]);
 
   // Poll flowchart periodically

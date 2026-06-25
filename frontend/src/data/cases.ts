@@ -14,6 +14,7 @@ export interface CaseData {
 }
 
 import { getAllExpandedCases } from './expanded-cases';
+const expandedCases = getAllExpandedCases();
 
 interface Exhibit {
   title: string;
