@@ -1,7 +1,25 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import cases, { CaseData } from '../data/cases';
 
 // Load from data/cases.ts (contains 39 handcrafted real cases)
 let allCases: CaseData[] = [...cases];
+
+// Also load generated cases from JSON
+try {
+  const jsonPath = path.join(__dirname, '../data/generated-cases.json');
+  if (fs.existsSync(jsonPath)) {
+    const raw = fs.readFileSync(jsonPath, 'utf-8');
+    const generated: CaseData[] = JSON.parse(raw);
+    if (Array.isArray(generated)) {
+      const existingIds = new Set(allCases.map(c => c.id));
+      const newOnes = generated.filter(c => c && c.id && !existingIds.has(c.id));
+      allCases = [...allCases, ...newOnes];
+    }
+  }
+} catch (e) {
+  console.warn('Could not load generated cases:', e);
+}
 
 export function getAllCases(): CaseData[] {
   return allCases;
