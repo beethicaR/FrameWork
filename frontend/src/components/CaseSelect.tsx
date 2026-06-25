@@ -19,18 +19,27 @@ const difficultyColors: Record<string, string> = {
 export default function CaseSelect({ category, onSelect, onBack }: CaseSelectProps) {
   const [cases, setCases] = useState<CaseData[]>(() => getCasesByCategory(category));
   const [filteredCases, setFilteredCases] = useState<CaseData[]>(() => getCasesByCategory(category));
-  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('');
 
   // Refresh from backend in the background (non-blocking)
+  // Merge backend cases with local cases (which include expandedCases)
   useEffect(() => {
     let cancelled = false;
     fetchCases({ category })
       .then((data) => {
         if (!cancelled && data.length > 0) {
-          setCases(data);
-          setFilteredCases(data);
+          const localCases = getCasesByCategory(category);
+          const seen = new Set(localCases.map((c) => c.id));
+          const merged = [...localCases];
+          for (const c of data) {
+            if (!seen.has(c.id)) {
+              merged.push(c);
+              seen.add(c.id);
+            }
+          }
+          setCases(merged);
+          setFilteredCases(merged);
         }
       })
       .catch(() => {});
@@ -93,12 +102,7 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
         </div>
       </div>
 
-      {loading ? (
-        <div className="loading-container">
-          <div className="loader" />
-          <p>Loading cases...</p>
-        </div>
-      ) : filteredCases.length === 0 ? (
+      {filteredCases.length === 0 ? (
         <div className="empty-state">
           <p>No cases found matching your criteria</p>
         </div>

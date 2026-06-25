@@ -1765,7 +1765,7 @@ export const categoryIcons: Record<string, string> = {
   'Digital Transformation': '💻', 'Turnaround / Restructuring': '🔄', 'New Business / Innovation': '💡',
 };
 
-const allCases: CaseData[] = [...baseCases, ...getAllExpandedCases()];
+const allCases: CaseData[] = [...baseCases, ...expandedCases];
 
 export function getCasesByCategory(category: string): CaseData[] {
   return allCases.filter(c => c.category === category);
