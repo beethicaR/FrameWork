@@ -15,16 +15,43 @@ const difficultyColors: Record<string, string> = {
   Expert: '#8b5cf6',
 };
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
 export default function CaseSelect({ category, onSelect, onBack }: CaseSelectProps) {
   const [cases, setCases] = useState<CaseData[]>([]);
   const [filteredCases, setFilteredCases] = useState<CaseData[]>([]);
   const [search, setSearch] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('');
+  const [caseCount, setCaseCount] = useState<number | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+    
+    // Always show local data instantly for perceived speed
     const localCases = getCasesByCategory(category);
     setCases(localCases);
     setFilteredCases(localCases);
+    setCaseCount(localCases.length);
+
+    // Then fetch full list from backend (includes all 167 cases)
+    fetch(`${API_URL}/api/cases/search?category=${encodeURIComponent(category)}`)
+      .then((r) => {
+        if (!r.ok) throw new Error('Failed');
+        return r.json();
+      })
+      .then((data: { cases: CaseData[] }) => {
+        if (!cancelled && data.cases.length > 0) {
+          setCases(data.cases);
+          setFilteredCases(data.cases);
+          setCaseCount(data.cases.length);
+        }
+      })
+      .catch(() => {
+        // Backend failed - keep showing local data
+        console.warn('Backend fetch failed, showing local cases only');
+      });
+
+    return () => { cancelled = true; };
   }, [category]);
 
   useEffect(() => {
@@ -57,7 +84,10 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
         <p className="page-subtitle">Browse and select a case to practice</p>
       </div>
 
-      <div className="case-filters">
+        <div className="case-count">
+          {caseCount !== null && `${caseCount} case${caseCount !== 1 ? 's' : ''} available`}
+        </div>
+        <div className="case-filters">
         <div className="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
