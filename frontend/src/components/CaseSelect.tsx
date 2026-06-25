@@ -15,8 +15,6 @@ const difficultyColors: Record<string, string> = {
   Expert: '#8b5cf6',
 };
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-
 export default function CaseSelect({ category, onSelect, onBack }: CaseSelectProps) {
   const [cases, setCases] = useState<CaseData[]>([]);
   const [filteredCases, setFilteredCases] = useState<CaseData[]>([]);
@@ -26,29 +24,37 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
 
   useEffect(() => {
     let cancelled = false;
-    
-    // Always show local data instantly for perceived speed
-    const localCases = getCasesByCategory(category);
-    setCases(localCases);
-    setFilteredCases(localCases);
-    setCaseCount(localCases.length);
 
-    // Then fetch full list from backend (includes all 167 cases)
-    fetch(`${API_URL}/api/cases/search?category=${encodeURIComponent(category)}`)
-      .then((r) => {
-        if (!r.ok) throw new Error('Failed');
-        return r.json();
-      })
-      .then((data: { cases: CaseData[] }) => {
-        if (!cancelled && data.cases.length > 0) {
-          setCases(data.cases);
-          setFilteredCases(data.cases);
-          setCaseCount(data.cases.length);
+    // Load generated-cases.json (128 cases) and merge with local cases
+    const localCases = getCasesByCategory(category);
+    const localIds = new Set(localCases.map(c => c.id));
+
+    fetch('/generated-cases.json')
+      .then(r => r.json())
+      .then((allGenerated: CaseData[]) => {
+        if (cancelled) return;
+        const generatedForCat = allGenerated.filter(
+          c => c.category.toLowerCase() === category.toLowerCase()
+        );
+        // Merge: local first, then add generated cases not already present
+        const merged = [...localCases];
+        const mergedIds = new Set(localIds);
+        for (const c of generatedForCat) {
+          if (!mergedIds.has(c.id)) {
+            merged.push(c);
+            mergedIds.add(c.id);
+          }
         }
+        setCases(merged);
+        setFilteredCases(merged);
+        setCaseCount(merged.length);
       })
       .catch(() => {
-        // Backend failed - keep showing local data
-        console.warn('Backend fetch failed, showing local cases only');
+        if (!cancelled) {
+          setCases(localCases);
+          setFilteredCases(localCases);
+          setCaseCount(localCases.length);
+        }
       });
 
     return () => { cancelled = true; };
