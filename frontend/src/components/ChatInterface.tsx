@@ -100,12 +100,19 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     };
   }, []);
 
-  // Keep chat scrolled to the top at all times
-  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+  // Auto-scroll to latest message
+  const prevMessagesRef = useRef<ChatMessage[]>([]);
   useEffect(() => {
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = 0;
-    }
+    if (messages.length === 0) return;
+    const lastMsg = messages[messages.length - 1];
+    const prevLast = prevMessagesRef.current[prevMessagesRef.current.length - 1];
+    if (lastMsg.timestamp === prevLast?.timestamp) return;
+    setTimeout(() => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 150);
+    prevMessagesRef.current = messages;
   }, [messages]);
 
   // Poll flowchart periodically
