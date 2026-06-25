@@ -16,48 +16,15 @@ const difficultyColors: Record<string, string> = {
 };
 
 export default function CaseSelect({ category, onSelect, onBack }: CaseSelectProps) {
-  const [cases, setCases] = useState<CaseData[]>([]);
-  const [filteredCases, setFilteredCases] = useState<CaseData[]>([]);
+  const [cases, setCases] = useState<CaseData[]>(() => getCasesByCategory(category));
+  const [filteredCases, setFilteredCases] = useState<CaseData[]>(() => getCasesByCategory(category));
   const [search, setSearch] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('');
-  const [caseCount, setCaseCount] = useState<number | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
-
-    // Load generated-cases.json (128 cases) and merge with local cases
-    const localCases = getCasesByCategory(category);
-    const localIds = new Set(localCases.map(c => c.id));
-
-    fetch('/generated-cases.json')
-      .then(r => r.json())
-      .then((allGenerated: CaseData[]) => {
-        if (cancelled) return;
-        const generatedForCat = allGenerated.filter(
-          c => c.category.toLowerCase() === category.toLowerCase()
-        );
-        // Merge: local first, then add generated cases not already present
-        const merged = [...localCases];
-        const mergedIds = new Set(localIds);
-        for (const c of generatedForCat) {
-          if (!mergedIds.has(c.id)) {
-            merged.push(c);
-            mergedIds.add(c.id);
-          }
-        }
-        setCases(merged);
-        setFilteredCases(merged);
-        setCaseCount(merged.length);
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setCases(localCases);
-          setFilteredCases(localCases);
-          setCaseCount(localCases.length);
-        }
-      });
-
-    return () => { cancelled = true; };
+    const catCases = getCasesByCategory(category);
+    setCases(catCases);
+    setFilteredCases(catCases);
   }, [category]);
 
   useEffect(() => {
@@ -91,7 +58,7 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
       </div>
 
         <div className="case-count">
-          {caseCount !== null && `${caseCount} case${caseCount !== 1 ? 's' : ''} available`}
+          {cases.length} case{cases.length !== 1 ? 's' : ''} available
         </div>
         <div className="case-filters">
         <div className="search-box">

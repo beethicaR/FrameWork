@@ -13,8 +13,11 @@ export interface CaseData {
   successCriteria: string[];
 }
 
+import generatedCases from '../public/generated-cases.json';
 import { getAllExpandedCases } from './expanded-cases';
+
 const expandedCases = getAllExpandedCases();
+const generatedCasesData: CaseData[] = (generatedCases as CaseData[]).filter(c => c && c.id);
 
 interface Exhibit {
   title: string;
@@ -1765,7 +1768,7 @@ export const categoryIcons: Record<string, string> = {
   'Digital Transformation': '💻', 'Turnaround / Restructuring': '🔄', 'New Business / Innovation': '💡',
 };
 
-const allCases: CaseData[] = [...baseCases, ...expandedCases];
+const allCases: CaseData[] = [...baseCases, ...expandedCases, ...generatedCasesData];
 
 export function getCasesByCategory(category: string): CaseData[] {
   return allCases.filter(c => c.category === category);
