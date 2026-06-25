@@ -13,7 +13,7 @@ export interface CaseData {
   successCriteria: string[];
 }
 
-import generatedCases from '../public/generated-cases.json';
+import generatedCases from './generated-cases.json';
 import { getAllExpandedCases } from './expanded-cases';
 
 const expandedCases = getAllExpandedCases();
@@ -1771,7 +1771,8 @@ export const categoryIcons: Record<string, string> = {
 const allCases: CaseData[] = [...baseCases, ...expandedCases, ...generatedCasesData];
 
 export function getCasesByCategory(category: string): CaseData[] {
-  return allCases.filter(c => c.category === category);
+  const cat = category.toLowerCase().trim();
+  return allCases.filter(c => c.category.toLowerCase().trim() === cat);
 }
 
 export function getCaseById(id: string): CaseData | undefined {
@@ -1781,7 +1782,8 @@ export function getCaseById(id: string): CaseData | undefined {
 export function getCaseCountByCategory(): Record<string, number> {
   const counts: Record<string, number> = {};
   for (const cat of categories) {
-    counts[cat] = allCases.filter(c => c.category === cat).length;
+    const lowerCat = cat.toLowerCase().trim();
+    counts[cat] = allCases.filter(c => c.category.toLowerCase().trim() === lowerCat).length;
   }
   return counts;
 }
