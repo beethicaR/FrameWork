@@ -1,4 +1,4 @@
-import { CaseData } from './cases';
+import type { CaseData } from './cases';
 
 const expandedCases: CaseData[] = [
   // ============================================================
