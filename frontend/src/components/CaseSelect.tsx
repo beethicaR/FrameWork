@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getCasesByCategory } from '../data/cases';
 import { fetchCases } from '../api/caseApi';
 import type { CaseData } from '../types';
 
@@ -16,26 +17,23 @@ const difficultyColors: Record<string, string> = {
 };
 
 export default function CaseSelect({ category, onSelect, onBack }: CaseSelectProps) {
-  const [cases, setCases] = useState<CaseData[]>([]);
-  const [filteredCases, setFilteredCases] = useState<CaseData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [cases, setCases] = useState<CaseData[]>(() => getCasesByCategory(category));
+  const [filteredCases, setFilteredCases] = useState<CaseData[]>(() => getCasesByCategory(category));
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('');
 
+  // Refresh from backend in the background (non-blocking)
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
     fetchCases({ category })
       .then((data) => {
-        if (!cancelled) {
+        if (!cancelled && data.length > 0) {
           setCases(data);
           setFilteredCases(data);
-          setLoading(false);
         }
       })
-      .catch(() => {
-        if (!cancelled) setLoading(false);
-      });
+      .catch(() => {});
     return () => { cancelled = true; };
   }, [category]);
 
