@@ -162,8 +162,8 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
 
   async function initSession(retries = 1) {
     try {
-      // First check backend is reachable
-      await fetch('http://localhost:3001/api/health', { signal: AbortSignal.timeout(5000) });
+      // First check backend is reachable (via Vite proxy to avoid CORS)
+      await fetch('/api/health', { signal: AbortSignal.timeout(5000) });
       
       const result = await Promise.race([
         startChatSession(caseData.id, userRole, difficulty),
