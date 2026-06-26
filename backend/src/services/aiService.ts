@@ -357,7 +357,7 @@ export async function initSession(
         ? 'Start the case interview. Present the case to the candidate. Greet them and present the prompt.'
         : 'Start the case interview. You are the candidate. Thank the interviewer and introduce your structured approach to solving the case.' }
     ],
-    { temperature: 0.7, maxTokens: 800 }
+    { temperature: 0.7, maxTokens: 600 }
   );
   session.messages.push({ role: 'assistant', content: groqReply });
   sessions.set(sessionId, session);
@@ -396,7 +396,7 @@ export async function processChat(
     ...session.messages.slice(1).map(m => ({ role: m.role, content: m.content }))
   ];
 
-  const reply = await callGroq(groqMessages, { temperature: 0.7, maxTokens: 1024 });
+  const reply = await callGroq(groqMessages, { temperature: 0.7, maxTokens: 800 });
   session.messages.push({ role: 'assistant', content: reply });
 
   // Keep session manageable
