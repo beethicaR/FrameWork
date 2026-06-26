@@ -100,19 +100,31 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     };
   }, []);
 
-  // Auto-scroll to bottom when a new message arrives (especially long AI responses)
+  // Auto-scroll: for long AI responses, show the TOP so user can read from the start
   const prevMessagesRef = useRef<ChatMessage[]>([]);
   useEffect(() => {
     if (messages.length === 0) return;
     const lastMsg = messages[messages.length - 1];
     const prevLast = prevMessagesRef.current[prevMessagesRef.current.length - 1];
     if (lastMsg.timestamp === prevLast?.timestamp) return;
-    // Use 'end' block to scroll to the bottom of the new content
+    
     const timer = setTimeout(() => {
-      if (messagesEndRef.current) {
+      if (!messagesEndRef.current) return;
+      // For long assistant messages, scroll to the TOP of the message so user starts reading from beginning
+      if (lastMsg.role === 'assistant' && lastMsg.content.length > 300) {
+        // Find the assistant message element and scroll its top into view
+        const msgElements = document.querySelectorAll('.message.assistant');
+        const lastAssistant = msgElements[msgElements.length - 1] as HTMLElement | undefined;
+        if (lastAssistant) {
+          lastAssistant.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+      } else {
+        // Normal scroll to bottom for short messages and user messages
         messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
-    }, lastMsg.role === 'assistant' ? 300 : 150);
+    }, lastMsg.role === 'assistant' ? 350 : 150);
     prevMessagesRef.current = messages;
     return () => clearTimeout(timer);
   }, [messages]);
