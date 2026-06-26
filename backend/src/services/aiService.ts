@@ -20,21 +20,58 @@ interface ChatSession {
 
 const sessions = new Map<string, ChatSession>();
 
-function createSystemPrompt(caseData: CaseData, userRole: string, difficulty: string): string {
-  const role = userRole === 'interviewee' ? 'INTERVIEWER' : 'CANDIDATE';
-  const task = userRole === 'interviewee'
-    ? 'You are a McKinsey partner interviewing a candidate. Guide them through the case, provide data when asked, evaluate their framework, challenge weak logic.'
-    : 'You are a top MBA candidate solving this case. Propose frameworks, do analysis, ask for data, give a clear recommendation.';
+function getDifficultyInstructions(userRole: string, difficulty: string): string {
+  if (userRole === 'interviewee') {
+    if (difficulty === 'Easy') return 'Tone: supportive mentor. Provide clear hints when stuck. Guide toward the answer without giving it. Use phrases like "Good start, now dig deeper..." Hold them accountable but be constructive.';
+    if (difficulty === 'Medium') return 'Tone: balanced professional interviewer. Probe frameworks, demand data-driven answers, push for "so what" insights. Let them struggle productively. Challenge weak assumptions.';
+    if (difficulty === 'Hard') return 'Tone: demanding McKinsey partner. Challenge every assumption. Demean second-order effects, trade-offs, non-obvious insights. After recommendations, grill on execution risks and stakeholder alignment. Use "Interesting, but have you considered X?"';
+    if (difficulty === 'Expert') return 'Tone: ruthless principal. Introduce curveballs ("What if the CEO quits?"). Expect A+ answers. Only reward truly sharp insights. Demand creative problem-solving under pressure.';
+  }
+  // interviewer mode (AI = candidate)
+  if (difficulty === 'Easy') return 'Tone: confident but straightforward candidate. Use solid frameworks, explain reasoning clearly, ask for data when needed. Give a simple recommendation.';
+  if (difficulty === 'Medium') return 'Tone: strong MBA candidate. Show commercial awareness, quantify with case data, identify 2-3 risks, be proactive.';
+  if (difficulty === 'Hard') return 'Tone: expert consultant. Identify non-obvious insights, reference specific numbers, anticipate pushback, give nuanced risk-aware recommendations with phased execution.';
+  if (difficulty === 'Expert') return 'Tone: seasoned partner-level thinker. Reframe problems others miss. Balance competing objectives. Weave quantitative rigor with strategic narrative. Recommendations equal partner sign-off quality.';
+  return 'Tone: professional. Provide structured, data-driven analysis.';
+}
 
-  return `You are conducting a case interview. Role: ${role}. ${task}
-CASE: ${caseData.title} | Industry: ${caseData.industry} | Difficulty: ${difficulty}
-PROMPT: ${caseData.prompt}
-CONTEXT: ${caseData.context}
-DATA: ${caseData.keyFacts.join(' | ')}
-HINTS: ${caseData.frameworkHints.join(' | ')}
-${caseData.expectedCalculations?.length ? 'CALCS: ' + caseData.expectedCalculations.join(' | ') : ''}
-${caseData.successCriteria?.length ? 'CRITERIA: ' + caseData.successCriteria.join(' | ') : ''}
-Keep responses concise (2-3 paragraphs). Be specific to this case. Use data from the case.`;
+function createSystemPrompt(caseData: CaseData, userRole: string, difficulty: string): string {
+  const roleLabel = userRole === 'interviewee' ? 'INTERVIEWER (evaluating a candidate)' : 'CANDIDATE (being interviewed)';
+  const dataLines = caseData.keyFacts.map((f, i) => `  [D${i + 1}] ${f}`).join('\n');
+  const hintLines = caseData.frameworkHints.map((h, i) => `  [F${i + 1}] ${h}`).join('\n');
+  const calcBlock = caseData.expectedCalculations
+    ? '\nExpected Calculations:\n' + caseData.expectedCalculations.map((c, i) => `  [C${i + 1}] ${c}`).join('\n')
+    : '';
+  const criteriaBlock = caseData.successCriteria
+    ? '\nSuccess Criteria:\n' + caseData.successCriteria.map((s, i) => `  [S${i + 1}] ${s}`).join('\n')
+    : '\nSuccess Criteria: Use professional judgment.';
+  const difficultyTone = getDifficultyInstructions(userRole, difficulty);
+
+  return [
+    `You are conducting a premium case interview simulation.`,
+    `Role: ${roleLabel}`,
+    `Difficulty Level: ${difficulty}`,
+    `${difficultyTone}`,
+    ``,
+    `CASE: ${caseData.title}`,
+    `Industry: ${caseData.industry} | Category: ${caseData.category}`,
+    ``,
+    `PROBLEM STATEMENT:\n${caseData.prompt}`,
+    ``,
+    `BACKGROUND:\n${caseData.context}`,
+    ``,
+    `AUTHORITATIVE DATA (cite these exact figures — never invent numbers):\n${dataLines}`,
+    ``,
+    `FRAMEWORK GUIDANCE (hint at these if the candidate struggles):\n${hintLines}`,
+    `${calcBlock}`,
+    `${criteriaBlock}`,
+    ``,
+    `RULES:`,
+    `- Always reference the specific case and industry.`,
+    `- Cite data as [D1], [D2], etc.`,
+    `- No markdown, no bullet points, no asterisks.`,
+    `- Responses: 3-5 sentences (Easy), 4-6 (Medium), 5-8+ (Hard/Expert).`,
+  ].join('\n');
 }
 
 function generateFlowchartFromSession(session: ChatSession): { nodes: any[]; edges: any[] } {
