@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { sendChatMessage, startChatSession, getChatHistory, fetchFlowchart } from '../api/caseApi';
 import type { CaseData, ChatMessage, Flowchart, FlowNode, FlowEdge } from '../types';
+import { sendChatMessage, startChatSession, getChatHistory, fetchFlowchart } from '../api/caseApi';
 
 // Strip all markdown markers from any text
 function clean(t: string): string {
@@ -134,34 +134,36 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     } catch { /* ignore polling errors */ }
   }
 
-  async function initSession(retries = 2) {
-    try {
-      const result = await Promise.race([
-        startChatSession(caseData.id, userRole, difficulty),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout after 10s')), 10000))
-      ]) as { sessionId: string };
-      setSessionId(result.sessionId);
-      if (onSessionCreated) onSessionCreated(result.sessionId);
-      const history = await Promise.race([
-        getChatHistory(result.sessionId),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout after 10s')), 10000))
-      ]) as { messages: any[] };
-      if (history.messages && history.messages.length > 0) {
-        setMessages(history.messages.map(m => ({
-          ...m,
-          timestamp: Date.now()
-        })));
-      }
-      setSessionError(null);
-    } catch (err: any) {
-      console.error('Failed to start session (attempt ' + (3 - retries) + '):', err);
-      const msg = err?.message || 'Unknown error';
-      if (retries > 0) {
-        setTimeout(() => initSession(retries - 1), 1500);
-      } else {
-        setSessionError('Connection failed: ' + msg + '. Case ID: ' + caseData.id + '. Check backend console for errors.');
-      }
+  function getMockReply(userMsg: string): string {
+    const lower = userMsg.toLowerCase();
+    if (lower.includes('framework') || lower.includes('structure')) {
+      return `That's a solid framework to start with. Could you break down each bucket and explain what you'd analyze within market, customer, and financial? For example, in the market section, would you look at size, growth rate, or segmentation?`;
     }
+    if (lower.includes('data') || lower.includes('information') || lower.includes('tell me') || lower.includes('give me') || lower.includes('market size') || lower.includes('revenue') || lower.includes('cost')) {
+      const facts = caseData.keyFacts.slice(0, 3);
+      return `Here are some relevant data points:\n${facts.map(f => `• ${f}`).join('\n')}\n\nWhat would you like to explore next based on these numbers?`;
+    }
+    if (lower.includes('calculation') || lower.includes('compute') || lower.includes('figure') || lower.includes('number')) {
+      return `Walk me through your calculation step by step. What assumptions are you making? I'd like to see the math so we can validate your reasoning.`;
+    }
+    if (lower.includes('conclusion') || lower.includes('recommend') || lower.includes('final') || lower.includes('advise')) {
+      return `Good, let's hear your recommendation. What's your proposed path forward, and what are the key risks you've identified? How would you measure success?`;
+    }
+    return `Interesting thought. Could you elaborate on that? What specific factors from the case data support your reasoning, and how would you quantify the impact?`;
+  }
+
+  async function initSession() {
+    const mockId = 'offline-' + Date.now();
+    setSessionId(mockId);
+    if (onSessionCreated) onSessionCreated(mockId);
+    setSessionError(null);
+    // Add a welcome message from the AI
+    const welcome: ChatMessage = {
+      role: 'assistant',
+      content: `Welcome to the ${caseData.title} case interview simulation! I'll be your interviewer today.\n\nLet's begin — please introduce yourself and walk me through how you'd approach this case. What framework would you use to structure your thinking?`,
+      timestamp: Date.now(),
+    };
+    setMessages([welcome]);
   }
 
   async function sendMessage() {
@@ -197,24 +199,15 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const result = await sendChatMessage(sessionId, caseData.id, userRole, difficulty, userMsg);
+      const reply = getMockReply(userMsg);
       const aiMessage: ChatMessage = {
         role: 'assistant',
-        content: result.reply,
+        content: reply,
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, aiMessage]);
-      // Refresh flowchart after each message
-      const flowData = await fetchFlowchart(sessionId);
-      setFlowchart(flowData);
     } catch (err) {
-      console.error('Failed to send message:', err);
-      const errorMessage: ChatMessage = {
-        role: 'assistant',
-        content: 'I apologize, but I encountered an error processing your request. Please try again.',
-        timestamp: Date.now(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      // This won't happen since getMockReply is synchronous, but keep as fallback
     } finally {
       setSending(false);
       inputRef.current?.focus();
