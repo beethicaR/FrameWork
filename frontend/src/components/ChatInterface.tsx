@@ -134,17 +134,17 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     } catch { /* ignore polling errors */ }
   }
 
-  async function initSession() {
+  async function initSession(retries = 2) {
     try {
       const result = await Promise.race([
         startChatSession(caseData.id, userRole, difficulty),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000))
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout after 10s')), 10000))
       ]) as { sessionId: string };
       setSessionId(result.sessionId);
       if (onSessionCreated) onSessionCreated(result.sessionId);
       const history = await Promise.race([
         getChatHistory(result.sessionId),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000))
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout after 10s')), 10000))
       ]) as { messages: any[] };
       if (history.messages && history.messages.length > 0) {
         setMessages(history.messages.map(m => ({
@@ -153,9 +153,14 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
         })));
       }
       setSessionError(null);
-    } catch (err) {
-      console.error('Failed to start session:', err);
-      setSessionError('Could not connect to the interview server. Please check your connection and try again.');
+    } catch (err: any) {
+      console.error('Failed to start session (attempt ' + (3 - retries) + '):', err);
+      const msg = err?.message || 'Unknown error';
+      if (retries > 0) {
+        setTimeout(() => initSession(retries - 1), 1500);
+      } else {
+        setSessionError('Connection failed: ' + msg + '. Case ID: ' + caseData.id + '. Check backend console for errors.');
+      }
     }
   }
 
@@ -386,7 +391,7 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
             <div className="chat-welcome" style={{ textAlign: 'center', padding: 40 }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
               <p style={{ color: 'var(--warning)', marginBottom: 16 }}>{sessionError}</p>
-              <button className="btn-primary" onClick={initSession} style={{ marginTop: 8 }}>
+              <button className="btn-primary" onClick={() => initSession()} style={{ marginTop: 8 }}>
                 Retry Connection
               </button>
             </div>
