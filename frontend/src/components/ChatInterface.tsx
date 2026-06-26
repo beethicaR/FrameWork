@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { CaseData, ChatMessage, Flowchart, FlowNode, FlowEdge } from '../types';
-import { fetchFlowchart } from '../api/caseApi';
+import { fetchFlowchart, startChatSession, getChatHistory, sendChatMessage } from '../api/caseApi';
 
 // Strip all markdown markers from any text
 function clean(t: string): string {
@@ -134,36 +134,76 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     } catch { /* ignore polling errors */ }
   }
 
-  function getMockReply(userMsg: string): string {
+  function getMockReply(userMsg: string, isInterviewer: boolean): string {
     const lower = userMsg.toLowerCase();
-    if (lower.includes('framework') || lower.includes('structure')) {
-      return `That's a solid framework to start with. Could you break down each bucket and explain what you'd analyze within market, customer, and financial? For example, in the market section, would you look at size, growth rate, or segmentation?`;
+    if (isInterviewer) {
+      // AI acts as interviewer
+      if (lower.includes('framework') || lower.includes('structure')) {
+        return `That's a solid framework to start with. Could you break down each bucket and explain what you'd analyze within market, customer, and financial? For example, in the market section, would you look at size, growth rate, or segmentation?`;
+      }
+      if (lower.includes('data') || lower.includes('information') || lower.includes('tell me') || lower.includes('give me') || lower.includes('market size') || lower.includes('revenue') || lower.includes('cost')) {
+        const facts = caseData.keyFacts.slice(0, 3);
+        return `Here are some relevant data points:\n${facts.map(f => `• ${f}`).join('\n')}\n\nWhat would you like to explore next based on these numbers?`;
+      }
+      if (lower.includes('calculation') || lower.includes('compute') || lower.includes('figure') || lower.includes('number')) {
+        return `Walk me through your calculation step by step. What assumptions are you making? I'd like to see the math so we can validate your reasoning.`;
+      }
+      if (lower.includes('conclusion') || lower.includes('recommend') || lower.includes('final') || lower.includes('advise')) {
+        return `Good, let's hear your recommendation. What's your proposed path forward, and what are the key risks you've identified? How would you measure success?`;
+      }
+      return `Interesting thought. Could you elaborate on that? What specific factors from the case data support your reasoning, and how would you quantify the impact?`;
+    } else {
+      // AI acts as candidate (interviewee)
+      if (lower.includes('framework') || lower.includes('structure') || lower.includes('approach')) {
+        return `Thank you. I'd like to approach this case using a structured framework. First, I'd analyze the market size and growth potential. Second, I'd look at the competitive landscape to understand positioning. Third, I'd examine the financial feasibility including revenue projections and cost structure. Finally, I'd synthesize my findings into a clear recommendation with implementation considerations. Does that sound like a good starting point?`;
+      }
+      if (lower.includes('data') || lower.includes('information') || lower.includes('tell me') || lower.includes('give me') || lower.includes('market size') || lower.includes('revenue')) {
+        const facts = caseData.keyFacts.slice(0, 3);
+        return `Based on what I've gathered so far, here's my analysis:\n${facts.map(f => `• ${f}`).join('\n')}\n\nI'd like to dig deeper into these numbers. Could you provide more specific data on competitive dynamics or customer segments?`;
+      }
+      if (lower.includes('calculation') || lower.includes('compute') || lower.includes('figure') || lower.includes('number') || lower.includes('math')) {
+        return `Let me walk through the math. Assuming we look at the total addressable market, if the market size is X and we capture Y% share, that gives us Z in revenue. On the cost side, considering the key cost drivers... I estimate margins to be around W%. Does my logic and assumptions seem reasonable?`;
+      }
+      if (lower.includes('conclusion') || lower.includes('recommend') || lower.includes('final') || lower.includes('advise')) {
+        return `My recommendation would be to proceed with the strategy we've outlined. The key rationale is based on the market opportunity and our competitive strengths. However, we need to mitigate risks around execution timeline and potential competitive response. I'd suggest a phased rollout approach with clear KPIs to track progress. Does that address the case objective?`;
+      }
+      return `Let me think about that. I believe the key insight here is to focus on the core drivers of the business case. The numbers suggest we should prioritize initiatives with the highest return on investment while being mindful of implementation risks. I'm happy to dive deeper into any specific area you'd like to explore further.`;
     }
-    if (lower.includes('data') || lower.includes('information') || lower.includes('tell me') || lower.includes('give me') || lower.includes('market size') || lower.includes('revenue') || lower.includes('cost')) {
-      const facts = caseData.keyFacts.slice(0, 3);
-      return `Here are some relevant data points:\n${facts.map(f => `• ${f}`).join('\n')}\n\nWhat would you like to explore next based on these numbers?`;
-    }
-    if (lower.includes('calculation') || lower.includes('compute') || lower.includes('figure') || lower.includes('number')) {
-      return `Walk me through your calculation step by step. What assumptions are you making? I'd like to see the math so we can validate your reasoning.`;
-    }
-    if (lower.includes('conclusion') || lower.includes('recommend') || lower.includes('final') || lower.includes('advise')) {
-      return `Good, let's hear your recommendation. What's your proposed path forward, and what are the key risks you've identified? How would you measure success?`;
-    }
-    return `Interesting thought. Could you elaborate on that? What specific factors from the case data support your reasoning, and how would you quantify the impact?`;
   }
 
-  async function initSession() {
-    const mockId = 'offline-' + Date.now();
-    setSessionId(mockId);
-    if (onSessionCreated) onSessionCreated(mockId);
-    setSessionError(null);
-    // Add a welcome message from the AI
-    const welcome: ChatMessage = {
-      role: 'assistant',
-      content: `Welcome to the ${caseData.title} case interview simulation! I'll be your interviewer today.\n\nLet's begin — please introduce yourself and walk me through how you'd approach this case. What framework would you use to structure your thinking?`,
-      timestamp: Date.now(),
-    };
-    setMessages([welcome]);
+  async function initSession(retries = 1) {
+    try {
+      const result = await Promise.race([
+        startChatSession(caseData.id, userRole, difficulty),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000))
+      ]) as { sessionId: string };
+      setSessionId(result.sessionId);
+      if (onSessionCreated) onSessionCreated(result.sessionId);
+      const history = await getChatHistory(result.sessionId);
+      if (history.messages && history.messages.length > 0) {
+        setMessages(history.messages.map((m: any) => ({ ...m, timestamp: Date.now() })));
+      }
+      setSessionError(null);
+    } catch (err) {
+      if (retries > 0) {
+        setTimeout(() => initSession(0), 1500);
+        return;
+      }
+      // Fallback: offline mock session
+      const mockId = 'offline-' + Date.now();
+      setSessionId(mockId);
+      if (onSessionCreated) onSessionCreated(mockId);
+      setSessionError(null);
+      const isInterviewer = userRole === 'interviewee';
+      const welcome: ChatMessage = {
+        role: 'assistant',
+        content: isInterviewer
+          ? `Welcome to the ${caseData.title} case interview simulation! I'll be your interviewer today.\n\nLet's begin — please introduce yourself and walk me through how you'd approach this case. What framework would you use to structure your thinking?`
+          : `Hello! I'm the candidate for this case. I've reviewed the case prompt and I'm ready to begin. I'll start by outlining my approach to solving this problem.\n\nThank you for this opportunity. Let me walk you through how I'd structure my analysis.`,
+        timestamp: Date.now(),
+      };
+      setMessages([welcome]);
+    }
   }
 
   async function sendMessage() {
@@ -199,15 +239,24 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const reply = getMockReply(userMsg);
+      // Try real backend first
+      const result = await sendChatMessage(sessionId, caseData.id, userRole, difficulty, userMsg);
+      const aiMessage: ChatMessage = {
+        role: 'assistant',
+        content: result.reply,
+        timestamp: Date.now(),
+      };
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch {
+      // Fallback to mock
+      const isInterviewer = userRole === 'interviewee';
+      const reply = getMockReply(userMsg, isInterviewer);
       const aiMessage: ChatMessage = {
         role: 'assistant',
         content: reply,
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, aiMessage]);
-    } catch (err) {
-      // This won't happen since getMockReply is synchronous, but keep as fallback
     } finally {
       setSending(false);
       inputRef.current?.focus();
