@@ -22,44 +22,55 @@ export async function callGroq(
 
   let lastError: string = '';
 
-  // Try each key in order
+  // Try each key with exponential backoff on rate limits
   for (let i = 0; i < keys.length; i++) {
-    try {
-      const response = await fetch(GROQ_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${keys[i]}`
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages,
-          temperature: options?.temperature ?? 0.7,
-          max_tokens: options?.maxTokens ?? 1024
-        })
-      });
+    const maxRetries = 3;
+    for (let retry = 0; retry < maxRetries; retry++) {
+      try {
+        const response = await fetch(GROQ_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${keys[i]}`
+          },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            messages,
+            temperature: options?.temperature ?? 0.7,
+            max_tokens: options?.maxTokens ?? 1024
+          })
+        });
 
-      if (response.ok) {
-        const payload = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
-        const raw = payload?.choices?.[0]?.message?.content;
-        if (typeof raw === 'string') return cleanMarkdown(raw.trim());
-        throw new Error('Unexpected response from Groq API');
+        if (response.ok) {
+          const payload = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
+          const raw = payload?.choices?.[0]?.message?.content;
+          if (typeof raw === 'string') return cleanMarkdown(raw.trim());
+          throw new Error('Unexpected response from Groq API');
+        }
+
+        const text = await response.text();
+        lastError = `Key ${i + 1} error ${response.status}: ${text.substring(0, 100)}`;
+        console.error(`Groq API key ${i + 1} failed (attempt ${retry + 1}/${maxRetries}):`, lastError);
+
+        // If it's not a rate limit error (e.g., auth error), don't retry
+        if (response.status !== 429) {
+          break;
+        }
+
+        // Rate limit: exponential backoff before retry (1.5s, 3s, 6s)
+        const backoffMs = 1500 * Math.pow(2, retry);
+        console.log(`Rate limited, backing off for ${backoffMs}ms...`);
+        await new Promise(resolve => setTimeout(resolve, backoffMs));
+      } catch (err) {
+        lastError = `Key ${i + 1} error: ${(err as Error).message}`;
+        console.error(`Groq API key ${i + 1} failed (attempt ${retry + 1}/${maxRetries}):`, lastError);
+        // On non-429 errors, break
+        if (!(err instanceof Error && err.message.includes('429'))) {
+          break;
+        }
+        const backoffMs = 1500 * Math.pow(2, retry);
+        await new Promise(resolve => setTimeout(resolve, backoffMs));
       }
-
-      const text = await response.text();
-      lastError = `Key ${i + 1} error ${response.status}: ${text.substring(0, 100)}`;
-      console.error(`Groq API key ${i + 1} failed:`, lastError);
-
-      // If it's not a rate limit error (e.g., auth error), don't try other keys
-      if (response.status !== 429) {
-        break;
-      }
-
-      // Rate limit: wait before retrying with next key
-      await new Promise(resolve => setTimeout(resolve, 1500));
-    } catch (err) {
-      lastError = `Key ${i + 1} error: ${(err as Error).message}`;
-      console.error(`Groq API key ${i + 1} failed:`, lastError);
     }
   }
 
