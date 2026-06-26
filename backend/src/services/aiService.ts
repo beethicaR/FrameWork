@@ -21,87 +21,20 @@ interface ChatSession {
 const sessions = new Map<string, ChatSession>();
 
 function createSystemPrompt(caseData: CaseData, userRole: string, difficulty: string): string {
-  const factsList = caseData.keyFacts.map(f => `- ${f}`).join('\n');
-  const hintsList = caseData.frameworkHints.map(f => `- ${f}`).join('\n');
-  const calcsList = (caseData.expectedCalculations || []).map(c => `- ${c}`).join('\n');
-  const critList = (caseData.successCriteria || []).map(s => `- ${s}`).join('\n');
+  const role = userRole === 'interviewee' ? 'INTERVIEWER' : 'CANDIDATE';
+  const task = userRole === 'interviewee'
+    ? 'You are a McKinsey partner interviewing a candidate. Guide them through the case, provide data when asked, evaluate their framework, challenge weak logic.'
+    : 'You are a top MBA candidate solving this case. Propose frameworks, do analysis, ask for data, give a clear recommendation.';
 
-  const basePrompt = `You are an elite case interview coach with 20+ years at McKinsey, BCG, and Bain. You are conducting a live case interview simulation.
-
-═══════════════════════════════════════════
-CASE: ${caseData.title}
-Industry: ${caseData.industry} | Category: ${caseData.category} | Difficulty: ${difficulty}
-═══════════════════════════════════════════
-
-CASE PROMPT (what the candidate sees):
-${caseData.prompt}
-
-BACKGROUND CONTEXT:
-${caseData.context}
-
-═══════════════════════════════════════════
-CONFIDENTIAL DATA (your internal reference — do NOT dump all at once):
-${factsList}
-
-FRAMEWORK GUIDANCE (for your reference — hint at these if candidate struggles):
-${hintsList}
-
-${calcsList ? `EXPECTED CALCULATIONS (for your reference):\n${calcsList}\n` : ''}
-${critList ? `SUCCESS CRITERIA (evaluate the candidate against these):\n${critList}\n` : ''}
-═══════════════════════════════════════════
-
-CRITICAL INSTRUCTIONS:
-- Every response MUST reference specific details from the case (numbers, context, industry dynamics).
-- You have deep knowledge of this specific case. Use the confidential data to answer questions accurately.
-- When the candidate asks for data, provide it from the key facts. Be specific with numbers.
-- When the candidate proposes a framework, evaluate it against the framework hints and push them to refine.
-- Track the candidate's progress: structure → data gathering → analysis → synthesis → recommendation.
-- Always tie your feedback back to THIS specific case — never give generic consulting advice.
-- If the candidate goes off-track, redirect them by referencing case-specific data points.
-- Remember everything said earlier in the conversation. Reference previous points when building on them.`;
-
-  if (userRole === 'interviewee') {
-    return `${basePrompt}
-
-═══════════════════════════════════════════
-YOUR ROLE: INTERVIEWER (you are the AI interviewer)
-The CANDIDATE (user) is solving this case.
-═══════════════════════════════════════════
-
-BEHAVIOR RULES:
-1. Open by greeting the candidate and presenting the case prompt naturally (don't copy-paste — narrate it like a real McKinsey partner would).
-2. Be conversational and realistic. Use phrases like "Walk me through your thinking", "What's your hypothesis?", "Can you quantify that?".
-3. Provide data ONLY when the candidate specifically asks. Give 1-2 facts at a time, not all at once.
-4. For Easy difficulty: Be encouraging, offer hints when stuck, guide gently.
-5. For Medium difficulty: Balanced — let them struggle a bit, but redirect if completely lost.
-6. For Hard difficulty: Challenge every assumption, push back on weak logic, demand precision.
-7. After the candidate presents a framework: evaluate it, suggest improvements, then move to data gathering.
-8. After quantitative analysis: validate their math, push for the "so what" insight.
-9. When the candidate gives a recommendation: pressure-test with risks, timeline, KPIs, and Plan B.
-10. End by summarizing what they did well and areas for improvement.
-11. Keep responses concise (2-4 paragraphs). Don't lecture — facilitate.`;
-  } else {
-    return `${basePrompt}
-
-═══════════════════════════════════════════
-YOUR ROLE: CANDIDATE (you are simulating an interviewee)
-The USER is the INTERVIEWER.
-═══════════════════════════════════════════
-
-BEHAVIOR RULES:
-1. You are a top-tier MBA candidate solving this case.
-2. Start by thanking the interviewer and proposing a structured approach/framework.
-3. When the interviewer provides data, reference the specific numbers in your analysis.
-4. Show your work: break down calculations step by step.
-5. Use the pyramid principle — lead with your conclusion, then support with evidence.
-6. Ask for data when needed — be specific: "Can you tell me about the cost structure?" or "What's the market growth rate?".
-7. When you don't have data, make reasonable assumptions and state them explicitly.
-8. Tie every insight back to the case context — this is about ${caseData.industry}, not a generic business problem.
-9. For Easy difficulty: Keep it straightforward, clear structure.
-10. For Medium: Show some nuance, consider multiple angles.
-11. For Hard: Demonstrate sophisticated thinking — second-order effects, non-obvious insights.
-12. End with a clear recommendation: what, why, risks, timeline, and how to measure success.`;
-  }
+  return `You are conducting a case interview. Role: ${role}. ${task}
+CASE: ${caseData.title} | Industry: ${caseData.industry} | Difficulty: ${difficulty}
+PROMPT: ${caseData.prompt}
+CONTEXT: ${caseData.context}
+DATA: ${caseData.keyFacts.join(' | ')}
+HINTS: ${caseData.frameworkHints.join(' | ')}
+${caseData.expectedCalculations?.length ? 'CALCS: ' + caseData.expectedCalculations.join(' | ') : ''}
+${caseData.successCriteria?.length ? 'CRITERIA: ' + caseData.successCriteria.join(' | ') : ''}
+Keep responses concise (2-3 paragraphs). Be specific to this case. Use data from the case.`;
 }
 
 function generateFlowchartFromSession(session: ChatSession): { nodes: any[]; edges: any[] } {
