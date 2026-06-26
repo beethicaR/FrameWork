@@ -100,19 +100,21 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     };
   }, []);
 
-  // Auto-scroll to latest message
+  // Auto-scroll to bottom when a new message arrives (especially long AI responses)
   const prevMessagesRef = useRef<ChatMessage[]>([]);
   useEffect(() => {
     if (messages.length === 0) return;
     const lastMsg = messages[messages.length - 1];
     const prevLast = prevMessagesRef.current[prevMessagesRef.current.length - 1];
     if (lastMsg.timestamp === prevLast?.timestamp) return;
-    setTimeout(() => {
+    // Use 'end' block to scroll to the bottom of the new content
+    const timer = setTimeout(() => {
       if (messagesEndRef.current) {
-        messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
-    }, 150);
+    }, lastMsg.role === 'assistant' ? 300 : 150);
     prevMessagesRef.current = messages;
+    return () => clearTimeout(timer);
   }, [messages]);
 
   // Poll flowchart periodically

@@ -316,10 +316,14 @@ function generateFlowchartFromSession(session: ChatSession): { nodes: any[]; edg
     }
   }
 
-  // Add a "dead-end" node if the user seems stuck
-  if (userMsgs.length > 2 && !hasFramework && !hasNumbers) {
-    nodes.push({ id: 'stuck', type: 'dead-end', label: '⚠️ Need more structure' });
-    edges.push({ id: 'edge-stuck', source: 'problem', target: 'stuck', label: 'Redirect needed' });
+  // Add a "dead-end" node only if the user seems genuinely stuck (rare)
+  // Require 4+ user messages AND no framework/number detection AND no recommendation
+  if (userMsgs.length >= 4 && !hasFramework && !hasNumbers && !hasRecommendation) {
+    const shortMsgs = userMsgs.every(m => m.content.trim().length < 40);
+    if (shortMsgs) {
+      nodes.push({ id: 'stuck', type: 'dead-end', label: '⚠️ Need more structure' });
+      edges.push({ id: 'edge-stuck', source: 'problem', target: 'stuck', label: 'Redirect needed' });
+    }
   }
 
   return { nodes, edges };

@@ -54,6 +54,9 @@ export async function callGroq(
       if (response.status !== 429) {
         break;
       }
+
+      // Rate limit: wait before retrying with next key
+      await new Promise(resolve => setTimeout(resolve, 1500));
     } catch (err) {
       lastError = `Key ${i + 1} error: ${(err as Error).message}`;
       console.error(`Groq API key ${i + 1} failed:`, lastError);
@@ -110,9 +113,9 @@ function generateMockResponse(messages: Array<{ role: string; content: string }>
   const factsStr = factsSection ? factsSection[0] : '';
   const keyFacts = factsStr.split('\n').filter(l => l.startsWith('- ')).map(l => l.replace('- ', ''));
 
-  // Determine interviewer vs interviewee mode
-  const isInterviewer = systemMsg.includes('YOUR ROLE: INTERVIEWER');
-  const isCandidate = systemMsg.includes('YOUR ROLE: CANDIDATE');
+  // Determine interviewer vs interviewee mode (match new system prompt format)
+  const isInterviewer = systemMsg.includes('CANDIDATE (being interviewed)');
+  const isCandidate = systemMsg.includes('INTERVIEWER (evaluating a candidate)');
 
   // Conversation state tracking
   const userMsgCount = userMessages.length;
