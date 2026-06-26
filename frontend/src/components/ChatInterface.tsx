@@ -136,9 +136,12 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
 
   async function initSession(retries = 1) {
     try {
+      // First check backend is reachable
+      await fetch('http://localhost:3001/api/health', { signal: AbortSignal.timeout(5000) });
+      
       const result = await Promise.race([
         startChatSession(caseData.id, userRole, difficulty),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timed out')), 30000))
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timed out waiting for AI')), 120000))
       ]) as { sessionId: string };
       setSessionId(result.sessionId);
       if (onSessionCreated) onSessionCreated(result.sessionId);
@@ -152,7 +155,7 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
         setTimeout(() => initSession(0), 2000);
         return;
       }
-      setSessionError('Unable to connect to the AI service. Please ensure the backend is running on port 3001 and try again.');
+      setSessionError('Connection failed: The AI service did not respond within the time limit. Please ensure the backend is running and try again.');
     }
   }
 
