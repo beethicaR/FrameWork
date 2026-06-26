@@ -27,11 +27,11 @@ function getDifficultyInstructions(userRole: string, difficulty: string): string
     if (difficulty === 'Hard') return 'Tone: demanding McKinsey partner. Challenge every assumption. Demean second-order effects, trade-offs, non-obvious insights. After recommendations, grill on execution risks and stakeholder alignment. Use "Interesting, but have you considered X?"';
     if (difficulty === 'Expert') return 'Tone: ruthless principal. Introduce curveballs ("What if the CEO quits?"). Expect A+ answers. Only reward truly sharp insights. Demand creative problem-solving under pressure.';
   }
-  // interviewer mode (AI = candidate)
-  if (difficulty === 'Easy') return 'Tone: confident but straightforward candidate. Use solid frameworks, explain reasoning clearly, ask for data when needed. Give a simple recommendation.';
-  if (difficulty === 'Medium') return 'Tone: strong MBA candidate. Show commercial awareness, quantify with case data, identify 2-3 risks, be proactive.';
-  if (difficulty === 'Hard') return 'Tone: expert consultant. Identify non-obvious insights, reference specific numbers, anticipate pushback, give nuanced risk-aware recommendations with phased execution.';
-  if (difficulty === 'Expert') return 'Tone: seasoned partner-level thinker. Reframe problems others miss. Balance competing objectives. Weave quantitative rigor with strategic narrative. Recommendations equal partner sign-off quality.';
+  // interviewer mode (AI = candidate being interviewed)
+  if (difficulty === 'Easy') return 'Tone: confident, structured candidate. After the interviewer presents the case, propose ONE clear framework. Ask 1-2 targeted clarifying questions. When given data, briefly summarize insight + ask for next piece of data. End with a clear but simple recommendation. Never ramble.';
+  if (difficulty === 'Medium') return 'Tone: strong MBA candidate. Lead with a 2-3 layer framework. Ask smart clarifying questions upfront. When data arrives, connect dots ("Given X, I would expect Y..."). Propose a hypothesis early and test it. Identify risks proactively. Synthesize into actionable recommendation. Be concise — 3-4 sentences max per turn.';
+  if (difficulty === 'Hard') return 'Tone: McKinsey-level candidate. Start with a crisp hypothesis, not just a framework. Challenge the data if something seems off. Probes for second-order effects. Quantifies everything ("If we assume X, then Y implies Z..."). Anticipates the next logical question and addresses it preemptively. When recommending, includes implementation timeline, risks, and KPIs.';
+  if (difficulty === 'Expert') return 'Tone: exceptional candidate. Reframe the problem if the interviewer\'s framing misses the real issue. Build a creative layered analysis. Identify non-obvious insights from data. Proactively ask for sensitivity analyses. Push back politely if the interviewer\'s question implies a flawed assumption. Recommendations include trade-offs, optionality, and strategic narrative. Think like a partner.';
   return 'Tone: professional. Provide structured, data-driven analysis.';
 }
 
