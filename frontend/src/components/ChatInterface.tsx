@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { CaseData, ChatMessage, Flowchart, FlowNode, FlowEdge } from '../types';
-import { sendChatMessage, startChatSession, getChatHistory, fetchFlowchart } from '../api/caseApi';
+import { fetchFlowchart } from '../api/caseApi';
 
 // Strip all markdown markers from any text
 function clean(t: string): string {
