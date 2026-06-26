@@ -2,9 +2,21 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import type { CaseData, ChatMessage, Flowchart, FlowNode, FlowEdge } from '../types';
 import { fetchFlowchart, startChatSession, getChatHistory, sendChatMessage } from '../api/caseApi';
 
-// Strip all markdown markers from any text
+// Strip all markdown and internal citation markers from displayed text
 function clean(t: string): string {
-  return t.replace(/\*\*/g, '').replace(/\*/g, '').replace(/__/g, '').replace(/_/g, '').replace(/`/g, '');
+  return t
+    .replace(/\*\*/g, '').replace(/\*/g, '').replace(/__/g, '').replace(/_/g, '').replace(/`/g, '')
+    .replace(/\[D\d+\]/g, '')
+    .replace(/\[F\d+\]/g, '')
+    .replace(/\[C\d+\]/g, '')
+    .replace(/\[S\d+\]/g, '')
+    .replace(/\[A\d+\]/g, '')
+    .replace(/\[edge-[^\]]+\]/g, '')
+    .replace(/\[framework-node\]/g, '')
+    .replace(/\[quant-node\]/g, '')
+    .replace(/\[rec-node\]/g, '')
+    .replace(/\[stuck\]/g, '')
+    .replace(/• /g, '');
 }
 
 interface ChatInterfaceProps {
