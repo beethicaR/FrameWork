@@ -22,9 +22,9 @@ export async function callGroq(
 
   let lastError: string = '';
 
-  // Try each key with exponential backoff on rate limits
+  // Try each key with long backoff on rate limits (same org = shared bucket)
   for (let i = 0; i < keys.length; i++) {
-    const maxRetries = 3;
+    const maxRetries = 2;
     for (let retry = 0; retry < maxRetries; retry++) {
       try {
         const response = await fetch(GROQ_ENDPOINT, {
@@ -57,8 +57,8 @@ export async function callGroq(
           break;
         }
 
-        // Rate limit: exponential backoff before retry (1.5s, 3s, 6s)
-        const backoffMs = 1500 * Math.pow(2, retry);
+        // Rate limit: both keys share the same org bucket, so wait ~60s for window reset
+        const backoffMs = 30000 + retry * 15000;
         console.log(`Rate limited, backing off for ${backoffMs}ms...`);
         await new Promise(resolve => setTimeout(resolve, backoffMs));
       } catch (err) {
