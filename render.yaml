@@ -10,7 +10,7 @@ services:
       - key: PORT
         value: 10000
       - key: FRONTEND_URL
-        value: https://framework-frontend.onrender.com
+        value: https://framework-frontend-kf3h.onrender.com
       - key: GROQ_API_KEY
         sync: false
       - key: GROQ_FALLBACK_API_KEY
