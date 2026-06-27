@@ -27,6 +27,9 @@ export async function callGroq(
     const maxRetries = 2;
     for (let retry = 0; retry < maxRetries; retry++) {
       try {
+        const controller = new AbortController();
+        const timeoutMs = Math.max(8000, (options?.maxTokens ?? 1024) * 16);
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
         const response = await fetch(GROQ_ENDPOINT, {
           method: 'POST',
           headers: {

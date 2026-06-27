@@ -178,7 +178,7 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
       
       const result = await Promise.race([
         startChatSession(caseData.id, userRole, difficulty),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timed out waiting for AI')), 120000))
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timed out waiting for AI')), 40000))
       ]) as { sessionId: string };
       setSessionId(result.sessionId);
       if (onSessionCreated) onSessionCreated(result.sessionId);
@@ -543,3 +543,4 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     </div>
   );
 }
+
