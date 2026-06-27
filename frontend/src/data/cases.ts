@@ -1768,7 +1768,12 @@ export const categoryIcons: Record<string, string> = {
   'Digital Transformation': '💻', 'Turnaround / Restructuring': '🔄', 'New Business / Innovation': '💡',
 };
 
-const allCases: CaseData[] = [...baseCases, ...expandedCases, ...generatedCasesData];
+// Deduplicate by case ID — generated-cases.json may overlap with base/expanded cases
+const allCaseMap = new Map<string, CaseData>();
+for (const c of [...baseCases, ...expandedCases, ...generatedCasesData]) {
+  if (c && c.id && !allCaseMap.has(c.id)) allCaseMap.set(c.id, c);
+}
+const allCases: CaseData[] = Array.from(allCaseMap.values());
 
 export function getCasesByCategory(category: string): CaseData[] {
   const cat = category.toLowerCase().trim();

@@ -1,4 +1,4 @@
-import type { CaseData, ChatMessage } from '../types';
+import type { CaseData, ChatMessage, FlowNode, FlowEdge } from '../types';
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
@@ -80,7 +80,7 @@ export async function clearChatSession(sessionId: string): Promise<boolean> {
   return data.deleted;
 }
 
-export async function fetchFlowchart(sessionId: string): Promise<{ nodes: any[]; edges: any[] }> {
+export async function fetchFlowchart(sessionId: string): Promise<{ nodes: FlowNode[]; edges: FlowEdge[] }> {
   const res = await fetch(`${API_BASE}/flowchart/${sessionId}`);
   return handleResponse(res);
 }

@@ -172,7 +172,7 @@ export default function ResultsScreen({
         borderWidth: 2,
         borderStyle: 'solid',
         borderColor: nodeColors[node.type] || 'rgba(255,255,255,0.18)',
-        background: `${nodeColors[node.type]}15` || 'var(--bg-card)',
+        background: nodeColors[node.type] ? `${nodeColors[node.type]}15` : 'var(--bg-card)',
         color: 'var(--text-primary)',
         padding: '10px 16px',
         borderRadius: 12,

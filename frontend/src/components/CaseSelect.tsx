@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { getCasesByCategory } from '../data/cases';
 import type { CaseData } from '../types';
 
@@ -16,18 +16,10 @@ const difficultyColors: Record<string, string> = {
 };
 
 export default function CaseSelect({ category, onSelect, onBack }: CaseSelectProps) {
-  const [cases, setCases] = useState<CaseData[]>(() => getCasesByCategory(category));
-  const [filteredCases, setFilteredCases] = useState<CaseData[]>(() => getCasesByCategory(category));
   const [search, setSearch] = useState('');
+  const cases = useMemo(() => getCasesByCategory(category), [category]);
   const [difficultyFilter, setDifficultyFilter] = useState<string>('');
-
-  useEffect(() => {
-    const catCases = getCasesByCategory(category);
-    setCases(catCases);
-    setFilteredCases(catCases);
-  }, [category]);
-
-  useEffect(() => {
+  const filteredCases = useMemo(() => {
     let filtered = cases;
     if (search) {
       const s = search.toLowerCase();
@@ -41,8 +33,8 @@ export default function CaseSelect({ category, onSelect, onBack }: CaseSelectPro
     if (difficultyFilter) {
       filtered = filtered.filter((c) => c.difficulty === difficultyFilter);
     }
-    setFilteredCases(filtered);
-  }, [search, difficultyFilter, cases]);
+    return filtered;
+  }, [cases, search, difficultyFilter]);
 
   return (
     <div className="case-select-page">

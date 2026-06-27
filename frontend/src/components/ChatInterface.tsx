@@ -16,7 +16,13 @@ function clean(t: string): string {
     .replace(/\[quant-node\]/g, '')
     .replace(/\[rec-node\]/g, '')
     .replace(/\[stuck\]/g, '')
-    .replace(/• /g, '');
+    .replace(/• /g, '')
+    // Fix orphaned "in" left after citation marker stripping
+    .replace(/\b(described|stated|shown|mentioned|outlined|noted|defined|detailed|cited|listed)\s+in\s+([.,;!?)\]])/gi, '$1$2')
+    .replace(/\bin\s+([.,;!?)\]])/g, '$1')
+    .replace(/\bin\s+$/gm, '')
+    .replace(/  +/g, ' ')
+    .trim();
 }
 
 interface ChatInterfaceProps {
@@ -93,6 +99,8 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
   const [sessionError, setSessionError] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const chatMessagesRef = useRef<HTMLDivElement | null>(null);
+
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const hasInitRef = useRef<boolean>(false);
@@ -111,8 +119,10 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
       if (flowIntervalRef.current) clearInterval(flowIntervalRef.current);
     };
   }, []);
+  // Keep outermost page scroll at top while chatting
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  // Auto-scroll: for long AI responses, show the TOP so user can read from the start
+  // Auto-scroll: scroll WITHIN the chat container using scrollTop, show the TOP so user can read from the start
   const prevMessagesRef = useRef<ChatMessage[]>([]);
   useEffect(() => {
     if (messages.length === 0) return;
@@ -120,21 +130,22 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
     const prevLast = prevMessagesRef.current[prevMessagesRef.current.length - 1];
     if (lastMsg.timestamp === prevLast?.timestamp) return;
     
+    const container = chatMessagesRef.current;
+    if (!container) return;
     const timer = setTimeout(() => {
-      if (!messagesEndRef.current) return;
-      // For long assistant messages, scroll to the TOP of the message so user starts reading from beginning
+      // For long assistant messages, scroll within container to message top
       if (lastMsg.role === 'assistant' && lastMsg.content.length > 300) {
         // Find the assistant message element and scroll its top into view
-        const msgElements = document.querySelectorAll('.message.assistant');
+        const msgElements = container.querySelectorAll('.message.assistant');
         const lastAssistant = msgElements[msgElements.length - 1] as HTMLElement | undefined;
         if (lastAssistant) {
-          lastAssistant.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          container.scrollTop = lastAssistant.offsetTop - container.offsetTop - 80;
         } else {
-          messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          container.scrollTop = container.scrollHeight;
         }
       } else {
         // Normal scroll to bottom for short messages and user messages
-        messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        container.scrollTop = container.scrollHeight;
       }
     }, lastMsg.role === 'assistant' ? 350 : 150);
     prevMessagesRef.current = messages;
@@ -173,10 +184,10 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
       if (onSessionCreated) onSessionCreated(result.sessionId);
       const history = await getChatHistory(result.sessionId);
       if (history.messages && history.messages.length > 0) {
-        setMessages(history.messages.map((m: any) => ({ ...m, timestamp: Date.now() })));
+        setMessages(history.messages.map((m) => ({ ...m, timestamp: Date.now() })));
       }
       setSessionError(null);
-    } catch (err) {
+    } catch {
       if (retries > 0) {
         setTimeout(() => initSession(0), 2000);
         return;
@@ -398,7 +409,7 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
 
         {/* Center: Chat Area */}
       <div className="chat-main">
-        <div className="chat-messages">
+        <div className="chat-messages" ref={chatMessagesRef}>
           {messages.length === 0 && !sessionError ? (
             <div className="chat-welcome">
               <div className="welcome-spinner" />
