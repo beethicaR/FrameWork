@@ -41,7 +41,8 @@ export async function callGroq(
             messages,
             temperature: options?.temperature ?? 0.7,
             max_tokens: options?.maxTokens ?? 1024
-          })
+          }),
+          signal: controller.signal
         });
 
         if (response.ok) {
@@ -61,7 +62,7 @@ export async function callGroq(
         }
 
         // Rate limit: both keys share the same org bucket, so wait ~60s for window reset
-        const backoffMs = 30000 + retry * 15000;
+        const backoffMs = 2000 + retry * 1000;
         console.log(`Rate limited, backing off for ${backoffMs}ms...`);
         await new Promise(resolve => setTimeout(resolve, backoffMs));
       } catch (err) {
@@ -279,3 +280,4 @@ I'll focus on three key areas:
 
 Where would you like me to start?`;
 }
+
