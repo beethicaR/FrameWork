@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { CaseData, ChatMessage, Flowchart, FlowNode, FlowEdge } from '../types';
-import { fetchFlowchart, startChatSession, getChatHistory, sendChatMessage } from '../api/caseApi';
+import { API_BASE, fetchFlowchart, startChatSession, getChatHistory, sendChatMessage } from '../api/caseApi';
 
 // Strip all markdown and internal citation markers from displayed text
 function clean(t: string): string {
@@ -174,7 +174,7 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
   async function initSession(retries = 1) {
     try {
       // First check backend is reachable (via Vite proxy to avoid CORS)
-      await fetch('/api/health', { signal: AbortSignal.timeout(5000) });
+      await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(5000) });
       
       const result = await Promise.race([
         startChatSession(caseData.id, userRole, difficulty),
@@ -189,7 +189,7 @@ export default function ChatInterface({ caseData, userRole, difficulty, onBack, 
       setSessionError(null);
     } catch {
       if (retries > 0) {
-        setTimeout(() => initSession(0), 2000);
+        setTimeout(() => initSession(retries - 1), 2000);
         return;
       }
       setSessionError('Connection failed: The AI service did not respond within the time limit. Please ensure the backend is running and try again.');
