@@ -28,7 +28,7 @@ export async function callGroq(
     for (let retry = 0; retry < maxRetries; retry++) {
       try {
         const controller = new AbortController();
-        const timeoutMs = Math.max(8000, (options?.maxTokens ?? 1024) * 16);
+        const timeoutMs = 10000;
         const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
         const response = await fetch(GROQ_ENDPOINT, {
           method: 'POST',
@@ -62,7 +62,7 @@ export async function callGroq(
         }
 
         // Rate limit: both keys share the same org bucket, so wait ~60s for window reset
-        const backoffMs = 2000 + retry * 1000;
+        const backoffMs = 1000;
         console.log(`Rate limited, backing off for ${backoffMs}ms...`);
         await new Promise(resolve => setTimeout(resolve, backoffMs));
       } catch (err) {
@@ -72,7 +72,7 @@ export async function callGroq(
         if (!(err instanceof Error && err.message.includes('429'))) {
           break;
         }
-        const backoffMs = 1500 * Math.pow(2, retry);
+        const backoffMs = 1000;
         await new Promise(resolve => setTimeout(resolve, backoffMs));
       }
     }
@@ -280,4 +280,8 @@ I'll focus on three key areas:
 
 Where would you like me to start?`;
 }
+
+
+
+
 
