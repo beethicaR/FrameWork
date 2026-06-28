@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getAllCategories, getCaseCountByCategory, categoryIcons, categoryDescriptions } from '../data/cases';
 
 interface CategorySelectProps {
@@ -8,24 +8,8 @@ interface CategorySelectProps {
 
 export default function CategorySelect({ onSelect, onBack }: CategorySelectProps) {
   const [categories] = useState<string[]>(getAllCategories());
-  const [caseCounts, setCaseCounts] = useState<Record<string, number>>(() => getCaseCountByCategory());
-
-  // Optionally refresh counts from backend in background (non-blocking)
-  useEffect(() => {
-    let cancelled = false;
-    import('../api/caseApi').then(({ fetchCases }) => {
-      fetchCases().then((allCases) => {
-        if (!cancelled) {
-          const counts: Record<string, number> = {};
-          for (const cat of categories) {
-            counts[cat] = allCases.filter((c) => c.category === cat).length;
-          }
-          setCaseCounts(counts);
-        }
-      }).catch(() => {});
-    }).catch(() => {});
-    return () => { cancelled = true; };
-  }, [categories]);
+  // Use local data counts — avoids mismatch with backend which may have different files
+  const [caseCounts] = useState<Record<string, number>>(() => getCaseCountByCategory());
 
   return (
     <div className="category-page">
