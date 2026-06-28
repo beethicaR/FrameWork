@@ -382,8 +382,703 @@ const expandedCases: CaseData[] = [
     expectedCalculations: ['Break-even rate reduction target and levers', 'Capacity management scenarios', 'Network optimization savings', 'Fuel cost reduction', 'Profitability under different rate scenarios'],
     successCriteria: ['Profitability restoration with rate environment assumptions', 'Capacity and fleet management strategy', 'Cost reduction program by category', 'Network and alliance optimization', '3-year financial forecast with sensitivity analysis']
   },
-];
 
+  // ============================================================
+  // NEW BUSINESS / INNOVATION — 17 cases
+  // ============================================================
+  {
+    id: 'nb-07', title: 'Autonomous Vehicle Mobility Service',
+    category: 'New Business / Innovation', industry: 'Automotive / Mobility', difficulty: 'Expert',
+    prompt: 'An automaker ($80B revenue) wants to launch an autonomous ride-hailing service in 5 cities. Investment: $5B. Expected to break even in 7 years.',
+    context: 'Current: traditional auto manufacturer. AV technology: Level 4 pilot in 2 cities. Target: 1,000 vehicles in 5 cities. Competitor: Waymo (operational), Cruise (paused).',
+    keyFacts: ['Revenue: $80B (traditional auto)', 'AV investment: $5B', 'Target cities: 5', 'Vehicles: 1,000 (Level 4)', 'Break-even: 7 years', 'Competitor: Waymo (1,000+ vehicles, 3 cities)', 'Technology: Level 4 pilot in 2 cities', 'Ride-hailing market: $200B by 2030', 'Current utilization: 18 hours/day (need 20)', 'Revenue per vehicle: $100K/year (need $200K)', 'Regulatory: 15 states permit AV operation', 'Safety: 1 incident per 1M miles (human: 1 per 100K)'],
+    frameworkHints: ['City selection and market sizing', 'AV fleet deployment strategy (1,000 vehicles)', 'Technology and safety validation timeline', 'Regulatory and permitting strategy', 'Pricing and unit economics model'],
+    expectedCalculations: ['Fleet deployment: 1,000 vehicles across 5 cities', 'Revenue per vehicle: $200K/year = $200M total', 'Unit economics: positive contribution margin by Year 3', 'Safety record: achieve 10x better than human drivers', 'Break-even timeline: 7 years'],
+    successCriteria: ['AV mobility service launch strategy', 'City prioritization and market sizing', 'Technology and safety roadmap', 'Financial model with 7-year break-even plan', 'Regulatory and partnership strategy']
+  },
+  {
+    id: 'nb-08', title: 'Space-Based Earth Observation Startup',
+    category: 'New Business / Innovation', industry: 'Space / Technology', difficulty: 'Expert',
+    prompt: 'A satellite startup ($0 revenue, $500M raised) wants to build a constellation of 100 small satellites for real-time Earth observation. Target market: agriculture, defense, climate.',
+    context: 'Pre-revenue, $500M raised. Constellation cost: $2B. 100 small satellites, 1m resolution. Target customers: governments (40%), agriculture (30%), commercial (30%).',
+    keyFacts: ['Revenue: $0 (pre-revenue)', 'Funding raised: $500M', 'Constellation cost: $2B (100 satellites)', 'Satellite cost: $15M each', 'Launch cost: $5M each (SpaceX rideshare)', 'Resolution: 1m (competitor: 30cm)', 'Time to first satellite: 18 months', 'Full constellation: 36 months', 'Target market: agriculture 30%, defense 40%, commercial 30%', 'Competitor: Planet (200 satellites), Maxar, BlackSky', 'TAM: $15B by 2030', 'Current team: 200 (need 500)'],
+    frameworkHints: ['Constellation design (orbits, coverage, revisit rate)', 'Satellite manufacturing and launch strategy', 'Data platform and analytics services', 'Customer acquisition: government, agriculture, commercial', 'Funding strategy for remaining $1.5B'],
+    expectedCalculations: ['First satellite launch: 18 months', 'Full constellation: 36 months', 'Revenue target: $100M by Year 5', 'Customer contracts: 50 by launch', 'Capital efficiency: $20M per satellite (benchmark)'],
+    successCriteria: ['Space-based Earth observation business strategy', 'Satellite constellation and launch plan', 'Data platform and analytics offering', 'Customer and market strategy', 'Financial model and funding plan']
+  },
+  {
+    id: 'nb-09', title: 'Vertical Farming Network Expansion',
+    category: 'New Business / Innovation', industry: 'Agriculture / Food Tech', difficulty: 'Hard',
+    prompt: 'A vertical farming startup ($50M revenue) wants to expand from 2 to 20 facilities nationally. Current: profitable in leafy greens, wants to add herbs and berries.',
+    context: '2 facilities, $50M revenue, 15% EBITDA margin. Leafy greens only. Expansion: $500M capital for 18 new facilities. Competitor: AeroFarms (bankrupt), Plenty (struggling).',
+    keyFacts: ['Revenue: $50M (2 facilities)', 'EBITDA margin: 15% ($7.5M)', 'Product: leafy greens only', 'Expansion: 18 new facilities (20 total)', 'Capital required: $500M', 'Revenue per facility: $25M', 'Competitor: AeroFarms (bankrupt), Plenty (struggling)', 'Cost per pound: $2 (benchmark outdoor: $1)', 'Energy cost: 30% of operating cost', 'Water usage: 95% less than outdoor farming', 'Retail customers: 50 grocery chains', 'Market: indoor farming $5B by 2028'],
+    frameworkHints: ['Facility site selection (energy cost, proximity to market)', 'Crop expansion: herbs, berries, microgreens', 'Technology improvements: LED efficiency, automation', 'Customer expansion: new retail and food service', 'Capital raise: $500M equity and debt'],
+    expectedCalculations: ['Facility expansion: 2 to 20 in 3 years', 'Revenue: $50M to $500M', 'EBITDA margin: 15% to 25% at scale', 'Product mix: leafy greens 50%, herbs 30%, berries 20%', 'Unit economics: positive contribution margin by facility #5'],
+    successCriteria: ['Vertical farming network expansion strategy', 'Technology and crop diversification plan', 'Customer and market development', 'Capital and funding strategy', 'Financial model with 20-facility network economics']
+  },
+  {
+    id: 'nb-10', title: 'Plant-Based Meat 2.0 Product Launch',
+    category: 'New Business / Innovation', industry: 'Food Tech / CPG', difficulty: 'Medium',
+    prompt: 'A food tech startup ($30M revenue) has developed a new plant-based meat using precision fermentation. They need to launch nationally and scale to $500M revenue.',
+    context: 'Current: $30M revenue, specialty retail only. New product: indistinguishable from real meat (blind taste test 85% preference). Retail price: $8/lb (real meat: $6/lb).',
+    keyFacts: ['Revenue: $30M (specialty retail only)', 'New product: precision fermentation plant-based meat', 'Taste test: 85% preference over competitor', 'Price: $8/lb (real meat $6/lb, competitor $10/lb)', 'Distribution: specialty retail only (need national)', 'Manufacturing: 1 facility (need 3)', 'Customers: 5,000 retail doors (need 50,000)', 'Marketing budget: $50M', 'Competitor: Impossible, Beyond Meat (struggling)', 'Market: plant-based meat $15B by 2030', 'Shelf life: 21 days (need 45 days)'],
+    frameworkHints: ['National retail launch strategy (50K doors in 12 months)', 'Manufacturing scale-up: 3 facilities', 'Food service channel entry (restaurants, universities)', 'Marketing and brand building campaign', 'Supply chain for precision fermentation ingredients'],
+    expectedCalculations: ['Revenue: $30M to $500M in 3 years', 'Distribution: 5K to 50K retail doors', 'Price parity with real meat: $8 to $6/lb', 'Manufacturing: 3 facilities at full capacity', 'Brand awareness: 0% to 40% in target demographic'],
+    successCriteria: ['Plant-based meat 2.0 national launch strategy', 'Manufacturing and supply chain scale-up', 'Retail and food service channel strategy', 'Marketing and brand building plan', 'Financial model with $500M revenue target']
+  },
+  {
+    id: 'nb-11', title: 'Cybersecurity Managed Service for SMBs',
+    category: 'New Business / Innovation', industry: 'Cybersecurity / Technology', difficulty: 'Medium',
+    prompt: 'A cybersecurity company ($200M revenue) wants to launch a managed security service for SMBs (100-1,000 employees). Market is underserved: 60% of SMBs have no security.',
+    context: 'Current: enterprise cybersecurity ($200M revenue). SMB market: 30M companies, 60% unprotected. Competitor: mostly enterprise-focused. Price point: $500/month per company.',
+    keyFacts: ['Revenue: $200M (enterprise only)', 'SMB target market: 30M companies (100-1,000 employees)', 'SMB security gap: 60% have no protection', 'Price point: $500/month per company', 'TAM: $180B (30M x $500 x 12)', 'Competitor: enterprise-focused (CrowdStrike, Palo Alto)', 'Technology: existing platform needs SMB adaptation', 'Sales model: PLG + inside sales (not field sales)', 'Customer acquisition cost: $2,000 (target LTV: $18,000)', 'Churn: target 5% monthly (benchmark 3%)', 'Revenue model: subscription + incident response fees'],
+    frameworkHints: ['SMB-specific product bundle (endpoint, email, network, compliance)', 'PLG (product-led growth) acquisition funnel', 'Inside sales team and customer success', 'Partner channel: MSPs, VARs, accountants', 'Compliance add-on (SOC 2, HIPAA, PCI for SMBs)'],
+    expectedCalculations: ['SMB customers: 0 to 10,000 in 3 years', 'Revenue: $0 to $60M from SMB segment', 'CAC: $2,000 (LTV/CAC: 9x)', 'Churn: 5% to 3% monthly', 'Gross margin: 70%+ on managed services'],
+    successCriteria: ['SMB cybersecurity managed service strategy', 'Product and pricing design', 'PLG and inside sales go-to-market', 'Partner channel strategy', 'Financial model with $60M revenue target']
+  },
+  {
+    id: 'nb-12', title: 'Digital Health Wearable Platform',
+    category: 'New Business / Innovation', industry: 'Healthcare / Wearables', difficulty: 'Hard',
+    prompt: 'A health tech company ($100M revenue) wants to launch a medical-grade wearable that monitors 10 health metrics. Target: 1M devices sold in Year 1.',
+    context: 'Current: health data analytics ($100M revenue). New: FDA-cleared wearable. Metrics: heart rate, SpO2, ECG, blood pressure, glucose (non-invasive), temperature, sleep, stress, activity, respiratory rate.',
+    keyFacts: ['Revenue: $100M (analytics only)', 'New product: medical-grade wearable', 'Price: $299 (consumer: $199, medical: $399)', 'FDA clearance: Class II (6-month timeline)', 'Battery life: 7 days (competitor: 2 days)', 'Accuracy: 95% (medical-grade threshold)', 'Target: 1M devices Year 1, 5M Year 3', 'Recurring revenue: $10/month subscription', 'Competitor: Apple Watch (consumer), Dexcom (glucose)', 'Non-invasive glucose: breakthrough technology (if achieved)', 'Manufacturing: contract manufacturer, $200M upfront', 'Marketing budget: $100M Year 1'],
+    frameworkHints: ['FDA clearance strategy and clinical trials', 'Device manufacturing and supply chain', 'Software platform and health analytics', 'Consumer and medical channel distribution', 'Subscription and recurring revenue model'],
+    expectedCalculations: ['Device sales: 1M Year 1, 5M Year 3', 'Revenue: $100M devices + $120M subscription Year 1', 'FDA clearance: achieve Class II approval', 'Accuracy: 95% across all 10 metrics', 'Gross margin: 50% devices, 80% subscription'],
+    successCriteria: ['Medical wearable launch strategy', 'FDA and clinical trial roadmap', 'Manufacturing and distribution plan', 'Software platform and analytics', 'Financial model with device + subscription revenue']
+  },
+  {
+    id: 'nb-13', title: 'Electric Aircraft Regional Routes',
+    category: 'New Business / Innovation', industry: 'Aviation / Clean Tech', difficulty: 'Expert',
+    prompt: 'An aviation startup ($0 revenue, $1B raised) wants to launch electric short-haul flights (500-mile routes). Fleet: 50 electric aircraft. Target: 20 routes by Year 3.',
+    context: 'Pre-revenue, $1B raised. Electric aircraft: 19-seater, 500-mile range. Aircraft cost: $10M each. Operating cost: 70% less than jet fuel. Competitor: Heart Aerospace, Eviation.',
+    keyFacts: ['Revenue: $0 (pre-revenue)', 'Funding: $1B raised (need $2B total)', 'Aircraft: 19-seater electric', 'Range: 500 miles', 'Aircraft cost: $10M each (50 = $500M)', 'Operating cost: 70% less than jet fuel', 'Competitor: Heart Aerospace (ES-30), Eviation (Alice)', 'FAA certification: 3-year timeline', 'First delivery: Year 2', 'Full fleet: Year 5', 'Routes: 20 regional routes by Year 3', 'Ticket price: 30% below comparable', 'Passengers per flight: 14 average (74% load factor)'],
+    frameworkHints: ['FAA certification and type certificate strategy', 'Aircraft procurement and fleet management', 'Route selection and airport partnerships', 'Charging infrastructure at airports', 'Revenue management and pricing strategy'],
+    expectedCalculations: ['FAA certification: achieve by Year 2', 'Fleet deployment: 50 aircraft over 5 years', 'Routes: 20 profitable regional routes', 'Operating cost: 70% reduction vs jet fuel', 'Break-even: Year 4 on route level'],
+    successCriteria: ['Electric aviation business strategy', 'FAA certification and regulatory roadmap', 'Fleet and route planning', 'Infrastructure and partnerships', 'Financial model with 5-year fleet deployment']
+  },
+  {
+    id: 'nb-14', title: 'AI-Powered Legal Services Platform',
+    category: 'New Business / Innovation', industry: 'Legal / Technology', difficulty: 'Medium',
+    prompt: 'A legal tech startup ($20M revenue) wants to build an AI platform that handles routine legal work (contracts, compliance, IP filings). Target: 10K law firms.',
+    context: 'Current: $20M revenue from contract review tool. New: full legal services platform. AI handles 80% of routine legal work. Price: $500/month per firm.',
+    keyFacts: ['Revenue: $20M (contract review tool only)', 'New platform: AI-powered legal services', 'Target: 10K law firms', 'Price: $500/month per firm', 'TAM: $60B (routine legal work)', 'AI capability: handles 80% of routine work', 'Competitor: Harvey AI, Casetext (acquired by Thomson Reuters)', 'Accuracy: 95% (human lawyer: 99%)', 'Time savings: 70% reduction in document drafting', 'Ethical considerations: unauthorized practice of law', 'Regulatory: varies by jurisdiction', 'Sales cycle: 3-6 months for law firms'],
+    frameworkHints: ['AI model training on legal datasets (contracts, compliance, IP)', 'Law firm acquisition strategy (PLG + partnerships)', 'Ethical AI framework and liability management', 'Regulatory compliance by jurisdiction', 'Integration with existing legal practice management'],
+    expectedCalculations: ['Law firm customers: 0 to 10,000 in 3 years', 'Revenue: $20M to $200M', 'AI accuracy: 95% to 99%', 'Time savings: 70% to 85%', 'Product liability: zero malpractice claims'],
+    successCriteria: ['AI legal services platform strategy', 'AI model and accuracy improvement plan', 'Law firm go-to-market strategy', 'Ethical and regulatory framework', 'Financial model with $200M revenue target']
+  },
+  {
+    id: 'nb-15', title: 'Subscription Car Service (No Ownership)',
+    category: 'New Business / Innovation', industry: 'Automotive / Mobility', difficulty: 'Hard',
+    prompt: 'An automotive company ($60B revenue) wants to launch a subscription car service where customers never own a car. Monthly fee includes insurance, maintenance, and unlimited swaps.',
+    context: 'Subscription: $500/month (compact), $800/month (sedan), $1,200/month (SUV). Includes insurance, maintenance, roadside, 1 swap/month. Fleet: 50,000 vehicles.',
+    keyFacts: ['Revenue: $60B (traditional sales)', 'New service: subscription car model', 'Price: $500-$1,200/month', 'Includes: insurance, maintenance, swaps', 'Fleet: 50,000 vehicles (Year 1, need 200K)', 'Customer acquisition cost: $2,000', 'Target customer: urban professionals 25-40', 'Churn: 5% monthly (benchmark 3%)', 'Vehicle utilization: 85% (need 90%)', 'Competitor: Care by Volvo, Porsche Drive', 'Market: subscription economy growing 20% annually', 'Unit economics: positive at 18 months per vehicle'],
+    frameworkHints: ['Subscription tier design and pricing', 'Fleet management and vehicle lifecycle', 'Customer acquisition and retention', 'Insurance and maintenance cost optimization', 'Technology platform (app, vehicle access, swaps)'],
+    expectedCalculations: ['Fleet size: 50K to 200K in 3 years', 'Revenue: $0 to $1B from subscriptions', 'Customer churn: 5% to 3% monthly', 'Vehicle utilization: 85% to 90%', 'Unit economics: positive contribution by Month 18'],
+    successCriteria: ['Subscription car service business model', 'Fleet and operations strategy', 'Customer acquisition and pricing', 'Technology platform design', 'Financial model with unit economics per vehicle']
+  },
+  {
+    id: 'nb-16', title: 'Carbon Capture and Trading Platform',
+    category: 'New Business / Innovation', industry: 'Climate Tech / Energy', difficulty: 'Expert',
+    prompt: 'A climate tech startup ($10M revenue) wants to build a carbon capture technology and digital trading platform. Target: capture 1M tonnes/year and trade carbon credits.',
+    context: 'Current: pilot carbon capture facility (10K tonnes/year). New: scale to 1M tonnes and build trading platform. Cost: $100/tonne (need $50). Market price: $30-80/tonne.',
+    keyFacts: ['Revenue: $10M (carbon credits, pilot)', 'Pilot capacity: 10K tonnes/year', 'Target: 1M tonnes/year', 'Capture cost: $100/tonne (need $50)', 'Market price: $30-80/tonne (volatile)', 'Technology: direct air capture (DAC)', 'Facility cost: $500M for 1M tonnes', 'Trading platform: digital marketplace', 'Competitor: Climeworks, Carbon Engineering, 1PointFive', 'Policy: IRA 45Q tax credit ($180/tonne US)', 'Demand: voluntary + compliance markets growing 30% annually', 'Team: 100 (need 500)'],
+    frameworkHints: ['Technology scale-up from 10K to 1M tonnes', 'Carbon credit trading platform development', 'Policy and regulatory strategy (45Q, EU ETS)', 'Customer contracts (voluntary + compliance markets)', 'Facility financing and construction'],
+    expectedCalculations: ['Capture capacity: 10K to 1M tonnes/year', 'Cost per tonne: $100 to $50', 'Revenue: $10M to $200M (trading platform + credits)', 'Tax credit optimization: $180/tonne 45Q', 'Platform: 100+ corporate buyers on trading platform'],
+    successCriteria: ['Carbon capture and trading business strategy', 'Technology and facility scale-up plan', 'Trading platform development', 'Policy and regulatory strategy', 'Financial model with 5-year scaling roadmap']
+  },
+  {
+    id: 'nb-17', title: 'Robotic Restaurant Kitchen',
+    category: 'New Business / Innovation', industry: 'Food Tech / Robotics', difficulty: 'Hard',
+    prompt: 'A robotics startup ($5M revenue) has developed a robotic kitchen that can cook 100 menu items. They want to launch 50 ghost kitchens in major cities.',
+    context: 'Current: 2 pilot locations, $5M revenue. Robot cost: $250K each. Menu: 100 items. Cooking time: 3 minutes. Accuracy: 99%. Competitor: Miso Robotics (Flippy).',
+    keyFacts: ['Revenue: $5M (2 pilot locations)', 'Robot cost: $250K each', 'Menu: 100 items', 'Cooking time: 3 minutes (human: 12 minutes)', 'Accuracy: 99%', 'Ghost kitchen model: 50 locations', 'Revenue per location: $1.5M/year', 'Target: 50 ghost kitchens in 3 years', 'Competitor: Miso Robotics (Flippy), Nuro', 'Labor: 1 person per kitchen (vs 5 human)', 'Food cost: 28% (human kitchen: 35%)', 'Delivery platforms: 30% commission'],
+    frameworkHints: ['Robot manufacturing scale-up (50 units)', 'Ghost kitchen site selection and launch', 'Menu optimization for robotic cooking', 'Delivery platform partnerships and direct ordering', 'Franchise or company-owned model decision'],
+    expectedCalculations: ['Ghost kitchens: 2 to 50 in 3 years', 'Revenue: $5M to $75M', 'Labor cost: 70% reduction vs human kitchen', 'Food cost: 28% (7% improvement)', 'Payback period: 12 months per kitchen'],
+    successCriteria: ['Robotic kitchen ghost network strategy', 'Robot manufacturing and deployment', 'Kitchen operations and menu design', 'Customer acquisition and ordering platforms', 'Financial model with 50-kitchen network economics']
+  },
+  {
+    id: 'nb-18', title: 'Drone Delivery Network (Last-Mile)',
+    category: 'New Business / Innovation', industry: 'Logistics / Drone Tech', difficulty: 'Expert',
+    prompt: 'A drone delivery startup ($10M revenue) has FAA Part 135 certification. They want to build a drone delivery network covering 10M households in 10 metropolitan areas.',
+    context: 'FAA Part 135 certified. Current: 50 drones, 2 cities. Drone cost: $20K each. Delivery range: 10 miles. Payload: 5 lbs. Time: 15 minutes (vs 2 hours by car).',
+    keyFacts: ['Revenue: $10M (2 cities)', 'FAA Part 135 certification: obtained', 'Drones: 50 (need 500)', 'Drone cost: $20K each (500 = $10M)', 'Delivery range: 10 miles', 'Payload: 5 lbs', 'Delivery time: 15 minutes', 'Coverage target: 10M households in 10 metro areas', 'Competitor: Wing (Alphabet), Zipline (healthcare)', 'Delivery price: $5 (competitor: $10+)', 'Orders per drone per day: 20 (need 30)', 'Unit economics: positive at 15+ orders/day'],
+    frameworkHints: ['Drone fleet expansion: 50 to 500', 'Metropolitan area expansion (10 cities)', 'Customer partnerships (retail, pharmacy, food)', 'Airspace management and BVLOS operations', 'Maintenance and operations infrastructure'],
+    expectedCalculations: ['Fleet: 50 to 500 drones', 'Coverage: 2 to 10 metropolitan areas', 'Orders per drone: 20 to 30 per day', 'Revenue: $10M to $100M', 'Unit economics: positive by Year 2'],
+    successCriteria: ['Drone delivery network expansion strategy', 'Fleet and airspace operations', 'Customer and partnership strategy', 'Regulatory and safety framework', 'Financial model with 10-city network plan']
+  },
+  {
+    id: 'nb-19', title: 'Personalized Nutrition AI Platform',
+    category: 'New Business / Innovation', industry: 'Health Tech / Food Tech', difficulty: 'Medium',
+    prompt: 'A health tech startup ($15M revenue) wants to launch an AI-powered personalized nutrition platform using gut microbiome testing. Target: 2M subscribers.',
+    context: 'Current: $15M revenue from wellness app. New: gut microbiome test + AI meal plans. Price: $200 test + $30/month subscription. Competitor: ZOE, Viome.',
+    keyFacts: ['Revenue: $15M (wellness app)', 'New product: microbiome-based nutrition AI', 'Test cost: $200', 'Subscription: $30/month', 'Target: 2M subscribers in 3 years', 'Competitor: ZOE ($100 test + $30/month), Viome', 'Science: gut microbiome links to 20+ health conditions', 'Accuracy: personalized recommendations improve outcomes 40%', 'Lab partner: 2 CLIA-certified labs', 'Time to result: 2 weeks (need 5 days)', 'Retention: 60% at 12 months (benchmark 70%)'],
+    frameworkHints: ['Microbiome testing and lab partnership', 'AI nutrition recommendation engine', 'Content and meal planning platform', 'Customer acquisition (DTC + healthcare partnerships)', 'Clinical validation and published research'],
+    expectedCalculations: ['Subscribers: 0 to 2M in 3 years', 'Revenue: $15M to $250M', 'Test turnaround: 2 weeks to 5 days', 'Retention: 60% to 70% at 12 months', 'Clinical outcomes: 40% improvement in health markers'],
+    successCriteria: ['Personalized nutrition platform strategy', 'AI and microbiome science capabilities', 'Customer acquisition and retention', 'Clinical validation and partnerships', 'Financial model with 2M subscriber target']
+  },
+  {
+    id: 'nb-20', title: 'Electric Boat Rental Network',
+    category: 'New Business / Innovation', industry: 'Clean Tech / Maritime / Tourism', difficulty: 'Medium',
+    prompt: 'A clean tech startup ($5M revenue) wants to build an electric boat rental network in 20 coastal/tourist cities. 1,000 boats, 500 charging stations.',
+    context: 'Current: 2 cities, 50 boats, $5M revenue. Electric boats: 20ft, 4-hour range. Price: $100/hour. Competitor: few electric options. Tourism market: $1T globally.',
+    keyFacts: ['Revenue: $5M (2 cities, 50 boats)', 'Boat: 20ft electric, 4-hour range', 'Price: $100/hour', 'Boat cost: $50K each (1,000 = $50M)', 'Charging stations: 500 ($5K each = $2.5M)', 'Expansion: 20 cities in 3 years', 'Revenue per boat: $100K/year (need $150K)', 'Utilization: 40% (need 60%)', 'Competitor: few electric boat options', 'Market: boat rental $15B globally', 'Tourism recovery: 120% of pre-COVID in target cities', 'Regulatory: marina permits, safety certifications'],
+    frameworkHints: ['Fleet manufacturing and procurement (1,000 boats)', 'Charging infrastructure deployment (500 stations)', 'City expansion: 20 coastal/tourist cities', 'Customer acquisition: tourism platforms, direct', 'Operations and maintenance at scale'],
+    expectedCalculations: ['Fleet: 50 to 1,000 boats', 'Cities: 2 to 20', 'Revenue: $5M to $150M', 'Utilization: 40% to 60%', 'Charging stations: 500 across 20 cities'],
+    successCriteria: ['Electric boat rental network expansion strategy', 'Fleet and infrastructure deployment plan', 'City selection and market entry', 'Customer acquisition and partnerships', 'Financial model with 20-city network']
+  },
+  {
+    id: 'nb-21', title: 'AI Tutoring Platform (K-12 Education)',
+    category: 'New Business / Innovation', industry: 'Education / EdTech', difficulty: 'Medium',
+    prompt: 'An edtech startup ($25M revenue) wants to launch an AI tutoring platform that adapts to each student. Target: 10M students in 3 years.',
+    context: 'Current: $25M from online courses. New: AI tutor that adapts in real-time. Price: $20/student/month. Competitor: Khanmigo, Duolingo Max.',
+    keyFacts: ['Revenue: $25M (online courses)', 'New product: adaptive AI tutor', 'Price: $20/student/month', 'Target: 10M students in 3 years', 'Market: K-12 tutoring $100B globally', 'Competitor: Khanmigo, Duolingo MasterClass', 'AI capability: real-time adaptation, 50 subjects', 'Learning improvement: 2x faster than traditional', 'Teacher dashboard: progress and intervention alerts', 'Accessibility: 20 languages', 'School vs parent purchasing: 60% school, 40% parent'],
+    frameworkHints: ['AI tutor model training and subject expansion', 'School district sales and partnerships', 'Parent direct-to-consumer marketing', 'Teacher and administrator dashboard', 'Multi-language and accessibility features'],
+    expectedCalculations: ['Students: 0 to 10M in 3 years', 'Revenue: $25M to $500M', 'Learning outcomes: 2x improvement', 'School partnerships: 1,000 districts', 'Subject coverage: 50 subjects in 20 languages'],
+    successCriteria: ['AI tutoring platform strategy', 'AI model and content development', 'School district and parent go-to-market', 'Learning outcomes measurement and validation', 'Financial model with 10M student target']
+  },
+  {
+    id: 'nb-22', title: 'Smart Home Energy Management System',
+    category: 'New Business / Innovation', industry: 'Clean Tech / Smart Home', difficulty: 'Easy',
+    prompt: 'A clean tech startup ($15M revenue) wants to launch a smart home energy system that reduces electricity bills by 40%. Target: 2M homes in 3 years.',
+    context: 'Current: smart thermostat ($15M revenue). New: complete home energy system (solar, battery, EV charger, smart panels). Price: $15,000 installed (before tax credits).',
+    keyFacts: ['Revenue: $15M (smart thermostat only)', 'New product: complete home energy system', 'Components: solar panels, battery, EV charger, smart panel', 'Price: $15,000 installed (before 30% tax credit = $10,500)', 'Savings: $2,400/year (40% reduction)', 'Payback: 4.4 years', 'Target: 2M homes in 3 years', 'Competitor: Tesla Powerwall, Enphase, Sunrun', 'Installation: certified installer network (500 partners)', 'Financing: $0 down, 10-year loan ($100/month)', 'Net savings: $100/month ($200 savings - $100 loan)'],
+    frameworkHints: ['Home energy system product bundle', 'Installer network expansion (500 partners)', 'Financing and subscription options', 'Utility partnership and grid services', 'Smart home app and energy optimization AI'],
+    expectedCalculations: ['Homes: 0 to 2M in 3 years', 'Revenue: $15M to $3B', 'Installer network: 500 to 2,000 partners', 'Customer savings: $2,400/year average', 'Payback period: <5 years for customer'],
+    successCriteria: ['Smart home energy system launch strategy', 'Product and installation network plan', 'Financing and customer acquisition', 'Utility partnerships and grid services', 'Financial model with 2M home deployment']
+  },
+  {
+    id: 'nb-23', title: 'Virtual Reality Training Platform (Enterprise)',
+    category: 'New Business / Innovation', industry: 'VR / Enterprise Training', difficulty: 'Medium',
+    prompt: 'A VR startup ($10M revenue) wants to launch an enterprise training platform for high-risk industries (oil & gas, healthcare, construction). Target: 5,000 enterprise clients.',
+    context: 'Current: $10M from VR gaming. New: enterprise training. VR training reduces incidents 40%, speeds learning 60%. Price: $500/employee/year. Competitor: Strivr, Mursion.',
+    keyFacts: ['Revenue: $10M (VR gaming)', 'New product: enterprise VR training platform', 'Price: $500/employee/year', 'Target: 5,000 enterprise clients in 3 years', 'Industries: oil & gas, healthcare, construction, aviation', 'Training improvement: 60% faster learning, 40% fewer incidents', 'Competitor: Strivr, Mursion, Talespin', 'Market: enterprise VR training $12B by 2028', 'Hardware: Meta Quest 3, Apple Vision Pro', 'Content library: 100 pre-built training modules', 'Custom content development: $50K per module'],
+    frameworkHints: ['Enterprise VR training content library (100 modules)', 'Industry-specific solutions (oil & gas, healthcare, construction)', 'Enterprise sales team and channel partnerships', 'VR hardware partnerships and procurement', 'ROI measurement and analytics platform'],
+    expectedCalculations: ['Enterprise clients: 0 to 5,000 in 3 years', 'Revenue: $10M to $250M', 'Content library: 100 to 500 modules', 'Employee reach: 0 to 5M trained', 'ROI proof: 40% incident reduction documented'],
+    successCriteria: ['Enterprise VR training platform strategy', 'Content library and industry solution development', 'Enterprise sales and channel strategy', 'Hardware partnerships and deployment', 'Financial model with $250M revenue target']
+  },
+
+  // ============================================================
+  // OPERATIONS / SUPPLY CHAIN — 17 cases
+  // ============================================================
+  {
+    id: 'ops-07', title: 'Freight Network Optimization',
+    category: 'Operations / Supply Chain', industry: 'Logistics / Freight', difficulty: 'Hard',
+    prompt: 'A national freight company ($4B revenue, 5,000 trucks) is spending 30% of revenue on fuel while operating at 65% truck utilization. Target 85% utilization with 20% fuel reduction.',
+    context: 'Long-haul trucking, 200 terminals, 3,000 drivers. Key issue: empty backhauls (40% of miles), poor route planning, aging fleet.',
+    keyFacts: ['Revenue: $4B','Fuel cost: 30% of revenue ($1.2B)','Trucks: 5,000','Utilization: 65% (target 85%)','Drivers: 3,000','Terminals: 200','Empty backhaul rate: 40%','Route efficiency: below benchmark','Fleet age: avg 8 years','Driver turnover: 80% annually','Maintenance cost: rising 12% yearly'],
+    frameworkHints: ['Route optimization and empty backhaul reduction','Fleet electrification strategy','Terminal consolidation and automation','Driver scheduling and productivity improvement','Load matching technology platform'],
+    expectedCalculations: ['Fuel reduction from 30% to 25% = $200M savings','Utilization improvement revenue per truck','Empty backhaul elimination value','Terminal consolidation savings','Driver productivity and retention impact'],
+    successCriteria: ['Operations transformation plan','Route optimization and load matching technology','Fleet modernization strategy','Terminal and network optimization','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-08', title: 'E-Commerce Returns Management',
+    category: 'Operations / Supply Chain', industry: 'E-commerce / Retail', difficulty: 'Medium',
+    prompt: 'An online fashion retailer ($1B revenue) has 30% return rate costing $100M annually to process. Target: reduce to 20% and cut processing cost by 50%.',
+    context: 'Fashion e-commerce, 5M customers, 15M orders/year. 30% return rate is highest in industry (benchmark 15-20%). High return rate driven by poor size guidance and customer expectation.',
+    keyFacts: ['Revenue: $1B','Return rate: 30% (benchmark 15-20%)','Return processing cost: $100M annually','Orders: 15M/year','Customers: 5M','Avg order value: $65','Return items: 4.5M annually','Restocking cost: $8/item','Resale value: 70% of original (10% unsellable)','Size selection accuracy: 60%','Free return shipping cost: $5/item'],
+    frameworkHints: ['AI-powered size recommendation engine','Virtual try-on technology (AR)','Return friction design (prepaid labels, instant refunds)','Customer education and styling content','Return-to-resale marketplace for unsellable items'],
+    expectedCalculations: ['Return rate reduction from 30% to 20% savings','Processing cost reduction per return','Size recommendation accuracy improvement','AR try-on conversion rate impact','Total cost reduction from returns optimization'],
+    successCriteria: ['Returns reduction strategy with technology','Size and fit solution roadmap','Return-to-resale marketplace design','Financial model and savings projection','Implementation timeline and investment']
+  },
+  {
+    id: 'ops-09', title: 'Agricultural Supply Chain Traceability',
+    category: 'Operations / Supply Chain', industry: 'Agriculture / Food', difficulty: 'Hard',
+    prompt: 'A major food manufacturer ($20B revenue) needs to build a blockchain-based supply chain traceability system for farm-to-fork transparency. Customers and regulators demanding provenance data.',
+    context: '40+ countries, 10,000 suppliers, 2M tonnes of raw materials annually. Current traceability: 1-step back, need end-to-end. Food safety incidents risk brand reputation.',
+    keyFacts: ['Revenue: $20B','Suppliers: 10,000 across 40 countries','Raw materials: 2M tonnes annually','Current traceability: 1-step back','Regulatory trend: EU Farm to Fork (2025), FDA FSMA 2.0','Technology cost: $200M over 3 years','Incident cost: avg $10M per food safety recall','Customer demand: 70% of food buyers want provenance data','Competitor: Nestle (blockchain for coffee, pilot)','Integration complexity: 50+ ERP systems across geographies'],
+    frameworkHints: ['Blockchain-based traceability platform design','Supplier onboarding and data collection strategy','Regulatory compliance framework (EU, US, China)','Consumer-facing transparency portal','Integration with existing ERP and supply chain systems'],
+    expectedCalculations: ['Traceability platform development cost and timeline','Supplier adoption cost and timeline','ROI: incident reduction + brand value + premium pricing','Data collection infrastructure and sensors','Scalability: 10,000 suppliers across 40 countries'],
+    successCriteria: ['End-to-end traceability implementation strategy','Technology platform recommendation','Supplier onboarding and data strategy','Regulatory compliance framework','Financial model and ROI analysis']
+  },
+  {
+    id: 'ops-10', title: 'Warehouse Automation Transformation',
+    category: 'Operations / Supply Chain', industry: 'Retail / E-commerce', difficulty: 'Easy',
+    prompt: 'A retail distribution network ($50B company, 20 warehouses, 50K SKUs) has 3% error rate and 48-hour fulfillment time. Target: automate 60% with robots and AI.',
+    context: 'Current: 5,000 warehouse workers, $500M labor cost, 3% error rate, 48-hour fulfillment. Target: reduce to 2,000 workers, 0.5% error, 24-hour fulfillment.',
+    keyFacts: ['Revenue: $50B (company)','Warehouses: 20, 50K SKUs','Workers: 5,000 warehouse staff','Labor cost: $500M','Error rate: 3% (target 0.5%)','Fulfillment time: 48 hours (target 24)','Automation investment: $1B over 5 years','ROI: 3x on automation','Competitor: Amazon (60% automated)','Technology: AMRs, ASRS, vision systems','Integration: existing WMS'],
+    frameworkHints: ['Warehouse automation roadmap (phased by type)','Robot selection and deployment strategy','Labor transition and reskilling plan','WMS integration and data architecture','Change management for warehouse operations'],
+    expectedCalculations: ['Automation ROI by warehouse (20 locations)','Labor cost reduction ($500M to $200M target)','Error rate reduction impact on quality and returns','Fulfillment speed improvement customer impact','Implementation timeline and capital allocation'],
+    successCriteria: ['Warehouse automation strategy','Robot deployment and integration plan','Labor transition and reskilling','WMS and technology architecture','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-11', title: 'Cold Chain Last-Mile Innovation',
+    category: 'Operations / Supply Chain', industry: 'Pharma / Logistics', difficulty: 'Medium',
+    prompt: 'A pharmaceutical logistics provider ($5B revenue) distributes to 50,000 pharmacies and 2,000 hospitals. They want to reduce last-mile delivery cost by 25% while improving reliability.',
+    context: 'Current: 95% on-time delivery, $15 cost per delivery, 8% wastage on temperature-sensitive products. Competition: FedEx Cold Chain, UPS Temperature True.',
+    keyFacts: ['Revenue: $5B','Delivery destinations: 50K pharmacies + 2K hospitals','On-time delivery: 95% (target 98%)','Cost per delivery: $15','Temperature wastage: 8% ($400M annual loss)','Fleet: 3,000 refrigerated vehicles','Route: avg 50 miles, 15 stops','Cold chain breach cost: $200K per incident','Competitor performance: 97% on-time, $12 cost per delivery','Technology gap: basic GPS, no real-time temp monitoring','Customer requirements: 99.9% temp compliance'],
+    frameworkHints: ['Route optimization and load consolidation','Real-time temperature monitoring IoT platform','Cold chain packaging innovation (phase-change materials)','Last-mile delivery partnerships (micro-fulfillment)','Predictive maintenance for refrigerated vehicles'],
+    expectedCalculations: ['Cost reduction from $15 to $11 per delivery','Temperature wastage reduction from 8% to 3%','Customer retention improvement from reliability gains','Technology investment ROI','Revenue growth from premium cold chain services'],
+    successCriteria: ['Last-mile cold chain optimization strategy','IoT monitoring and predictive maintenance','Packaging and vehicle technology upgrades','Partnership and micro-fulfillment strategy','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-12', title: 'Multi-National Inventory Optimization',
+    category: 'Operations / Supply Chain', industry: 'Retail / Consumer Goods', difficulty: 'Hard',
+    prompt: 'A global consumer goods company ($30B revenue, 15 countries, 50K SKUs) has $5B in inventory (120 days vs benchmark 60 days). They want to cut inventory to $3B while maintaining service levels.',
+    context: 'Inventory: $5B (120 days vs 60-day benchmark). 50K SKUs across 15 countries. Forecast accuracy: 70% (benchmark 85%). Waste/spoilage: 5% of inventory value. Seasonality is significant.',
+    keyFacts: ['Revenue: $30B','Inventory: $5B (120 days, benchmark 60)','SKUs: 50K across 15 countries','Forecast accuracy: 70% (benchmark 85%)','Waste/spoilage: 5% ($250M annual loss)','Seasonality: high (peaks 3x in Q4)','Warehouse cost: $500M annually','IT systems: 8 legacy systems, no unified visibility','Supply chain cost: 18% of revenue (benchmark 12%)','Customer SLA: 99% fill rate required','Demand volatility: 30% coefficient of variation'],
+    frameworkHints: ['Demand forecasting AI/ML platform implementation','Inventory optimization by SKU tier (ABC analysis)','Supply chain visibility and control tower','Warehouse and distribution network rationalization','Supplier collaboration and VMI programs'],
+    expectedCalculations: ['Inventory reduction from $5B to $3B = $2B cash release','Waste reduction from 5% to 2% = $90M annual savings','Forecast accuracy improvement revenue impact','Warehouse cost reduction from optimization','Service level maintenance during inventory reduction'],
+    successCriteria: ['Inventory optimization transformation strategy','AI/ML demand forecasting implementation','Supply chain visibility platform','Network and warehouse optimization','Financial model with $2B cash release target']
+  },
+  {
+    id: 'ops-13', title: 'Airport Ground Handling Digitization',
+    category: 'Operations / Supply Chain', industry: 'Aviation / Ground Handling', difficulty: 'Medium',
+    prompt: 'An airport ground handling company ($800M revenue) manages turnaround services for 30 airlines at 12 airports. Operations are manual and slow. Want to digitize to improve efficiency and reduce delays.',
+    context: 'Manual checklists, paper-based workflows, radio communications. Average turnaround time 45 minutes (target 35). Delay rate: 15% (target 5%). Labor cost: 40% of revenue.',
+    keyFacts: ['Revenue: $800M','Airlines served: 30','Airports: 12','Avg turnaround time: 45 min (target 35)','Delay rate: 15% (target 5%)','Labor cost: 40% of revenue ($320M)','Workers: 8,000','Shifts: 24/7 operations','Equipment: 500 ground support vehicles','Current tech: paper checklists, radio comms','Customer satisfaction: below SLA penalties'],
+    frameworkHints: ['Digital operations platform (mobile, real-time tracking)','Ground handling automation (baggage, fueling)','Predictive analytics for turnaround optimization','Airline integration and data sharing','Worker safety and performance management'],
+    expectedCalculations: ['Turnaround time reduction from 45 to 35 minutes','Delay rate reduction from 15% to 5%','Labor cost reduction through productivity gains','Airline satisfaction and contract renewal rate','Technology investment ROI and payback'],
+    successCriteria: ['Digital ground handling transformation strategy','Technology platform and automation plan','Airline integration and partnership strategy','Worker transition and training program','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-14', title: 'Perishable Food Cold Chain Optimization',
+    category: 'Operations / Supply Chain', industry: 'Food / Retail', difficulty: 'Easy',
+    prompt: 'A regional grocery chain ($5B revenue, 500 stores) is experiencing 12% spoilage in its fresh foods category (benchmark 5%). They need to redesign their cold chain from farm to shelf.',
+    context: 'Fresh produce and dairy represent 30% of revenue ($1.5B). 8 regional distribution centers, 30% of deliveries have temperature issues. Average shelf life: 5 days (benchmark 7).',
+    keyFacts: ['Revenue: $5B','Fresh food: $1.5B (30% of revenue)','Spoilage rate: 12% (benchmark 5%)','Spoilage cost: $180M annually','Distribution centers: 8 regional','Temperature compliance: 70% on all deliveries','Avg shelf life: 5 days (benchmark 7)','Fleet: 200 refrigerated trucks','Driver scheduling: manual, no route optimization','Demand forecasting: basic historical averages','Waste disposal cost: $20M annually','Competitor benchmark: Walmart 3% spoilage, Whole Foods 4%'],
+    frameworkHints: ['IoT temperature monitoring across cold chain','AI-powered demand forecasting and dynamic ordering','Shelf-life management and predictive expiration','Delivery route and timing optimization','Waste reduction and donation programs'],
+    expectedCalculations: ['Spoilage reduction from 12% to 5% = $105M savings','Waste disposal cost reduction','Demand forecasting revenue uplift from reduced out-of-stocks','Energy cost reduction from optimized cold chain','Investment payback and ROI timeline'],
+    successCriteria: ['Cold chain transformation strategy','IoT monitoring and real-time visibility platform','Demand forecasting and dynamic ordering','Waste reduction program','Financial model and implementation roadmap']
+  },
+  {
+    id: 'ops-15', title: 'Pharmaceutical Batch Production Optimization',
+    category: 'Operations / Supply Chain', industry: 'Pharmaceuticals', difficulty: 'Expert',
+    prompt: 'A pharmaceutical manufacturer ($8B revenue) operates 6 GMP-certified facilities producing 200 million units/year. Batch failure rate is 8% (industry avg 3%). Reduce failures while increasing throughput.',
+    context: 'Six facilities producing biologics, small molecules, and generics. Batch failure costs $50M annually in rework, disposal, and lost capacity. Compliance is FDA/EMA critical.',
+    keyFacts: ['Revenue: $8B','Facilities: 6 GMP-certified plants','Annual output: 200M units','Batch failure rate: 8% (industry avg 3%)','Failure cost: $50M annually','FDA/EMA compliance: critical','Product mix: biologics 40%, small molecules 40%, generics 20%','Capacity utilization: 75% (target 90%)','Changeover time: 12 hours average','Quality release time: 72 hours','Labor: 3,000 skilled workers','Energy cost: $100M annually','Supply chain: 100+ raw material suppliers'],
+    frameworkHints: ['Process analytical technology (PAT) implementation','Batch release acceleration (rapid microbiology)','Predictive maintenance for GMP equipment','Supply chain digitization and supplier quality','Advanced process control and automation'],
+    expectedCalculations: ['Batch failure reduction from 8% to 3% = $150M capacity recovered','Throughput increase: 20% more units without new facilities','Quality release time reduction (72h to 24h)','Energy and utility cost reduction','Regulatory compliance improvement and audit readiness'],
+    successCriteria: ['Pharmaceutical manufacturing optimization strategy','PAT and process analytics implementation plan','Supply chain digitalization roadmap','Quality improvement and compliance program','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-16', title: 'Retail Store Network Optimization',
+    category: 'Operations / Supply Chain', industry: 'Retail', difficulty: 'Medium',
+    prompt: 'A fashion retail chain ($2B revenue, 800 stores) has 40% of stores underperforming. Revenue/sq ft: $200 (benchmark $300). They want to optimize the network.',
+    context: '800 stores in malls and lifestyle centers. 40% of stores below breakeven. Real estate mix: 60% malls, 40% lifestyle centers. E-commerce growing at 30%.',
+    keyFacts: ['Revenue: $2B','Stores: 800','Avg revenue/sq ft: $200 (benchmark $300)','Underperforming stores: 40% (320 stores)','Mall vs lifestyle: 60/40','Store closures needed: 150-200 stores','Annual lease cost: $600M','Customer satisfaction: 78/100','E-commerce: 25% of sales (growing 30%)','Foot traffic decline: 15% over 5 years in malls'],
+    frameworkHints: ['Store performance analysis and ranking','Network optimization modeling (open/closed/resize)','Real estate portfolio restructuring (renegotiations, closures)','Digital and e-commerce expansion','Brand repositioning and customer experience innovation'],
+    expectedCalculations: ['Store closure savings: $200M lease cost reduction','Revenue risk from closures: $50M-100M','Net profit improvement: $100M-150M annually','Digital revenue potential: $200M-500M','Brand repositioning impact on customer satisfaction and NPS'],
+    successCriteria: ['Store network optimization strategy','Store closure and resize recommendations','Real estate portfolio restructuring plan','Digital and brand innovation strategy','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-17', title: 'Last-Mile Delivery Autonomous Fleet',
+    category: 'Operations / Supply Chain', industry: 'Logistics / Technology', difficulty: 'Expert',
+    prompt: 'A last-mile delivery company ($3B revenue, 20,000 drivers) wants to deploy autonomous delivery vehicles (Level 4) in 10 metro areas to reduce cost-per-delivery from $4 to $1.50.',
+    context: 'Driver shortage: 25% vacancy rate. Cost per delivery: $4.00. Average 20 deliveries/day per driver. Autonomous vehicles can do 100+ deliveries/day. Competitors: Nuro, Starship, Amazon Scout.',
+    keyFacts: ['Revenue: $3B','Drivers: 20,000 (25% vacancy rate)','Cost per delivery: $4.00','Deliveries per driver per day: 20','Autonomous capacity: 100+ deliveries/day','Metropolitan areas: 10 target','Technology cost: $200K per vehicle (Level 4)','Infrastructure cost: $50M for charging/maintenance hubs','Regulatory: 8 of 50 states fully permit autonomous delivery','Timeline: 2-year pilot in 3 cities, 5-year full deployment','Workforce transition: 20,000 drivers need retraining','Competitor: Nuro (10,000+ vehicles), Starship (2,000+ robots)'],
+    frameworkHints: ['Autonomous fleet deployment strategy (phased by city)','Driver transition and retraining program','Infrastructure investment (charging hubs, maintenance)','Regulatory compliance and permitting strategy','Customer acceptance and communication plan'],
+    expectedCalculations: ['Cost-per-delivery reduction: $4 to $1.50','Autonomous fleet ROI vs current driver model','Driver transition cost and timeline','Infrastructure investment and payback period','Customer satisfaction improvement from reliability'],
+    successCriteria: ['Autonomous fleet deployment strategy with city prioritization','Driver transition and workforce transformation plan','Infrastructure investment and technology roadmap','Regulatory compliance strategy','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-18', title: 'Omnichannel Fulfillment Network',
+    category: 'Operations / Supply Chain', industry: 'Retail / E-commerce', difficulty: 'Medium',
+    prompt: 'A specialty retail chain ($5B revenue, 1,200 stores) wants to offer BOPIS and ship-from-store across all locations. Currently fulfillment is 100% warehouse-based.',
+    context: '1,200 stores in US and Canada. 5 warehouses ship 80% of online orders. Store inventory: $3B. E-commerce revenue: $1.5B (30% of total). BOPIS not available. Ship-from-store: 5% pilot.',
+    keyFacts: ['Revenue: $5B ($3.5B stores, $1.5B online)','Stores: 1,200 (US and Canada)','Warehouses: 5','Inventory: $3B total ($200K/store avg)','E-commerce: $1.5B (30% of revenue)','BOPIS: not available','Ship-from-store: 5% pilot (100 stores)','Avg order value: $85','Same-day delivery demand: 30% of online orders','Customer expectation: Amazon-level speed','Ship-from-store margin: 20% higher than warehouse'],
+    frameworkHints: ['Ship-from-store network design (all 1200 stores)','BOPIS implementation and in-store fulfillment workflow','Inventory visibility and allocation system','Last-mile delivery optimization (couriers, lockers)','Store staffing and labor management for fulfillment'],
+    expectedCalculations: ['Ship-from-store: $500M revenue uplift in 3 years','BOPIS: $200M revenue uplift (customers spend 35% more in store)','Same-day delivery capability: 2x conversion rate increase','Inventory turnover improvement: 25% reduction in days-on-hand','Fulfillment cost reduction: $50M from store-based fulfillment'],
+    successCriteria: ['Omnichannel fulfillment transformation strategy','Ship-from-store and BOPIS implementation roadmap','Technology and integration plan','Labor and operations optimization','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-19', title: 'Manufacturing Predictive Maintenance Network',
+    category: 'Operations / Supply Chain', industry: 'Manufacturing / IoT', difficulty: 'Hard',
+    prompt: 'A heavy equipment manufacturer ($15B revenue, 20 factories globally) has 10,000 machines and 20% unplanned downtime ($1B annual cost). They want to deploy IoT and AI to predict failures.',
+    context: '20 factories, 10,000 CNC machines, presses, and assembly lines. Unplanned downtime: 20% (benchmark 5%). Each hour of downtime costs $50K. Current maintenance: calendar-based, reactive.',
+    keyFacts: ['Revenue: $15B','Machines: 10,000 (CNC, presses, assembly)','Factories: 20 globally','Unplanned downtime: 20% (benchmark 5%)','Downtime cost: $1B annually ($50K/hour)','Maintenance cost: $500M annually','Equipment age: avg 12 years','Maintenance strategy: calendar-based (reactive)','Spare parts inventory: $100M','MTBF: 500 hours (benchmark 1,000)','Technician response time: 4 hours (target 30 min)'],
+    frameworkHints: ['IoT sensor deployment strategy for 10,000 machines','AI/ML predictive failure modeling platform','Predictive maintenance scheduling and optimization','Spare parts management and supply chain','Workforce training and change management for 5,000 technicians'],
+    expectedCalculations: ['Unplanned downtime reduction: 20% to 5% = $750M annual savings','Maintenance cost reduction through predictive scheduling','Spare parts inventory reduction from $100M to $50M','Production throughput increase: 15% from reduced downtime','Investment: $200M over 3 years with 3-year payback'],
+    successCriteria: ['Predictive maintenance IoT and AI strategy','Implementation roadmap across 20 factories','Workforce and change management program','Technology platform architecture','Financial model with $750M annual savings target']
+  },
+  {
+    id: 'ops-20', title: 'Retail Demand Sensing Network',
+    category: 'Operations / Supply Chain', industry: 'Retail / CPG', difficulty: 'Medium',
+    prompt: 'A consumer goods company ($10B revenue, 200 SKUs, 15,000 retail accounts) has 35% forecast accuracy (benchmark 85%). Poor demand sensing causes $500M in excess inventory and $300M in lost sales.',
+    context: '200 SKUs across 15,000 retail accounts. Demand variability: 40% month-to-month (benchmark 15%). Inventory: 90 days (benchmark 45). Lost sales: $300M.',
+    keyFacts: ['Revenue: $10B','SKUs: 200','Retail accounts: 15,000','Forecast accuracy: 35% (benchmark 85%)','Excess inventory cost: $500M annually','Lost sales due to stockouts: $300M annually','Inventory days: 90 (benchmark 45)','Demand variability: 40% month-to-month','Seasonality: 30% of sales in Q4','Lead time from order: 14 days','Waste/spoilage: 4% of inventory','Promotional spend: $1B annually (25% of revenue)'],
+    frameworkHints: ['Demand sensing AI/ML platform','Real-time point-of-sale data integration','Weather and event-driven demand prediction','Promotional impact modeling and optimization','Dynamic allocation and replenishment system'],
+    expectedCalculations: ['Excess inventory reduction: $500M to $200M = $300M savings','Lost sales reduction: $300M to $100M = $200M recovered','Promotional ROI improvement: 15% incrementality lift','Forecast accuracy improvement: 35% to 85%','Waste/spoilage reduction: 4% to 1% = $30M savings'],
+    successCriteria: ['Demand sensing and AI/ML platform strategy','Point-of-sale and data integration plan','Replenishment and allocation system','Implementation and training program','Financial model with $800M annual impact']
+  },
+  {
+    id: 'ops-21', title: 'Healthcare Hospital Operations Transformation',
+    category: 'Operations / Supply Chain', industry: 'Healthcare / Hospital Operations', difficulty: 'Hard',
+    prompt: 'A 500-bed hospital has 6-hour ED wait times (benchmark 2 hours), 15% readmission rate (benchmark 10%), and $200M in avoidable costs. They need a comprehensive operations overhaul.',
+    context: '500 beds, 50,000 ED visits/year, 20,000 admissions/year. ED bottlenecks, discharge delays, physician burnout, poor handoffs. Readmission rate 15% costs $50M in penalties.',
+    keyFacts: ['Beds: 500','ED visits: 50,000/year','Admissions: 20,000/year','ED wait time: 6 hours (benchmark 2)','Readmission rate: 15% (benchmark 10%)','Avoidable costs: $200M annually','Physician burnout: 40% (benchmark 25%)','Patient satisfaction: 30th percentile','Length of stay: 5.5 days (benchmark 4.5)','OR utilization: 65% (benchmark 85%)','Bed turnover: 1.5x/day (benchmark 2x)','Discharge delay: avg 8 hours post-decision'],
+    frameworkHints: ['Lean Six Sigma process improvement','AI-powered patient flow optimization','Discharge planning and care coordination','ED fast track and streaming system','Physician productivity and burnout prevention'],
+    expectedCalculations: ['ED wait time reduction from 6 to 2 hours','Readmission rate reduction from 15% to 10%','Avoidable cost reduction from $200M to $50M','Patient satisfaction improvement from 30th to 70th percentile','OR utilization improvement from 65% to 85%'],
+    successCriteria: ['Hospital operations transformation strategy','Lean Six Sigma implementation plan','AI-powered patient flow and discharge planning','ED and OR optimization program','Financial model with $150M annual savings']
+  },
+  {
+    id: 'ops-22', title: 'Pharmaceutical Warehouse Automation',
+    category: 'Operations / Supply Chain', industry: 'Pharmaceuticals / Logistics', difficulty: 'Medium',
+    prompt: 'A pharmaceutical distribution company ($8B revenue, 15 warehouses) handles 2B units annually. Current: manual picking (4 errors/1000), 3-day cycle time, $400M labor cost. Target: automate 70% with 99.9% accuracy.',
+    context: '15 warehouses across US and Europe. 2B units/year, 50K SKUs (temperature-sensitive). Customer SLA: 99.9% order accuracy, next-day delivery. Current error rate: 4 per 1,000.',
+    keyFacts: ['Revenue: $8B','Warehouses: 15 (US 10, Europe 5)','Annual units: 2B','SKUs: 50K (temperature-sensitive)','Order accuracy: 99.6% (target 99.9%)','Cycle time: 3 days (target 1 day)','Labor cost: $400M annually','Workers: 12,000 (warehouse staff)','Temperature compliance: 99.5% (FDA requirement 99.9%)','Competitors: McKesson, AmerisourceBergen, Cardinal Health','Technology: basic conveyor systems, manual picking'],
+    frameworkHints: ['Warehouse automation roadmap (robotics, ASRS, AMR)','Temperature monitoring IoT platform expansion','Order picking accuracy improvement (vision systems)','WMS integration and real-time visibility','Workforce transition and reskilling program'],
+    expectedCalculations: ['Automation ROI by warehouse','Order accuracy improvement from 99.6% to 99.9%','Temperature compliance improvement: 99.5% to 99.9%','Labor cost reduction: $400M to $250M','Fulfillment speed: 3-day to 1-day cycle time'],
+    successCriteria: ['Pharmaceutical warehouse automation strategy','Robotics and automation technology deployment','Temperature monitoring and compliance platform','WMS and integration architecture','Financial model and implementation timeline']
+  },
+  {
+    id: 'ops-23', title: 'Agricultural Crop Monitoring Network',
+    category: 'Operations / Supply Chain', industry: 'Agriculture / Technology', difficulty: 'Easy',
+    prompt: 'A large agricultural cooperative (5,000 farms, $2B revenue) needs to deploy satellite and drone monitoring to reduce crop losses (currently 15%) and improve yields.',
+    context: '5,000 farms across US Midwest. Current crop loss: 15% (benchmark 5%). Yield gap: 20% below potential. Data: manual soil testing, no real-time monitoring. Climate risk increasing.',
+    keyFacts: ['Revenue: $2B','Farms: 5,000 (US Midwest)','Crop loss rate: 15% (benchmark 5%)','Yield gap: 20% below potential','Total crop value: $4B annually','Crop loss cost: $600M annually','Current monitoring: manual soil testing (quarterly)','Real-time data: none','Drones: 0 (target: 50)','Satellite subscription: none','Climate risk: increasing drought/flood events','Technology gap: 10-15 years behind precision ag leaders'],
+    frameworkHints: ['Satellite imagery and NDVI monitoring','Drone-based crop health assessment','AI/ML predictive analytics platform','Soil and weather sensor deployment','Integration with farm management software'],
+    expectedCalculations: ['Crop loss reduction from 15% to 5% = $400M savings','Yield improvement from 20% gap to 10% gap = $400M gain','Water usage reduction: 25% (drought mitigation)','Pesticide cost reduction: 20% (precision application)','Total annual benefit: $800M+'],
+    successCriteria: ['Agricultural monitoring network strategy','Technology deployment plan (satellites, drones, sensors)','AI/ML analytics platform development','Farmer training and adoption program','Financial model with $800M annual benefit target']
+  },
+
+  // ============================================================
+  // DIGITAL TRANSFORMATION — 17 cases
+  // ============================================================
+  {
+    id: 'dt-07', title: 'Telecom 5G Digital Services',
+    category: 'Digital Transformation', industry: 'Telecommunications', difficulty: 'Expert',
+    prompt: 'A telecom operator ($25B revenue) is launching 5G and wants to build a $5B digital services business on top of the network. Currently 90% of revenue is from connectivity.',
+    context: '300M subscribers, 5G rolling out in 20 markets. Connectivity ARPU declining 5% annually. Digital services opportunity: enterprise IoT, edge computing, private networks, consumer AR/VR.',
+    keyFacts: ['Revenue: $25B (90% connectivity)','Subscribers: 300M','5G coverage: 20 markets','ARPU: declining 5% annually','Digital services today: $2.5B (10% of revenue)','Target: $5B digital services in 5 years','Enterprise segment: 50K business customers','Network capex: $4B annually','Competitors: AT&T (Warner), T-Mobile (Magenta)','Technology gap: no cloud-native platform','Talent: 500 digital engineers (need 5,000)'],
+    frameworkHints: ['5G digital services portfolio design (B2B, B2C, B2B2X)','Cloud-native platform and API strategy','Enterprise IoT and private 5G network offerings','Consumer digital services (AR/VR, gaming, health)','Organization transformation: digital business unit'],
+    expectedCalculations: ['Digital services revenue: $2.5B to $5B in 5 years','ARPU stabilization through digital upsell','Enterprise digital revenue growth','Platform economics and margin improvement','Organization and talent transformation investment'],
+    successCriteria: ['5G digital services strategy','Platform and technology architecture','Enterprise and consumer offering design','Organization and capability transformation','Financial model and investment case']
+  },
+  {
+    id: 'dt-08', title: 'Manufacturing Industry 4.0 Rollout',
+    category: 'Digital Transformation', industry: 'Manufacturing', difficulty: 'Hard',
+    prompt: 'A manufacturer ($12B revenue, 30 plants) wants to implement Industry 4.0 across all facilities. Currently: 2 plants are smart factories, rest are traditional.',
+    context: '30 plants in 12 countries. Only 2 have IoT, digital twins, and AI. Current OEE: 65% (benchmark 85%). Annual maintenance cost: $600M.',
+    keyFacts: ['Revenue: $12B','Plants: 30 (12 countries)','Smart factory count: 2','OEE: 65% (benchmark 85%)','Maintenance cost: $600M','Quality defect rate: 2.5% (benchmark 0.5%)','Downtime: 15% (benchmark 5%)','Workers: 25,000 across all plants','IT/OT systems: fragmented, no standardization','Digital maturity: Level 1-2 (of 5)','Investment available: $500M over 3 years','Competitor: Siemens (14 smart factories)'],
+    frameworkHints: ['Digital maturity assessment and roadmap by plant','IoT platform selection and deployment','Digital twin implementation strategy','AI/ML use cases: predictive quality, maintenance, scheduling','Worker upskilling and change management'],
+    expectedCalculations: ['OEE improvement: 65% to 80% across all plants','Quality defect reduction: 2.5% to 0.8%','Maintenance cost reduction: $600M to $400M','Digital skills training: 25,000 workers','Payback period for $500M investment'],
+    successCriteria: ['Industry 4.0 transformation strategy','Plant-by-plant implementation roadmap','Technology platform and architecture','Workforce transformation plan','Financial model with 3-year payback target']
+  },
+  {
+    id: 'dt-09', title: 'Insurance Telematics Platform',
+    category: 'Digital Transformation', industry: 'Insurance', difficulty: 'Medium',
+    prompt: 'An auto insurer ($8B GWP) wants to launch a telematics-based usage insurance product. Currently: traditional underwriting, no real-time driving data.',
+    context: '2M policyholders. Loss ratio: 72% (benchmark 65%). No driving behavior data. Competitors: Progressive Snapshot, GEICO DriveSafe.',
+    keyFacts: ['GWP: $8B','Policyholders: 2M','Loss ratio: 72% (benchmark 65%)','Telematics adoption: 0% (benchmark 20%)','Target loss ratio: 65%','Competitor penetration: 20-30% of policies','Customer satisfaction: 72/100','Mobile app users: 40% (800K)','Data: no real-time driving data','Pricing model: demographic only','Regulatory: telematics approved in 45 states'],
+    frameworkHints: ['Telematics data collection (OBD device, mobile app)','Risk scoring model using driving behavior','Usage-based insurance product design','Customer acquisition and opt-in strategy','Privacy and regulatory compliance framework'],
+    expectedCalculations: ['Loss ratio reduction from 72% to 65% = $560M savings','Telematics adoption: 0% to 30% of book','Customer retention improvement from personalized pricing','New customer acquisition from competitive pricing','Data monetization and partnership opportunities'],
+    successCriteria: ['Telematics and usage-based insurance strategy','Data collection and risk modeling platform','Product design and pricing innovation','Customer acquisition and retention plan','Financial model and ROI analysis']
+  },
+  {
+    id: 'dt-10', title: 'Media Company Direct-to-Consumer Pivot',
+    category: 'Digital Transformation', industry: 'Media / Entertainment', difficulty: 'Hard',
+    prompt: 'A traditional media company ($5B revenue: 70% broadcast, 30% digital) wants to flip to 30% broadcast, 70% digital in 3 years. Digital subscribers: 2M (need 15M).',
+    context: 'Broadcast TV networks, 200M reach. Digital: streaming with 2M subscribers ($5/month). Need to reach 15M subscribers at $12/month to offset broadcast decline.',
+    keyFacts: ['Revenue: $5B (70% broadcast, 30% digital)','Digital subscribers: 2M (need 15M)','Streaming price: $5/month (need $12)','Broadcast reach: 200M households','Content spend: $2B annually','Digital content: 10% of budget (need 40%)','Ad revenue declining: 8% annually in broadcast','Competitors: Netflix (250M), Disney+ (150M), Peacock','Churn rate: 8% monthly (benchmark 5%)','Tech platform: licensed, not owned','Customer acquisition cost: $50 per subscriber'],
+    frameworkHints: ['Content strategy for streaming-first (originals, library)','Direct-to-consumer platform build vs license','Pricing and bundling strategy (ad-free, ad-supported)','Distribution and partnership strategy','Organization from broadcast to digital-first culture'],
+    expectedCalculations: ['Digital subscribers: 2M to 15M in 3 years','Digital revenue: $1.5B to $3.5B','Content cost reallocation: 10% to 40% digital','Customer acquisition: 13M new subscribers at $50 CAC','Total investment: $1.5B over 3 years'],
+    successCriteria: ['Direct-to-consumer transformation strategy','Content and programming strategy','Platform and technology roadmap','Organization and culture transformation','Financial model with subscriber growth projections']
+  },
+  {
+    id: 'dt-11', title: 'Logistics Real-Time Visibility Platform',
+    category: 'Digital Transformation', industry: 'Logistics / Supply Chain', difficulty: 'Medium',
+    prompt: 'A third-party logistics provider ($10B revenue) wants to build a real-time visibility platform for 50K shippers. Currently: batch tracking, no real-time data.',
+    context: '50,000 shippers, 2M shipments/month. Current tracking: batch updates every 4 hours. Customer complaints: 35% cite visibility as top issue.',
+    keyFacts: ['Revenue: $10B','Shippers: 50,000','Shipments: 2M/month','Current tracking: batch updates every 4h','Customer complaints: 35% cite visibility','Customer churn: 12% annually','Competitor: project44, FourKites (real-time)','Data: GPS from 30% of fleet, nothing from carriers','Platform: legacy TMS, no API layer','Investment available: $100M','Target: real-time visibility for 90% of shipments'],
+    frameworkHints: ['Real-time visibility platform architecture','IoT and GPS data collection from multiple sources','Carrier onboarding and data integration','Customer-facing dashboard and API','Analytics: ETA prediction, exception management'],
+    expectedCalculations: ['Visibility: batch to real-time for 90% of shipments','Customer churn reduction from 12% to 5%','Revenue uplift from premium visibility services','Operational efficiency from exception management','Customer satisfaction improvement from 65 to 85 NPS'],
+    successCriteria: ['Real-time visibility platform strategy','Data collection and carrier integration','Customer experience and analytics platform','Implementation roadmap','Financial model and ROI analysis']
+  },
+  {
+    id: 'dt-12', title: 'Healthcare Patient Portal Overhaul',
+    category: 'Digital Transformation', industry: 'Healthcare', difficulty: 'Medium',
+    prompt: 'A health system ($6B revenue, 30 hospitals, 500 clinics) has an outdated patient portal with 15% adoption. They want to build a modern digital health platform with 60% adoption.',
+    context: '30 hospitals, 500 clinics, 3M patients. Current portal: basic, fragmented (3 different systems). Mobile app: none. Telehealth: 5% of visits.',
+    keyFacts: ['Revenue: $6B','Hospitals: 30','Clinics: 500','Patients: 3M','Portal adoption: 15% (target 60%)','Current portal: basic, 3 fragmented systems','Mobile app: none','Telehealth: 5% of visits','Patient satisfaction with digital: 25th percentile','Cost per patient interaction: $15 (digital $2)','Competitors: Epic MyChart, Cerner Patient Portal','Regulatory: ONC interoperability rules'],
+    frameworkHints: ['Unified patient portal with single sign-on','Mobile-first design with patient engagement features','Telehealth and virtual care platform','Integration with EHRs (Epic, Cerner, Meditech)','Patient engagement: messaging, scheduling, records'],
+    expectedCalculations: ['Portal adoption: 15% to 60%','Cost per interaction: $15 to $5 (digital shift)','Patient satisfaction improvement from 25th to 70th percentile','Revenue from telehealth expansion','Operational efficiency from self-service'],
+    successCriteria: ['Digital health platform strategy','Portal and mobile app design','Integration and interoperability roadmap','Patient adoption and engagement plan','Financial model and implementation timeline']
+  },
+  {
+    id: 'dt-13', title: 'Energy Company Digital Field Operations',
+    category: 'Digital Transformation', industry: 'Energy / Utilities', difficulty: 'Hard',
+    prompt: 'An oil and gas company ($20B revenue, 500 field sites) is deploying digital tools for 10,000 field workers. Currently: paper-based, 2-hour average response time to incidents.',
+    context: '500 field sites, 10,000 field workers. Paper-based work orders, manual safety inspections, no real-time monitoring. Incident response: 2 hours average. Target: 15 minutes.',
+    keyFacts: ['Revenue: $20B','Field sites: 500','Field workers: 10,000','Current response time: 2 hours (target 15 min)','Work orders: paper-based','Safety inspections: manual, quarterly','Equipment downtime: 12% ($2.4B annual cost)','Maintenance cost: $1.5B annually','Incident rate: 2.5 per 100 workers (benchmark 1.0)','Digital maturity: Level 1','IT budget: $500M (10% for digital)'],
+    frameworkHints: ['Mobile field worker platform (work orders, inspections)','IoT sensors for equipment monitoring','Real-time safety monitoring and incident response','Digital twin of critical assets','AR/VR for remote expert assistance'],
+    expectedCalculations: ['Response time: 2 hours to 15 minutes','Equipment downtime: 12% to 5% = $1.4B savings','Maintenance cost reduction: $1.5B to $1B','Safety incident rate reduction: 2.5 to 1.0','Field worker productivity improvement: 25%'],
+    successCriteria: ['Digital field operations strategy','Mobile and IoT platform architecture','Safety and incident response digitization','Implementation across 500 sites','Financial model with $1.4B downtime savings']
+  },
+  {
+    id: 'dt-14', title: 'Banking Core Modernization',
+    category: 'Digital Transformation', industry: 'Banking / Financial Services', difficulty: 'Expert',
+    prompt: 'A regional bank ($50B assets) is running on a 30-year-old core banking system. They want to modernize to compete with fintech challengers. Current: 40% digital adoption, high cost-to-serve.',
+    context: 'Core system: 30 years old, COBOL-based. Cost to maintain: $200M/year. New product launch: 6 months (benchmark 2 weeks). Digital adoption: 40%.',
+    keyFacts: ['Assets: $50B','Core system age: 30 years (COBOL)','Maintenance cost: $200M/year','New product launch: 6 months (benchmark 2 weeks)','Digital adoption: 40%','Branches: 200','Customers: 2M','Cost-to-income ratio: 65% (benchmark 45%)','Digital competitors: 5 neobanks in market','Data: locked in legacy systems, no real-time','Staff: 5,000 (30% in IT)'],
+    frameworkHints: ['Core banking modernization strategy (replace, re-platform, or wrap)','Cloud migration and API-first architecture','Digital product factory for rapid launch','Data platform for real-time analytics','Branch and workforce transformation'],
+    expectedCalculations: ['Maintenance cost: $200M to $50M','New product launch: 6 months to 2 weeks','Cost-to-income ratio: 65% to 50%','Digital adoption: 40% to 80%','Customer growth: 2M to 3M from digital channels'],
+    successCriteria: ['Core modernization strategy with risk assessment','Cloud and API architecture','Digital product and platform strategy','Branch and workforce transformation','Financial model with $150M annual savings']
+  },
+  {
+    id: 'dt-15', title: 'Retail Media Network Launch',
+    category: 'Digital Transformation', industry: 'Retail / Advertising', difficulty: 'Medium',
+    prompt: 'A grocery chain ($30B revenue, 1,000 stores) wants to build a retail media network leveraging its loyalty data (15M members). Target: $500M in ad revenue in 3 years.',
+    context: '1,000 stores, 15M loyalty members. Current: no media business. Competitor: Walmart Connect ($2B+), Kroger Precision Marketing.',
+    keyFacts: ['Revenue: $30B (grocery)','Stores: 1,000','Loyalty members: 15M','Competitor: Walmart Connect $2B+, Kroger $1B+','Target: $500M ad revenue in 3 years','Data: purchase history, demographics, store visits','Current data monetization: $0','Digital ads market: growing 25% annually','Advertiser demand: 200 CPG brands as partners','Technology: basic loyalty platform, no DSP','Privacy: first-party data advantage (cookie deprecation)'],
+    frameworkHints: ['Retail media platform build (DSP, ad server)','Data clean room for advertiser analytics','Advertiser sales team and go-to-market','Measurement and attribution framework','Privacy and compliance framework'],
+    expectedCalculations: ['Ad revenue: $0 to $500M in 3 years','Advertiser count: 0 to 200 brands','Data-driven advertising ROAS vs traditional','Loyalty member engagement improvement','Gross margin on media: 70%+'],
+    successCriteria: ['Retail media network strategy','Platform and data architecture','Advertiser acquisition and sales strategy','Measurement and attribution platform','Financial model with $500M revenue target']
+  },
+  {
+    id: 'dt-16', title: 'Education Digital Learning Platform',
+    category: 'Digital Transformation', industry: 'Education / EdTech', difficulty: 'Easy',
+    prompt: 'A university ($2B revenue, 40K students) wants to build a hybrid digital learning platform. Currently: 90% in-person, limited LMS usage, no online degree programs.',
+    context: '40,000 students, 2,000 faculty, 200 programs. LMS adoption: 30% of courses. Online programs: 0. Competitor: Arizona State (online 70K students).',
+    keyFacts: ['Revenue: $2B (90% in-person tuition)','Students: 40,000','Faculty: 2,000','Programs: 200','LMS adoption: 30%','Online programs: 0 (target: 50)','Competitor: ASU online 70K students','Market: online higher ed $100B and growing 15%','Technology: basic LMS (Canvas), no video platform','Student satisfaction with tech: 40/100','Digital skills gap: 60% of faculty need training'],
+    frameworkHints: ['Hybrid learning platform design (LMS, video, assessment)','Online program development (50 programs in 3 years)','Faculty digital training program','Student engagement and retention tools','Marketing and student acquisition for online'],
+    expectedCalculations: ['Online enrollment: 0 to 20,000 students in 3 years','Online revenue: $0 to $400M','Faculty digital proficiency: 40% to 90%','Student satisfaction with tech: 40 to 80/100','Cost per online student: 50% of in-person'],
+    successCriteria: ['Digital learning transformation strategy','Platform and technology architecture','Online program portfolio design','Faculty training and adoption plan','Financial model with $400M online revenue target']
+  },
+  {
+    id: 'dt-17', title: 'Insurance Claims AI Automation',
+    category: 'Digital Transformation', industry: 'Insurance', difficulty: 'Hard',
+    prompt: 'A property and casualty insurer ($12B GWP) processes 1M claims/year with 40% straight-through processing rate. They want to achieve 80% STP using AI.',
+    context: '1M claims/year, 40% STP (benchmark 80%). Average claims cycle: 30 days (benchmark 7). Claims cost: $8B annually. Leakage: 15% (benchmark 5%).',
+    keyFacts: ['GWP: $12B','Claims volume: 1M/year','STP rate: 40% (benchmark 80%)','Average claims cycle: 30 days (benchmark 7)','Claims cost: $8B annually','Claims leakage: 15% ($1.2B) vs benchmark 5%','Customer satisfaction: 55/100','Claims staff: 3,000','Fraud detection: manual review of 10%','Technology: legacy claims system, basic rules engine','Competitor: Lemonade (AI claims in 3 seconds)'],
+    frameworkHints: ['AI/ML claims triage and routing','Computer vision for damage assessment (auto, property)','NLP for claims intake and documentation','Fraud detection and anomaly scoring','Straight-through processing engine'],
+    expectedCalculations: ['STP rate: 40% to 80%','Claims cycle time: 30 days to 7 days','Claims leakage: 15% to 5% = $800M savings','Customer satisfaction: 55 to 80/100','Claims staff redeployment: 1,500 to value-added roles'],
+    successCriteria: ['AI claims automation strategy','Computer vision and NLP implementation','STP engine and workflow redesign','Fraud detection platform','Financial model with $800M leakage reduction']
+  },
+  {
+    id: 'dt-18', title: 'Agricultural Precision Farming Platform',
+    category: 'Digital Transformation', industry: 'Agriculture', difficulty: 'Medium',
+    prompt: 'A large agribusiness ($8B revenue) wants to build a precision farming digital platform for 10,000 partner farmers. Currently: no digital tools, traditional farming practices.',
+    context: '10,000 partner farmers, 20M acres. Crop yield: 15% below optimal. Input costs: $3B. Digital tools: none. Competitor: John Deere Operations Center.',
+    keyFacts: ['Revenue: $8B','Partner farmers: 10,000','Acres: 20M','Yield gap: 15% below optimal','Input costs: $3B (seeds, fertilizer, chemicals)','Digital tools: none','Competitor: John Deere, Climate Corp','Market opportunity: precision ag $12B by 2028','Data: soil tests (quarterly), no real-time','Climate risk: increasing variability','Farmer tech adoption: low (average age 55)'],
+    frameworkHints: ['Precision farming platform (soil, weather, satellite)','AI/ML yield optimization recommendations','Input optimization (seeds, fertilizer, chemicals)','Farm management software and mobile app','Data partnerships (equipment OEMs, weather services)'],
+    expectedCalculations: ['Yield improvement: 15% gap to 5% = $1.2B value','Input cost reduction: 10% = $300M savings','Platform revenue: $100M/year from 10,000 farmers','Carbon credit monetization potential','Data-driven agronomy advisory services'],
+    successCriteria: ['Precision farming platform strategy','AI/ML and data analytics capabilities','Farmer adoption and engagement plan','Partnership and ecosystem strategy','Financial model with $1.5B total value creation']
+  },
+  {
+    id: 'dt-19', title: 'Pharma Digital Clinical Trials',
+    category: 'Digital Transformation', industry: 'Pharmaceuticals', difficulty: 'Expert',
+    prompt: 'A pharmaceutical company ($25B revenue) wants to digitize clinical trials. Currently: 90% site-based, 50% of trials delayed, $2B annual trial cost.',
+    context: '150 active trials, 50,000 patients. 90% site-based (target 50% decentralized). Trial delays: 50% (cost $100M each). Patient recruitment: 30% fail to meet targets.',
+    keyFacts: ['Revenue: $25B','Active trials: 150','Patients: 50,000','Site-based: 90% (target 50% decentralized)','Trial delays: 50% ($100M cost each)','Recruitment failures: 30% of trials','Annual trial cost: $2B','Patient dropout: 25%','Data: paper CRFs in 40% of sites','Regulatory: FDA accepts DHT data','Competitor: Medidata, Oracle Health Sciences'],
+    frameworkHints: ['Decentralized clinical trial (DCT) platform','Wearable and remote patient monitoring','AI-powered patient recruitment and matching','Electronic data capture and real-time analytics','Regulatory strategy for digital endpoints'],
+    expectedCalculations: ['Trial timeline reduction: 50% delay to 20% delay','Patient recruitment improvement: 30% failure to 10%','Patient dropout reduction: 25% to 10%','Cost per trial reduction: 20%','Time-to-market improvement: 6 months faster'],
+    successCriteria: ['Digital clinical trials transformation strategy','DCT platform and wearable integration','Patient recruitment and retention platform','Regulatory and compliance framework','Financial model with $600M annual savings']
+  },
+  {
+    id: 'dt-20', title: 'Insurance Product Configuration Engine',
+    category: 'Digital Transformation', industry: 'Insurance', difficulty: 'Medium',
+    prompt: 'A commercial insurer ($6B GWP) takes 9 months to launch new products. They want to build a no-code product configuration engine to launch in 2 weeks.',
+    context: 'Commercial lines: 50 products, 20 states. Current: 9 months per product launch. IT bottleneck: 80% of time spent on configuration vs innovation.',
+    keyFacts: ['GWP: $6B','Products: 50 commercial lines','States: 20','Product launch time: 9 months (target 2 weeks)','IT bottleneck: 80% on configuration','Product changes: 200/year','Compliance changes: 50/year','Underwriter manual processes: 60%','Competitor: Socotra (cloud-native core)','Regulatory filing: 4-6 weeks per state','Customer demand: 40% want digital self-service'],
+    frameworkHints: ['No-code product configuration engine','Rate/rule management and versioning','Regulatory compliance automation','Underwriter workflow and decision engine','API-first architecture for distribution channels'],
+    expectedCalculations: ['Product launch time: 9 months to 2 weeks','Product change implementation: 4 weeks to 1 day','IT time on configuration: 80% to 20%','Underwriter productivity: 40% improvement','Time-to-revenue for new products: 6x faster'],
+    successCriteria: ['Product configuration engine architecture','No-code/low-code platform selection','Regulatory compliance automation','Underwriter workflow redesign','Financial model and implementation roadmap']
+  },
+  {
+    id: 'dt-21', title: 'Fashion Virtual Try-On Platform',
+    category: 'Digital Transformation', industry: 'Fashion / E-commerce', difficulty: 'Medium',
+    prompt: 'A fashion retailer ($3B revenue, 20M online customers) has 30% return rate due to fit issues. They want to deploy AR virtual try-on to reduce returns by 40%.',
+    context: '30% return rate (industry avg 20%). 20M online customers. Fit/size: #1 reason for returns (60%). AR technology: available but unproven at scale.',
+    keyFacts: ['Revenue: $3B (online 40%)','Online customers: 20M','Return rate: 30% (industry avg 20%)','Fit/size issues: 60% of returns','Return processing cost: $150M/year','AR technology cost: $50M implementation','Size data: basic (S, M, L)','Body measurement data: none','Mobile traffic: 70% of visits','Conversion rate: 2.5%','Competitor: Warby Parker (virtual try-on), ASOS (Fit Assistant)'],
+    frameworkHints: ['AR virtual try-on for clothing and shoes','AI-powered size recommendation engine','Body measurement technology (phone camera)','Fit database from return data analytics','Integration with product pages and checkout'],
+    expectedCalculations: ['Return rate reduction: 30% to 18% = $180M savings','Conversion rate improvement: 2.5% to 3.5%','Customer satisfaction with fit: 50% to 80%','Size data creation: 20M body measurements','AR engagement rate: 25% of visitors'],
+    successCriteria: ['Virtual try-on technology strategy','AI size recommendation platform','Body measurement and fit analytics','Customer adoption and engagement plan','Financial model with $180M return savings']
+  },
+  {
+    id: 'dt-22', title: 'Banking AI-Powered Personalization',
+    category: 'Digital Transformation', industry: 'Banking / Financial Services', difficulty: 'Medium',
+    prompt: 'A retail bank ($80B assets, 5M customers) wants to deliver personalized financial advice at scale. Currently: generic product pushes, 2% cross-sell rate.',
+    context: '5M customers, 8M accounts. Cross-sell rate: 2% (benchmark 15%). Customer satisfaction: 60/100. Digital engagement: 45%. Personalization: none.',
+    keyFacts: ['Assets: $80B','Customers: 5M','Accounts: 8M','Cross-sell rate: 2% (benchmark 15%)','Customer satisfaction: 60/100','Digital engagement: 45%','Personalization: none (generic product pushes)','Revenue per customer: $400 (benchmark $800)','NPS: 15 (benchmark 45)','Competitor: JPMorgan (personalized at scale)','Data: transaction history, demographics, behavior'],
+    frameworkHints: ['AI/ML customer segmentation and next-best-action','Personalized financial health scoring','Contextual product recommendations','Hyper-personalized communication (email, push, in-app)','Privacy and consent management framework'],
+    expectedCalculations: ['Cross-sell rate: 2% to 15%','Revenue per customer: $400 to $800','Customer satisfaction: 60 to 80/100','NPS improvement: 15 to 45','Digital engagement: 45% to 75%'],
+    successCriteria: ['AI personalization strategy','Customer data and segmentation platform','Next-best-action engine design','Personalization use cases and roadmap','Financial model with $2B revenue uplift']
+  },
+  {
+    id: 'dt-23', title: 'Supply Chain Control Tower',
+    category: 'Digital Transformation', industry: 'Supply Chain / Retail', difficulty: 'Expert',
+    prompt: 'A consumer goods company ($15B revenue, 500 suppliers, 20 warehouses) has zero end-to-end supply chain visibility. They want to build a control tower for real-time visibility and predictive analytics.',
+    context: '500 suppliers, 20 warehouses, 100 distribution points. Current: batch updates, 24-hour lag. Disruptions cost $500M annually in expedited shipping and lost sales.',
+    keyFacts: ['Revenue: $15B','Suppliers: 500','Warehouses: 20','Distribution points: 100','Current visibility: batch (24h lag)','Disruption cost: $500M annually','Expedited shipping: $200M annually','Inventory excess: $1B above optimal','Demand forecast accuracy: 70%','Supply chain cost: 15% of revenue ($2.25B)','Competitor: Unilever (control tower), P&G (digital SC)'],
+    frameworkHints: ['Real-time supply chain visibility platform','Predictive disruption detection and alerts','Dynamic inventory rebalancing engine','Control tower operations and response protocols','Integration with 500 suppliers and 20 warehouses'],
+    expectedCalculations: ['Expedited shipping reduction: $200M to $80M','Disruption cost reduction: $500M to $200M','Inventory optimization: $1B to $600M','Demand forecast accuracy: 70% to 90%','Response time to disruption: 24h to 2h'],
+    successCriteria: ['Supply chain control tower strategy','Platform architecture and data integration','Predictive analytics and disruption management','Supplier and warehouse integration','Financial model with $820M annual savings']
+  },
+
+  // ============================================================
+  // TURNAROUND / RESTRUCTURING — 17 cases
+  // ============================================================
+  {
+    id: 'tr-07', title: 'Airline Fleet Restructuring',
+    category: 'Turnaround / Restructuring', industry: 'Aviation / Airlines', difficulty: 'Expert',
+    prompt: 'An airline ($15B revenue) is losing $2B annually with an aging fleet, high fuel costs, and unprofitable routes. They need a complete turnaround to survive.',
+    context: '200 aircraft (avg age 14 years, benchmark 8). Fuel cost: 35% of revenue (benchmark 25%). Load factor: 72% (benchmark 85%). Routes: 150 (40% unprofitable).',
+    keyFacts: ['Revenue: $15B','Net loss: -$2B annually','Fleet: 200 aircraft (avg age 14 years, benchmark 8)','Fuel cost: 35% of revenue ($5.25B)','Load factor: 72% (benchmark 85%)','Routes: 150 (40% unprofitable = 60 routes)','Passengers: 50M/year','Employee count: 45,000 (need 30,000)','Debt: $12B','Cash: $1.5B (6 months runway)','Competitors: 5 major airlines, 3 LCCs','Labor cost: 30% of revenue (benchmark 25%)'],
+    frameworkHints: ['Fleet renewal strategy (retire old, order efficient aircraft)','Route profitability analysis and network optimization','Cost reduction: fuel hedging, maintenance optimization','Revenue management and yield improvement','Workforce restructuring: 15,000 positions','Debt restructuring with creditors'],
+    expectedCalculations: ['Fleet fuel efficiency improvement: 35% to 25%','Route pruning: eliminate 60 unprofitable routes','Cost reduction: $3B over 2 years','Load factor improvement: 72% to 82%','Debt reduction from $12B to $8B'],
+    successCriteria: ['Comprehensive airline turnaround strategy','Fleet and network optimization plan','Cost reduction and restructuring program','Revenue improvement and market positioning','Financial model and creditor negotiation plan']
+  },
+  {
+    id: 'tr-08', title: 'Retail Chain Store Closures and Rebrand',
+    category: 'Turnaround / Restructuring', industry: 'Retail', difficulty: 'Hard',
+    prompt: 'A department store chain ($8B revenue, 400 stores) is losing $1B annually. 40% of stores are unprofitable. They need to close 150 stores, rebrand, and transform digitally.',
+    context: '400 stores in malls (60%) and off-mall (40%). Revenue declining 10% annually. E-commerce: 8% of sales (benchmark 30%). Brand perception: dated.',
+    keyFacts: ['Revenue: $8B (declining 10% annually)','Stores: 400 (150 to close)','Unprofitable stores: 40% (160 stores)','Net loss: -$1B annually','E-commerce: 8% of sales (benchmark 30%)','Mall concentration: 60%','Avg store size: 100K sq ft','Inventory: $3B (turns: 2x, benchmark 4x)','Lease obligations: $4B (avg 5 years)','Employee count: 30,000 (to reduce to 20,000)','Brand awareness: 60% (declining)','Competitor: Nordstrom (thriving), Sears (failed)'],
+    frameworkHints: ['Store closure strategy (which 150, exit costs, timeline)','Brand repositioning and marketing relaunch','E-commerce acceleration (from 8% to 30%)','Inventory reduction and supply chain optimization','Workforce restructuring and severance planning','Lease renegotiation and exit strategy'],
+    expectedCalculations: ['Store closures: 150 stores saving $600M annually','Revenue loss from closures: $1.5B','Digital revenue: 8% to 30% = $2.4B','Inventory reduction: $3B to $1.5B','Net improvement: break-even in 2 years'],
+    successCriteria: ['Turnaround strategy with store closure plan','Brand repositioning and digital transformation','Workforce and lease restructuring','E-commerce acceleration strategy','Financial model with break-even timeline']
+  },
+  {
+    id: 'tr-09', title: 'Telecom Subscriber Loss Crisis',
+    category: 'Turnaround / Restructuring', industry: 'Telecommunications', difficulty: 'Hard',
+    prompt: 'A telecom operator ($12B revenue) is losing 500K subscribers quarterly to competitors. Net Promoter Score: -20. Network quality complaints: 40% of calls.',
+    context: 'Subscribers declining from 20M to 18M. Churn rate: 3% monthly (benchmark 1.5%). ARPU: $45 (benchmark $55). Network: 60% 4G coverage (benchmark 95% 5G).',
+    keyFacts: ['Revenue: $12B (declining)','Subscribers: 18M (losing 500K/quarter)','Churn rate: 3% monthly (benchmark 1.5%)','ARPU: $45 (benchmark $55)','NPS: -20 (benchmark +30)','Network complaints: 40% of calls','4G coverage: 60% (competitors 95% 5G)','Net loss: -$500M annually','Market share: 15% (was 25%)','Fiber coverage: 20%','Competitors: 3 operators, 2 with 5G','Workforce: 8,000 (20% overstaffed)'],
+    frameworkHints: ['Network quality rapid improvement plan','Customer retention and win-back program','Competitive pricing and value proposition','Digital customer experience overhaul','Operational cost restructuring'],
+    expectedCalculations: ['Subscriber loss: 500K/quarter to net positive','Churn reduction: 3% to 1.5%','ARPU improvement: $45 to $55','NPS improvement: -20 to +20','Return to profitability in 18 months'],
+    successCriteria: ['Telecom turnaround strategy','Network improvement and 5G deployment','Customer retention and acquisition plan','Pricing and product restructuring','Financial model with subscriber recovery projections']
+  },
+  {
+    id: 'tr-10', title: 'Auto Parts Manufacturer Electric Transition',
+    category: 'Turnaround / Restructuring', industry: 'Automotive / Manufacturing', difficulty: 'Expert',
+    prompt: 'An auto parts manufacturer ($6B revenue) makes 80% ICE components. EV adoption is threatening their core business. They need to pivot to EV components while managing ICE decline.',
+    context: '80% revenue from ICE components (declining 15% annually). 20% from electronics. Need to become 50% EV-compatible in 3 years. 10 factories, 8 designed for ICE.',
+    keyFacts: ['Revenue: $6B (80% ICE, 20% electronics)','ICE revenue declining: 15% annually','EV trend: 40% of new cars by 2028','Factories: 10 (8 ICE-specific)','Workers: 15,000 (5,000 ICE-specific skills)','Customer base: 20 OEMs (15 ICE, 5 EV)','R&D spend: $200M (80% ICE, need 80% EV)','Competitor: Bosch (60% EV-ready), Continental','Technology gap: no battery, motor, or power electronics','Investment needed: $2B for EV transition','Timeline: 3 years to be 50% EV-compatible'],
+    frameworkHints: ['EV component strategy (battery, motor, power electronics, thermal)','Factory retooling and automation','Customer win-back from ICE to EV programs','R&D reallocation and talent acquisition','Strategic partnerships or acquisitions for EV technology'],
+    expectedCalculations: ['EV revenue: 20% to 50% in 3 years','ICE decline management: minimize revenue loss','Factory conversion: 8 ICE to 5 EV-ready','R&D reallocation: 80% EV by Year 1','Customer retention: keep 15 ICE accounts while winning EV business'],
+    successCriteria: ['EV transition turnaround strategy','Factory and capability transformation plan','Customer and market strategy','Talent and organization redesign','Financial model with $2B investment and 5-year ROI']
+  },
+  {
+    id: 'tr-11', title: 'Hospital Network Financial Recovery',
+    category: 'Turnaround / Restructuring', industry: 'Healthcare / Hospital Network', difficulty: 'Hard',
+    prompt: 'A hospital network ($4B revenue, 8 hospitals) is hemorrhaging $400M annually. Three rural hospitals are unprofitable, payer mix is deteriorating, and physician turnover is 25%.',
+    context: '8 hospitals: 5 urban (profitable), 3 rural (losing $200M). Payer mix: 40% Medicare/Medicaid (reimburses 60% of cost). Physician turnover: 25%. ER diversion rate: 15%.',
+    keyFacts: ['Revenue: $4B','Net loss: -$400M annually','Hospitals: 8 (5 urban profitable, 3 rural losing $200M)','Payer mix: 40% government (Medicare/Medicaid)','Physician turnover: 25% (benchmark 10%)','ER diversion rate: 15%','Bed occupancy: 55% (benchmark 80%)','Length of stay: 5.5 days (benchmark 4.5)','IT systems: 4 different EHRs','Malpractice insurance: rising 20% annually','Community: rural hospitals are sole providers'],
+    frameworkHints: ['Service line rationalization (what to keep, what to close)','Payer strategy: value-based care contracts','Physician recruitment and retention program','Operational efficiency: LEAN Six Sigma','Rural hospital transformation (critical access, telemedicine)','IT consolidation and interoperability'],
+    expectedCalculations: ['Net loss reduction: -$400M to break-even','Rural hospital strategy: close, convert, or restructure','Physician turnover: 25% to 10%','Bed occupancy: 55% to 75%','Length of stay: 5.5 to 4.5 days'],
+    successCriteria: ['Hospital network turnaround strategy','Service line and rural hospital restructuring','Payer and revenue cycle optimization','Physician retention and operational efficiency','Financial model with break-even in 18 months']
+  },
+  {
+    id: 'tr-12', title: 'Consumer Packaged Goods Brand Revival',
+    category: 'Turnaround / Restructuring', industry: 'Consumer Packaged Goods', difficulty: 'Medium',
+    prompt: 'A legacy CPG brand ($5B revenue) has lost 30% market share in 5 years to DTC competitors. Brand perception is outdated. They need to revitalize while maintaining core customers.',
+    context: '50-year-old brand, $5B revenue (was $7B). Market share declining 6% annually. DTC competitors growing 40% annually. Core customer aging (avg 55, target 35).',
+    keyFacts: ['Revenue: $5B (was $7B, declining 6% annually)','Market share: 12% (was 18%)','DTC competitors: growing 40% annually','Core customer avg age: 55 (target 35)','Brand awareness: 80% (but low relevance for under 40)','Distribution: 90% retail (benchmark: 60% retail, 40% DTC)','Digital: 5% of sales (benchmark 25%)','Innovation: 1 new product/year (benchmark 10)','Marketing spend: $500M (80% TV, 20% digital)','Competitor: 20+ DTC brands collectively taking 15% share','E-commerce: Amazon #1 seller, no DTC presence'],
+    frameworkHints: ['Brand repositioning for younger demographics','DTC channel launch and e-commerce acceleration','Product innovation pipeline (10 launches/year)','Marketing mix shift: TV to digital/social/influencer','Retail partner strategy evolution'],
+    expectedCalculations: ['Revenue stabilization: stop 6% annual decline','DTC revenue: 0% to 25% of sales ($1.25B)','Digital marketing ROI: 3x vs traditional','New customer acquisition: 1M under-40 customers/year','Market share recovery: 12% to 15%'],
+    successCriteria: ['Brand turnaround and revitalization strategy','DTC and digital transformation plan','Product innovation pipeline','Marketing and channel strategy','Financial model with market share recovery targets']
+  },
+  {
+    id: 'tr-13', title: 'Restaurant Chain Operational Overhaul',
+    category: 'Turnaround / Restructuring', industry: 'Food & Beverage / Restaurants', difficulty: 'Easy',
+    prompt: 'A fast-casual chain ($2B revenue, 800 locations) is losing market share. Food costs: 35% (benchmark 28%). Wait time: 12 minutes (benchmark 5). Customer satisfaction: 3.2/5.',
+    context: '800 locations, avg revenue $2.5M/location. Food costs 35%, labor 30%, rent 15%. Profit margin: -2% (benchmark 8%). Drive-through: 40% of orders, 12 min avg wait.',
+    keyFacts: ['Revenue: $2B (800 locations)','Avg revenue per location: $2.5M','Food cost: 35% (benchmark 28%)','Labor cost: 30% (benchmark 25%)','Rent: 15% (benchmark 10%)','Profit margin: -2% (benchmark 8%)','Drive-through wait: 12 min (benchmark 5)','Customer satisfaction: 3.2/5','Digital orders: 15% (benchmark 40%)','Delivery: 10% (through 3rd party, 30% commission)','Employee turnover: 120% annually'],
+    frameworkHints: ['Menu engineering for food cost optimization','Kitchen workflow and speed improvement','Digital ordering and drive-through technology','Labor scheduling optimization','Delivery channel strategy (reduce 3rd party dependence)'],
+    expectedCalculations: ['Food cost: 35% to 28% = $140M savings','Labor cost: 30% to 25% = $100M savings','Drive-through time: 12 min to 5 min','Digital orders: 15% to 40%','Net margin improvement: -2% to 8% = $200M profit'],
+    successCriteria: ['Restaurant turnaround strategy','Menu and food cost optimization','Digital and drive-through improvement','Labor and operational efficiency','Financial model with margin recovery plan']
+  },
+  {
+    id: 'tr-14', title: 'Industrial Conglomerate Divestiture Strategy',
+    category: 'Turnaround / Restructuring', industry: 'Industrial / Conglomerate', difficulty: 'Expert',
+    prompt: 'A conglomerate ($30B revenue, 5 business units) is trading at a 30% conglomerate discount. Shareholders want breakup. They need to decide: divest, spin-off, or restructure.',
+    context: '5 units: chemicals ($10B, 8% margin), packaging ($8B, 12%), automation ($6B, 15%), services ($4B, 5%), real estate ($2B, 20%). Total market cap: $15B (should be $22B).',
+    keyFacts: ['Revenue: $30B (5 business units)','Market cap: $15B (conglomerate discount: 30%)','Units: Chemicals ($10B, 8%), Packaging ($8B, 12%), Automation ($6B, 15%), Services ($4B, 5%), Real estate ($2B, 20%)','Debt: $10B','Overhead: $1.5B corporate (5% of revenue)','Synergies: $500M between units','Board pressure: activist investor demanding breakup','CEO tenure: 2 years (turnaround mandate)','Regulatory: antitrust for some divestitures','Timeline: 18 months for transformation'],
+    frameworkHints: ['Portfolio analysis: hold, divest, or spin-off each unit','Valuation analysis: sum-of-parts vs conglomerate','Separation costs and dis-synergies','Management team reallocation','Shareholder communication and governance reform'],
+    expectedCalculations: ['Conglomerate discount elimination: $15B to $22B market cap','Divestiture proceeds from services and real estate: $6B','Corporate overhead reduction: $1.5B to $500M','Debt reduction: $10B to $6B','Focus: 3 core units with 10%+ margins'],
+    successCriteria: ['Portfolio restructuring strategy','Divestiture and spin-off recommendations','Valuation and financial modeling','Governance and shareholder value plan','Execution roadmap with 18-month timeline']
+  },
+  {
+    id: 'tr-15', title: 'Banking NPL Crisis Resolution',
+    category: 'Turnaround / Restructuring', industry: 'Banking / Financial Services', difficulty: 'Expert',
+    prompt: 'A bank ($30B assets) has 15% non-performing loans (NPLs) from a real estate portfolio collapse. They need to clean up the balance sheet while maintaining operations.',
+    context: 'NPL ratio: 15% ($4.5B). Provision for credit losses: $2B. Capital adequacy: 8% (minimum 10.5%). Liquidity ratio: 90% (minimum 100%).',
+    keyFacts: ['Assets: $30B','NPLs: 15% ($4.5B, mostly real estate)','Provision for credit losses: $2B','Capital adequacy: 8% (minimum 10.5%)','Liquidity ratio: 90% (minimum 100%)','Deposits: $20B (30% wholesale funded)','Real estate exposure: 40% of loan book ($12B)','NPL resolution rate: 20% (benchmark 60%)','Legal proceedings: 500 cases pending','NII margin: 3.2% (benchmark 3.5%)','Regulatory: under supervision, remediation plan required'],
+    frameworkHints: ['NPL resolution strategy (restructure, provision, sell, or write-off)','Real estate asset management and recovery','Capital raising strategy (equity, sub-debt, asset sales)','Deposit base strengthening','Regulatory compliance and remediation','Asset-liability management'],
+    expectedCalculations: ['NPL ratio: 15% to 5% in 3 years','Capital adequacy: 8% to 12%','Liquidity ratio: 90% to 110%','NPL resolution: recover 50% of $4.5B ($2.25B)','Cost of resolution: $1B in provisions and write-offs'],
+    successCriteria: ['NPL resolution and balance sheet cleanup strategy','Capital strengthening and regulatory compliance','Asset management and recovery plan','Deposit and funding strategy','Financial model with 3-year NPL reduction roadmap']
+  },
+  {
+    id: 'tr-16', title: 'Tech Startup Profitability Pivot',
+    category: 'Turnaround / Restructuring', industry: 'Technology / SaaS', difficulty: 'Medium',
+    prompt: 'A SaaS startup ($200M ARR) is burning $150M/year. Growth has slowed to 20% (was 80%). They need to reach profitability within 18 months or face shutdown.',
+    context: 'ARR: $200M (growing 20%, was 80%). Burn: $150M/year. Cash: $100M (8 months runway). Customers: 5,000. Churn: 15% (benchmark 5%). CAC: $50K (LTV: $100K).',
+    keyFacts: ['ARR: $200M (growth slowing: 80% to 20%)','Burn rate: $150M/year','Cash: $100M (8 months runway)','Customers: 5,000','Churn rate: 15% (benchmark 5%)','CAC: $50K (LTV: $100K, LTV/CAC = 2x, benchmark 5x)','Employees: 2,000 (target: 1,200)','Gross margin: 60% (benchmark 80%)','NDR: 90% (benchmark 120%)','Pricing: $40K ACV','Competitors: 10 well-funded alternatives'],
+    frameworkHints: ['Aggressive cost reduction to extend runway','Churn reduction and customer success overhaul','Pricing and packaging optimization','Gross margin improvement (cloud cost optimization)','Revenue focus: land-and-expand strategy'],
+    expectedCalculations: ['Burn rate reduction: $150M to $30M/month','Churn reduction: 15% to 5%','Gross margin: 60% to 80%','LTV/CAC: 2x to 5x','Path to profitability: EBITDA positive in 18 months'],
+    successCriteria: ['Startup turnaround and profitability pivot strategy','Cost reduction and runway extension plan','Customer retention and revenue optimization','Pricing and unit economics improvement','Financial model with 18-month profitability path']
+  },
+  {
+    id: 'tr-17', title: 'Pharmaceutical Patent Cliff Response',
+    category: 'Turnaround / Restructuring', industry: 'Pharmaceuticals', difficulty: 'Hard',
+    prompt: 'A pharma company ($20B revenue) faces a $8B revenue cliff when its top drug loses patent exclusivity in 2 years. Pipeline is weak. They need to bridge the gap.',
+    context: 'Top drug: $8B revenue (40% of total), patent cliff in 2 years. Pipeline: 3 late-stage drugs, combined peak sales $2B. Generic competition expected to capture 80% within 12 months.',
+    keyFacts: ['Revenue: $20B ($8B from top drug, 40%)','Patent cliff: 2 years','Generic erosion: 80% within 12 months ($6.4B loss)','Pipeline: 3 late-stage drugs (peak sales $2B combined)','R&D spend: $3B (15% of revenue)','Cash: $5B','M&A budget: $10B available','Workforce: 30,000','Sales force: 5,000 (focused on top drug)','Regulatory: 2 ANDAs filed by generics companies','Competitor: 3 companies with generic versions ready'],
+    frameworkHints: ['Patent cliff mitigation (authorized generics, litigation, settlements)','Pipeline acceleration (fast-track approvals, label expansion)','M&A for pipeline acquisition (buy revenue to bridge gap)','Cost restructuring for post-cliff revenue level','Lifecycle management (new formulations, combinations)'],
+    expectedCalculations: ['Revenue gap: $8B loss, need to cover $4B+ through new sources','Pipeline acceleration: bring 1 drug forward 6 months','M&A: acquire $2B+ revenue product','Cost restructuring: reduce $3B to match post-cliff revenue','Cash deployment: optimal mix of M&A vs R&D'],
+    successCriteria: ['Patent cliff response strategy','M&A and pipeline acceleration plan','Cost and revenue restructuring','Lifecycle management and legal strategy','Financial model with revenue bridge plan']
+  },
+  {
+    id: 'tr-18', title: 'Logistics Company Union Restructuring',
+    category: 'Turnaround / Restructuring', industry: 'Logistics / Transportation', difficulty: 'Hard',
+    prompt: 'A trucking company ($3B revenue) has a unionized workforce with restrictive work rules. Labor costs are 45% of revenue (benchmark 30%). They need to renegotiate or restructure.',
+    context: 'Union workforce: 10,000 drivers, 2,000 dock workers. Labor cost: 45% of revenue ($1.35B). Work rules: no cross-training, strict seniority, 23% absenteeism. Non-union competitors: 30% labor cost.',
+    keyFacts: ['Revenue: $3B','Labor cost: 45% ($1.35B, benchmark 30%)','Union workers: 12,000 (10K drivers, 2K dock)','Work rules: no cross-training, strict seniority','Absenteeism: 23% (benchmark 5%)','Contract expiration: 8 months','Non-union competitors: 30% labor cost','Profit margin: -1% (benchmark 8%)','Safety record: above industry average','Customer satisfaction: declining','Strike risk: high if negotiations fail'],
+    frameworkHints: ['Union contract renegotiation strategy','Operational flexibility improvements','Technology investment to reduce labor dependency','Workforce transition planning (if strike)','Non-union facility expansion strategy'],
+    expectedCalculations: ['Labor cost: 45% to 35% = $300M savings','Absenteeism: 23% to 8%','Productivity improvement: 20%','Strike risk mitigation and contingency plan','Margin improvement: -1% to 8% = $270M profit'],
+    successCriteria: ['Labor restructuring and union negotiation strategy','Operational flexibility and technology plan','Contingency and strike preparedness','Non-union expansion strategy','Financial model with $300M labor cost reduction']
+  },
+  {
+    id: 'tr-19', title: 'Education Institution Revenue Diversification',
+    category: 'Turnaround / Restructuring', industry: 'Education / Higher Education', difficulty: 'Medium',
+    prompt: 'A university ($800M revenue) is 90% dependent on tuition. Enrollment is declining 5% annually. They need to diversify to survive.',
+    context: 'Enrollment: 15,000 (was 20,000, declining 5%/year). Tuition: 90% of revenue. Endowment: $500M. Deferred maintenance: $200M. Faculty: 800.',
+    keyFacts: ['Revenue: $800M (90% tuition = $720M)','Enrollment: 15,000 (declining 5%/year, was 20K)','Tuition dependence: 90%','Endowment: $500M','Deferred maintenance: $200M','Faculty: 800 (20% nearing retirement)','Student satisfaction: 60/100','Alumni giving rate: 15% (benchmark 25%)','Online programs: minimal','Research funding: $50M (benchmark $150M)','Competitor: 10 similar institutions in region'],
+    frameworkHints: ['Revenue diversification: corporate training, online, research','Enrollment recovery through new programs and marketing','Alumni engagement and giving improvement','Endowment growth strategy','Cost structure optimization'],
+    expectedCalculations: ['Tuition dependence: 90% to 60% in 5 years','New revenue streams: $200M from corporate, online, research','Enrollment: stabilize at 15K, grow to 18K','Endowment growth: $500M to $800M','Deferred maintenance: reduce from $200M to $50M'],
+    successCriteria: ['Revenue diversification strategy','Enrollment and program innovation plan','Alumni and endowment strategy','Cost optimization and facilities plan','Financial model with 5-year revenue mix targets']
+  },
+  {
+    id: 'tr-20', title: 'Energy Company Coal-to-Renewables Transition',
+    category: 'Turnaround / Restructuring', industry: 'Energy / Utilities', difficulty: 'Expert',
+    prompt: 'An energy company ($10B revenue) generates 70% from coal. Regulatory and market pressures are forcing a transition to renewables. They need to transition while managing $5B in stranded assets.',
+    context: '70% coal ($7B), 20% gas, 10% renewables. Coal declining 10% annually. Regulatory: carbon tax proposed. Stranded assets: $5B coal plants. Workers: 8,000 in coal operations.',
+    keyFacts: ['Revenue: $10B (70% coal, 20% gas, 10% renewables)','Coal revenue: $7B (declining 10% annually)','Stranded asset risk: $5B coal plants','Carbon tax risk: $500M annually if enacted','Workers: 8,000 in coal operations','Regulatory: 2050 net-zero mandates in 12 states','Capital available: $3B over 5 years','Competitor: NextEra (largest wind/solar), Duke (coal exit)','Technology: no renewable development capability','Grid infrastructure: aging, needs $1B upgrade','Political: coal communities dependent on operations'],
+    frameworkHints: ['Renewables development strategy (wind, solar, storage)','Coal plant retirement schedule and asset write-down','Just transition plan for coal workers and communities','Gas as bridge fuel strategy','Carbon capture and storage evaluation','Regulatory and policy engagement'],
+    expectedCalculations: ['Renewable capacity: 10% to 50% in 10 years','Coal phase-down: 70% to 20%','Stranded asset management: minimize write-downs','Worker transition: retrain or severance for 8,000','Revenue stability during transition: <5% annual decline'],
+    successCriteria: ['Energy transition turnaround strategy','Renewables development and investment plan','Coal retirement and asset management','Just transition and workforce plan','Financial model with 10-year transition roadmap']
+  },
+  {
+    id: 'tr-21', title: 'Media Company Cord-Cutting Survival',
+    category: 'Turnaround / Restructuring', industry: 'Media / Telecommunications', difficulty: 'Hard',
+    prompt: 'A cable company ($8B revenue) is losing 500K subscribers quarterly to cord-cutting. They need to transform from cable to broadband/entertainment platform.',
+    context: 'Subscribers declining from 8M to 6M. Cord-cutting: 500K/quarter. Broadband: 3M subscribers (growing). Content: no owned content. OTT: no offering.',
+    keyFacts: ['Revenue: $8B (cable 60%, broadband 30%, other 10%)','Subscribers: 6M (declining 500K/quarter from 8M)','Broadband: 3M subscribers (growing 10% annually)','Cord-cutting rate: 500K/quarter','Content: no owned content','OTT: no offering','Competitors: Netflix, YouTube TV, Hulu','Infrastructure: DOCSIS 3.1, fiber limited','Customer satisfaction: 3.5/5','Churn: 2% monthly (benchmark 1.5%)','Employee count: 25,000'],
+    frameworkHints: ['Broadband-first strategy (upgrade infrastructure)','OTT streaming platform launch','Content acquisition and bundling','Customer retention: bundles, pricing, service','Workforce transformation from cable to digital'],
+    expectedCalculations: ['Broadband: 3M to 6M subscribers in 3 years','OTT subscribers: 0 to 2M','Cable decline: manage to $2B from $5B','Total revenue: maintain $8B through diversification','Customer retention: churn from 2% to 1.2%'],
+    successCriteria: ['Cord-cutting survival and transformation strategy','Broadband infrastructure and growth plan','OTT and content strategy','Customer retention and pricing','Financial model with revenue diversification']
+  },
+  {
+    id: 'tr-22', title: 'Professional Services Firm Digitization',
+    category: 'Turnaround / Restructuring', industry: 'Professional Services / Consulting', difficulty: 'Medium',
+    prompt: 'A mid-tier accounting firm ($500M revenue) is losing clients to Big 4 and tech-enabled competitors. Utilization: 65% (benchmark 80%). They need to digitize or die.',
+    context: '2,000 professionals, 200 partners. Revenue declining 8% annually. Clients: 500 (losing 10% to Big 4). Technology: basic Excel/Word. No AI, no automation.',
+    keyFacts: ['Revenue: $500M (declining 8% annually)','Professionals: 2,000','Partners: 200','Clients: 500 (losing 10%/year to Big 4)','Utilization: 65% (benchmark 80%)','Technology: basic Excel/Word, no AI','No automation: manual audit/tax processes','Competitor: Big 4 (tech-enabled), tech startups','Pricing pressure: 20% below Big 4','Talent: losing recruits to Big 4 and tech'],
+    frameworkHints: ['Digital transformation: AI-powered audit and tax tools','Automation of routine compliance work','Data analytics and advisory services expansion','Talent modernization and digital skills','Client experience and platform upgrade'],
+    expectedCalculations: ['Revenue decline: reverse from -8% to +5%','Utilization: 65% to 80%','Client retention: stop 10% annual loss','New revenue: data analytics advisory ($50M/year)','Talent retention improvement'],
+    successCriteria: ['Digital transformation strategy for professional services','AI and automation implementation','Advisory services expansion','Talent and client experience modernization','Financial model with revenue recovery plan']
+  },
+  {
+    id: 'tr-23', title: 'Aerospace Supply Chain Crisis Recovery',
+    category: 'Turnaround / Restructuring', industry: 'Aerospace / Defense', difficulty: 'Expert',
+    prompt: 'An aerospace supplier ($8B revenue) has critical quality issues causing production halts at 3 major OEM customers. They face potential loss of $4B in contracts.',
+    context: '3 OEM customers: Boeing (40% of revenue), Airbus (30%), Lockheed (20%). Quality escapes: 12 in 6 months. Production halts: 3 (costing $2B to customers). Potential contract loss: $4B.',
+    keyFacts: ['Revenue: $8B','Customer concentration: Boeing 40%, Airbus 30%, Lockheed 20%','Quality escapes: 12 in 6 months (benchmark: 0-1)','Production halts at customers: 3','Contract loss risk: $4B','Quality cost: $500M (rework, scrap, warranty)','Workforce: 15,000','Facilities: 8 plants','ITAR compliance: critical','Regulatory: FAA/EASA scrutiny increasing','Competitor: 3 qualified alternates ready to step in'],
+    frameworkHints: ['Root cause analysis and quality system overhaul','Customer recovery and relationship rebuilding','Quality management system (AS9100) certification','Manufacturing process improvement (Six Sigma)','Supply chain quality management','Regulatory compliance and communication'],
+    expectedCalculations: ['Quality escapes: 12 to 0 per year','Production halts: eliminate completely','Customer retention: keep 100% of $8B contracts','Quality cost: $500M to $100M','Regulatory compliance: zero findings'],
+    successCriteria: ['Quality crisis recovery and turnaround strategy','Customer relationship recovery plan','Quality management system overhaul','Manufacturing and supply chain improvement','Financial model with quality cost reduction targets']
+  },
+]
 export function getAllExpandedCases(): CaseData[] {
   return expandedCases;
 }
