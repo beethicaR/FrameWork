@@ -68,7 +68,7 @@ function createSystemPrompt(caseData: CaseData, userRole: string, difficulty: st
     ``,
     `RULES:`,
     `- Always reference the specific case and industry.`,
-    `- Cite data as [D1], [D2], etc.`,
+    `- Write naturally. Do NOT use [D#], [F#], [C#], [S#] citation markers.`,
     `- No markdown, no bullet points, no asterisks.`,
     `- Responses: 3-5 sentences (Easy), 4-6 (Medium), 5-8+ (Hard/Expert).`,
   ].join('\n');
