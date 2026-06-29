@@ -17,14 +17,30 @@ function clean(t: string): string {
     .replace(/\[rec-node\]/g, '')
     .replace(/\[stuck\]/g, '')
     .replace(/• /g, '')
-    // Catch orphaned phrases left after citation stripping: "as per .", "hinted at by .", "displayed at .", "noted in .", "a .", "the .", "in .", etc.
-    .replace(/\b(as\s+per|according\s+to|hinted\s+at\s+by\s*|referred\s+to\s+|displayed\s+at\s+|indicated\s+by|highlighted\s+by|supported\s+by|investigate\s*,\s*|\.\s+I'll\s+investigate)\s+([.,;!?)\]])/gi, '$2')
-    .replace(/\b(described\s+in\s+|stated\s+in\s+|shown\s+in\s+|mentioned\s+in\s+|outlined\s+in\s+|noted\s+in\s+|defined\s+in\s+|detailed\s+in\s+|cited\s+in\s+|listed\s+in\s+)([.,;!?)\]])/gi, '$2')
+    // Catch orphaned phrases left after citation stripping
+    // 1. "such as [D2] and" → "such as and" → remove
+    .replace(/\b(such\s+as)\s+and\b/gi, '')
+    .replace(/\b(such\s+as)\s+([.,;!?)\]])/gi, '$2')
+    // 2. "stated in and" → after [D3] stripped → remove
+    .replace(/\b(as\s+stated\s+in|as\s+noted\s+in|as\s+shown\s+in|as\s+mentioned\s+in|as\s+cited\s+in|as\s+described\s+in)\s+and\b/gi, '')
+    .replace(/\b(described\s+in|stated\s+in|shown\s+in|mentioned\s+in|outlined\s+in|noted\s+in|defined\s+in|detailed\s+in|cited\s+in|listed\s+in)\s+and\b/gi, '')
+    // 3. "highlighted in and", "indicated by and", "displayed at and"
+    .replace(/\b(highlighted|indicated|displayed|referred|hinted)\s+(in|at|by)\s+and\b/gi, '')
+    // 4. "as per and", "according to and"
+    .replace(/\b(as\s+per|according\s+to)\s+and\b/gi, '')
+    // 5. Orphaned "and" before punctuation: "such as and .", "in and ."
+    .replace(/\band\s+([.,;!?)\]])/g, '$1')
+    .replace(/\band\s+$/gm, '')
+    // 6. Orphaned phrases before punctuation
+    .replace(/\b(as\s+per|according\s+to|hinted\s+at\s+by\s*|referred\s+to\s*|displayed\s+at\s*|indicated\s+by|highlighted\s+by|supported\s+by)\s+([.,;!?)\]])/gi, '$2')
+    .replace(/\b(described\s+in|stated\s+in|shown\s+in|mentioned\s+in|outlined\s+in|noted\s+in|defined\s+in|detailed\s+in|cited\s+in|listed\s+in)\s+([.,;!?)\]])/gi, '$2')
     .replace(/\b(a|an|the|this|that)\s+([.,;!?)\]])/gi, '$2')
     .replace(/\b(in|at|by|to)\s+([.,;!?)\]])/g, '$2')
     .replace(/\b(in|at|by|to)\s+$/gm, '')
     .replace(/\s{2,}/g, ' ')
-    .replace(/([.,;!?])\1+/g, '$1')
+    .replace(/([.,;!?])\1{2,}/g, '$1$1')
+    .replace(/ ,,/g, ',')
+    .replace(/, ,/g, ',')
     .trim();
 }
 
