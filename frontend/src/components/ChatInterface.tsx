@@ -17,11 +17,14 @@ function clean(t: string): string {
     .replace(/\[rec-node\]/g, '')
     .replace(/\[stuck\]/g, '')
     .replace(/• /g, '')
-    // Fix orphaned "in" left after citation marker stripping
-    .replace(/\b(described|stated|shown|mentioned|outlined|noted|defined|detailed|cited|listed)\s+in\s+([.,;!?)\]])/gi, '$1$2')
-    .replace(/\bin\s+([.,;!?)\]])/g, '$1')
-    .replace(/\bin\s+$/gm, '')
-    .replace(/  +/g, ' ')
+    // Catch orphaned phrases left after citation stripping: "as per .", "hinted at by .", "displayed at .", "noted in .", "a .", "the .", "in .", etc.
+    .replace(/\b(as\s+per|according\s+to|hinted\s+at\s+by\s*|referred\s+to\s+|displayed\s+at\s+|indicated\s+by|highlighted\s+by|supported\s+by|investigate\s*,\s*|\.\s+I'll\s+investigate)\s+([.,;!?)\]])/gi, '$2')
+    .replace(/\b(described\s+in\s+|stated\s+in\s+|shown\s+in\s+|mentioned\s+in\s+|outlined\s+in\s+|noted\s+in\s+|defined\s+in\s+|detailed\s+in\s+|cited\s+in\s+|listed\s+in\s+)([.,;!?)\]])/gi, '$2')
+    .replace(/\b(a|an|the|this|that)\s+([.,;!?)\]])/gi, '$2')
+    .replace(/\b(in|at|by|to)\s+([.,;!?)\]])/g, '$2')
+    .replace(/\b(in|at|by|to)\s+$/gm, '')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/([.,;!?])\1+/g, '$1')
     .trim();
 }
 
