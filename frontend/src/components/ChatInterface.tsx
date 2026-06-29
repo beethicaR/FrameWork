@@ -36,11 +36,30 @@ function clean(t: string): string {
     .replace(/\b(described\s+in|stated\s+in|shown\s+in|mentioned\s+in|outlined\s+in|noted\s+in|defined\s+in|detailed\s+in|cited\s+in|listed\s+in)\s+([.,;!?)\]])/gi, '$2')
     .replace(/\b(a|an|the|this|that)\s+([.,;!?)\]])/gi, '$2')
     .replace(/\b(in|at|by|to)\s+([.,;!?)\]])/g, '$2')
+    .replace(/\b(as)\s+([.,;!?)\]])/gi, '$2')
+    .replace(/\b(in|at|by|to)\s+([.,;!?)\]])/g, '$2')
     .replace(/\b(in|at|by|to)\s+$/gm, '')
+    // Remove leading stray punctuation that ended up at start of line after stripping
+    .replace(/^[.,;!?\s]+/, '')
+    // Remove trailing "as " left behind
+    .replace(/\bas\s+$/gm, '')
+    .replace(/\bsuch\s+as\s+(those|these)\s+/gi, 'such as $1 ')
+    // "as . X" → ". X", "such as . X" → ". X"
+    .replace(/\b(such\s+as|as)\s+\.\s+/gi, '. ')
+    // "as ," → ""
+    .replace(/\bas\s+,/gi, '')
+    // ".price" → "price" (period at start of word after stripping)
+    .replace(/\.(\w)/g, '. $1')
+    // ", ." → "."
+    .replace(/, \./g, '.')
+    .replace(/\. ,/g, '.')
     .replace(/\s{2,}/g, ' ')
     .replace(/([.,;!?])\1{2,}/g, '$1$1')
     .replace(/ ,,/g, ',')
     .replace(/, ,/g, ',')
+    .replace(/\b(such\s+as)\s*$/gm, '')
+    .replace(/\b(as|in|at|by|to)\s+$/gm, '')
+    .replace(/\b(as|in|at|by|to)\s+([.,;!?)\]])/gi, '$2')
     .trim();
 }
 
